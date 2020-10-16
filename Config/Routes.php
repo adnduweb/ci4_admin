@@ -3,6 +3,8 @@
 /**
  * Logn route
  */
-//$routes->get(CI_AREA_ADMIN, '\App\Controllers\Admin\Authentication::login', ['as' => 'ci_site_area', 'filter' => 'apiauth']);
-$routes->get(CI_AREA_ADMIN . '/login', '\Adnduweb\Admin\Controllers\Admin\Authentication::index', ['as' => 'login']);
-$routes->post(CI_AREA_ADMIN . '/login', '\Adnduweb\Admin\Controllers\Admin\Authentication::attemptLogin', ['as' => 'postlogin']);
+$routes->group('', ['namespace' => '\Adnduweb\Admin\Controllers\Admin'], function($routes) {
+    //$routes->get(CI_AREA_ADMIN, '\App\Controllers\Admin\Authentication::login', ['as' => 'ci_site_area', 'filter' => 'apiauth']);
+    $routes->get(CI_AREA_ADMIN . '/login', 'Authentication::index', ['as' => 'login-area']);
+    $routes->post(CI_AREA_ADMIN . '/login', 'Authentication::attemptLogin', ['as' => 'postlogin-area']);
+});
