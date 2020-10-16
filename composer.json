@@ -1,0 +1,14 @@
+
+{
+    "name": "adnduweb/ci4_admin",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Adnduweb\\Admin\\" : ""
+        }
+    },
+    "require": {
+        "myth/auth": "^1.0@beta",
+    }
+}
+
