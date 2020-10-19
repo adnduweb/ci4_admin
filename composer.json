@@ -9,7 +9,7 @@
         }
     },
     "require": {
-        "myth/auth": "^1.0@beta"
+        "adnduweb/ci4_core": "*"
     }
 }
 
