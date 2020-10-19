@@ -1,6 +1,6 @@
 <?php
 
-namespace Adnduweb\Admin\Models;
+namespace Adnduweb\Ci4Admin\Models;
 
 use CodeIgniter\Model;
 use App\Entities\Group;

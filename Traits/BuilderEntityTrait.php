@@ -1,6 +1,6 @@
 <?php
 
-namespace Adnduweb\Admin\Traits;
+namespace Adnduweb\Ci4Admin\Traits;
 
 /**
  *

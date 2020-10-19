@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Authentication\Resetters;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Resetters;
 
 use Config\Email;
 use CodeIgniter\Entity;
@@ -9,7 +9,7 @@ use CodeIgniter\Config\Services;
  *
  * Sends a reset password email to user.
  *
- * @package Adnduweb\Admin\Authentication\Resetters
+ * @package Adnduweb\Ci4Admin\Authentication\Resetters
  */
 class EmailResetter extends BaseResetter implements ResetterInterface
 {

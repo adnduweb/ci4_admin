@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Collectors;
+<?php namespace Adnduweb\Ci4Admin\Collectors;
 
 /**
  * Auth collector
@@ -95,7 +95,7 @@ class Auth extends \CodeIgniter\Debug\Toolbar\Collectors\BaseCollector
 			 *  so it's available globally,
 			 *  or not at all?
 			 */
-			$groupModel = new \Adnduweb\Admin\Authorization\GroupModel();
+			$groupModel = new \Adnduweb\Ci4Admin\Authorization\GroupModel();
 			$user->groups =  $groupModel->getGroupsForUser($user->id);
 
 			$groups = [];

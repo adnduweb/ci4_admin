@@ -1,7 +1,7 @@
-<?php namespace Adnduweb\Admin\Authentication\Passwords;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Passwords;
 
 use Config\Services;
-use Adnduweb\Admin\Entities\User;
+use Adnduweb\Ci4Admin\Entities\User;
 
 /**
  * Class ValidationRules
@@ -11,7 +11,7 @@ use Adnduweb\Admin\Entities\User;
  * To use, add this class to Config/Validation.php, in the
  * $rulesets array.
  *
- * @package Adnduweb\Admin\Authentication\Passwords
+ * @package Adnduweb\Ci4Admin\Authentication\Passwords
  */
 class ValidationRules
 {
@@ -63,7 +63,7 @@ class ValidationRules
     /**
      * Builds a new user instance from the global request.
      *
-     * @return \Adnduweb\Admin\Entities\User
+     * @return \Adnduweb\Ci4Admin\Entities\User
      */
     protected function buildUserFromRequest()
     {
@@ -79,7 +79,7 @@ class ValidationRules
      *
      * @param array $data Assigned data
      *
-     * @return \Adnduweb\Admin\Entities\User
+     * @return \Adnduweb\Ci4Admin\Entities\User
      */
     protected function buildUserFromData(array $data = [])
     {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Adnduweb\Admin\Models;
+namespace Adnduweb\Ci4Admin\Models;
 
 use CodeIgniter\Model;
 
 class PermissionModel extends Model
 {
-    use \Adnduweb\Ci4_logs\Traits\AuditsTrait, \Adnduweb\Admin\Models\BaseModel;
+    use \Adnduweb\Ci4_logs\Traits\AuditsTrait, \Adnduweb\Ci4Admin\Models\BaseModel;
     protected $afterInsert = ['auditInsert'];
     protected $afterUpdate = ['auditUpdate'];
     protected $afterDelete = ['auditDelete'];

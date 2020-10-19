@@ -1,13 +1,13 @@
 <?php
 
-namespace Adnduweb\Admin\Entities;
+namespace Adnduweb\Ci4Admin\Entities;
 
 use CodeIgniter\Entity;
 
 class Taxe extends Entity
 {
     use \Tatter\Relations\Traits\EntityTrait;
-    use \Adnduweb\Admin\Traits\BuilderEntityTrait;
+    use \Adnduweb\Ci4Admin\Traits\BuilderEntityTrait;
     protected $table      = 'taxes';
     protected $tableLang  = 'taxes_langs';
     protected $primaryKey = 'id';

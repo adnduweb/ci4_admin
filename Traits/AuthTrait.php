@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin;
+<?php namespace Adnduweb\Ci4Admin;
 
 use Config\Services;
 use CodeIgniter\Router\Exceptions\RedirectException;

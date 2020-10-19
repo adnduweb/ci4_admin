@@ -5,7 +5,7 @@
     "description": "An Example of CodeIgniter 4 Admin module",
     "autoload": {
         "psr-4": {
-            "Adnduweb\\Admin\\" : ""
+            "Adnduweb\\Ci4Admin\\" : ""
         }
     },
     "require": {

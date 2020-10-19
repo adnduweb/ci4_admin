@@ -1,13 +1,13 @@
 <?php
 
-namespace Adnduweb\Admin\Models;
+namespace Adnduweb\Ci4Admin\Models;
 
 use CodeIgniter\Model;
-use Adnduweb\Admin\Entities\Tab;
+use Adnduweb\Ci4Admin\Entities\Tab;
 
 class TabModel extends Model
 {
-    use \Tatter\Relations\Traits\ModelTrait, \Adnduweb\Ci4_logs\Traits\AuditsTrait, \Adnduweb\Admin\Traits\NotificationsTrait;
+    use \Tatter\Relations\Traits\ModelTrait, \Adnduweb\Ci4_logs\Traits\AuditsTrait, \Adnduweb\Ci4Admin\Traits\NotificationsTrait;
     protected $afterInsert = ['auditInsert'];
     protected $afterUpdate = ['auditUpdate'];
     protected $afterDelete = ['auditDelete'];

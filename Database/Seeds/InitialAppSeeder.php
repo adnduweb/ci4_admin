@@ -1,16 +1,16 @@
 <?php
 
-namespace Adnduweb\Admin\Database\Seeds;
+namespace Adnduweb\Ci4Admin\Database\Seeds;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Adnduweb\Admin\Models\LanguageModel;
-use Adnduweb\Admin\Models\CurrencyModel;
-use Adnduweb\Admin\Models\CountryModel;
-use Adnduweb\Admin\Models\TabModel;
-use Adnduweb\Admin\Entities\User;
-use Adnduweb\Admin\Models\UserModel;
-use Adnduweb\Admin\Models\CompanyModel;
+use Adnduweb\Ci4Admin\Models\LanguageModel;
+use Adnduweb\Ci4Admin\Models\CurrencyModel;
+use Adnduweb\Ci4Admin\Models\CountryModel;
+use Adnduweb\Ci4Admin\Models\TabModel;
+use Adnduweb\Ci4Admin\Entities\User;
+use Adnduweb\Ci4Admin\Models\UserModel;
+use Adnduweb\Ci4Admin\Models\CompanyModel;
 use Adnduweb\Ci4_settings\Models\SettingModel;
 use Adnduweb\Ci4_logs\Models\AuditModel;
 use joshtronic\LoremIpsum;

@@ -1,10 +1,10 @@
-<?php namespace Adnduweb\Admin\Commands;
+<?php namespace Adnduweb\Ci4Admin\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Services;
-use Adnduweb\Admin\Entities\User;
-use Adnduweb\Admin\Models\UserModel;
+use Adnduweb\Ci4Admin\Entities\User;
+use Adnduweb\Ci4Admin\Models\UserModel;
 
 class CreateUser extends BaseCommand
 {

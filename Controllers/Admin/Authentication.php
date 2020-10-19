@@ -1,14 +1,14 @@
 <?php
 
-namespace Adnduweb\Admin\Controllers\Admin;
+namespace Adnduweb\Ci4Admin\Controllers\Admin;
 
 use Config\Email;
 use Config\Services;
-use Adnduweb\Admin\Entities\User;
-use Adnduweb\Admin\Models\UserModel;
+use Adnduweb\Ci4Admin\Entities\User;
+use Adnduweb\Ci4Admin\Models\UserModel;
 use CodeIgniter\API\ResponseTrait;
 
-class Authentication extends \Adnduweb\Admin\Controllers\BaseAdminController
+class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 {
     use ResponseTrait;
 
@@ -65,7 +65,7 @@ class Authentication extends \Adnduweb\Admin\Controllers\BaseAdminController
             return redirect()->to($redirectURL);
         }
 
-       return view('Adnduweb\Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\index', ['config' => $this->config, 'data' => $this->data]);
+       return view('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\index', ['config' => $this->config, 'data' => $this->data]);
     }
 
     /**
@@ -157,7 +157,7 @@ class Authentication extends \Adnduweb\Admin\Controllers\BaseAdminController
             }
 
             // ON récupére le groupe principal
-            $groupModel = new Adnduweb\Admin\GroupModel();
+            $groupModel = new Adnduweb\Ci4Admin\GroupModel();
             $getGroupsForUser = $groupModel->getGroupsForUser($this->auth->user()->id);
             if (empty($getGroupsForUser[0]['login_destination']))
                 $getGroupsForUser[0]['login_destination'] = 'dashboard';

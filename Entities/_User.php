@@ -1,8 +1,8 @@
-<?php namespace Adnduweb\Admin\Entities;
+<?php namespace Adnduweb\Ci4Admin\Entities;
 
 use CodeIgniter\Entity;
-use Adnduweb\Admin\Authorization\GroupModel;
-use Adnduweb\Admin\Authorization\PermissionModel;
+use Adnduweb\Ci4Admin\Authorization\GroupModel;
+use Adnduweb\Ci4Admin\Authorization\PermissionModel;
 
 class User extends Entity
 {

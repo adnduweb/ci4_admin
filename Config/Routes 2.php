@@ -4,7 +4,7 @@
  * Myth:Auth routes file.
  */
 
-$routes->group('', ['namespace' => 'Adnduweb\Admin\Controllers'], function($routes) {
+$routes->group('', ['namespace' => 'Adnduweb\Ci4Admin\Controllers'], function($routes) {
     // Login/out
     $routes->get('login', 'AuthController::login', ['as' => 'login']);
     $routes->post('login', 'AuthController::attemptLogin');

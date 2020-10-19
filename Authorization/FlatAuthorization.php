@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Authorization;
+<?php namespace Adnduweb\Ci4Admin\Authorization;
 
 use CodeIgniter\Model;
 use CodeIgniter\Events\Events;

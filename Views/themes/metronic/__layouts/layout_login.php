@@ -1,6 +1,6 @@
 <?php
 
-use \Adnduweb\Admin\Libraries\Theme; ?>
+use \Adnduweb\Ci4Admin\Libraries\Theme; ?>
 <!DOCTYPE html>
 <html amp style="height: 100%!important;" lang="<?= service('request')->getLocale(); ?>" class="<?= detectBrowser(true);?>">
 

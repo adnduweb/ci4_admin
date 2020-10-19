@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Commands;
+<?php namespace Adnduweb\Ci4Admin\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;

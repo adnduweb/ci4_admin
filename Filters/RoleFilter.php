@@ -1,10 +1,10 @@
-<?php namespace Adnduweb\Admin\Filters;
+<?php namespace Adnduweb\Ci4Admin\Filters;
 
 use Config\Services;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
-use Adnduweb\Admin\Exceptions\PermissionException;
+use Adnduweb\Ci4Admin\Exceptions\PermissionException;
 
 class RoleFilter implements FilterInterface
 {

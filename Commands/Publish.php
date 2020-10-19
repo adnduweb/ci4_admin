@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Commands;
+<?php namespace Adnduweb\Ci4Admin\Commands;
 
 use Config\Autoload;
 use CodeIgniter\CLI\CLI;
@@ -52,7 +52,7 @@ class Publish extends BaseCommand
     ];
 
     /**
-     * The path to Adnduweb\Admin\src directory.
+     * The path to Adnduweb\Ci4Admin\src directory.
      *
      * @var string
      */
@@ -135,7 +135,7 @@ class Publish extends BaseCommand
             $path = "{$this->sourcePath}/Models/{$model}.php";
 
             $content = file_get_contents($path);
-            $content = $this->replaceNamespace($content, 'Adnduweb\Admin\Models', 'Models');
+            $content = $this->replaceNamespace($content, 'Adnduweb\Ci4Admin\Models', 'Models');
 
             $this->writeFile("Models/{$model}.php", $content);
         }
@@ -146,7 +146,7 @@ class Publish extends BaseCommand
         $path = "{$this->sourcePath}/Entities/User.php";
 
         $content = file_get_contents($path);
-        $content = $this->replaceNamespace($content, 'Adnduweb\Admin\Entities', 'Entities');
+        $content = $this->replaceNamespace($content, 'Adnduweb\Ci4Admin\Entities', 'Entities');
 
         $this->writeFile("Entities/User.php", $content);
     }
@@ -156,7 +156,7 @@ class Publish extends BaseCommand
         $path = "{$this->sourcePath}/Controllers/AuthController.php";
 
         $content = file_get_contents($path);
-        $content = $this->replaceNamespace($content, 'Adnduweb\Admin\Controllers', 'Controllers');
+        $content = $this->replaceNamespace($content, 'Adnduweb\Ci4Admin\Controllers', 'Controllers');
 
         $this->writeFile("Controllers/AuthController.php", $content);
     }
@@ -193,7 +193,7 @@ class Publish extends BaseCommand
 		$namespace = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
 
         $content = file_get_contents($path);
-        $content = str_replace('Adnduweb\Admin\Views', $namespace.'\Auth', $content);
+        $content = str_replace('Adnduweb\Ci4Admin\Views', $namespace.'\Auth', $content);
 
         $this->writeFile("Views/Auth/{$prefix}{$view}", $content);
     }
@@ -207,7 +207,7 @@ class Publish extends BaseCommand
             $path = "{$this->sourcePath}/Filters/{$filter}.php";
 
             $content = file_get_contents($path);
-            $content = $this->replaceNamespace($content, 'Adnduweb\Admin\Filters', 'Filters');
+            $content = $this->replaceNamespace($content, 'Adnduweb\Ci4Admin\Filters', 'Filters');
 
             $this->writeFile("Filters/{$filter}.php", $content);
         }
@@ -220,7 +220,7 @@ class Publish extends BaseCommand
         foreach ($map as $file)
         {
             $content = file_get_contents("{$this->sourcePath}/Database/Migrations/{$file}");
-            $content = $this->replaceNamespace($content, 'Adnduweb\Admin\Database\Migrations', 'Database\Migrations');
+            $content = $this->replaceNamespace($content, 'Adnduweb\Ci4Admin\Database\Migrations', 'Database\Migrations');
 
             $this->writeFile("Database/Migrations/{$file}", $content);
         }
@@ -233,15 +233,15 @@ class Publish extends BaseCommand
         $path = "{$this->sourcePath}/Config/Auth.php";
 
         $content = file_get_contents($path);
-        $content = str_replace('namespace Adnduweb\Admin\Config', "namespace Config", $content);
+        $content = str_replace('namespace Adnduweb\Ci4Admin\Config', "namespace Config", $content);
         $content = str_replace("use CodeIgniter\Config\BaseConfig;\n", '', $content);
-        $content = str_replace('extends BaseConfig', "extends \Adnduweb\Admin\Config\Auth", $content);
+        $content = str_replace('extends BaseConfig', "extends \Adnduweb\Ci4Admin\Config\Auth", $content);
 
         // are we also changing the views?
         if ($this->viewsPublished)
         {
             $namespace = defined('APP_NAMESPACE') ? APP_NAMESPACE : 'App';
-            $content = str_replace('Adnduweb\Admin\Views', $namespace . '\Views', $content);
+            $content = str_replace('Adnduweb\Ci4Admin\Views', $namespace . '\Views', $content);
         }
 
         $this->writeFile("Config/Auth.php", $content);
@@ -261,7 +261,7 @@ class Publish extends BaseCommand
     //--------------------------------------------------------------------
 
     /**
-     * Replaces the Adnduweb\Admin namespace in the published
+     * Replaces the Adnduweb\Ci4Admin namespace in the published
      * file with the applications current namespace.
      *
      * @param string $contents

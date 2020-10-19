@@ -1,11 +1,11 @@
-<?php namespace Adnduweb\Admin\Authentication\Resetters;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Resetters;
 
 use CodeIgniter\Entity;
 
 /**
  * Interface ResetterInterface
  *
- * @package Adnduweb\Admin\Authentication\Resetters
+ * @package Adnduweb\Ci4Admin\Authentication\Resetters
  */
 interface ResetterInterface
 {

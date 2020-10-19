@@ -1,14 +1,14 @@
-<?php namespace Adnduweb\Admin\Config;
+<?php namespace Adnduweb\Ci4Admin\Config;
 
 use CodeIgniter\Model;
-use Adnduweb\Admin\Authorization\FlatAuthorization;
-use Adnduweb\Admin\Models\UserModel;
-use Adnduweb\Admin\Models\LoginModel;
-use Adnduweb\Admin\Authorization\GroupModel;
-use Adnduweb\Admin\Authorization\PermissionModel;
-use Adnduweb\Admin\Authentication\Passwords\PasswordValidator;
-use Adnduweb\Admin\Authentication\Activators\UserActivator;
-use Adnduweb\Admin\Authentication\Resetters\UserResetter;
+use Adnduweb\Ci4Admin\Authorization\FlatAuthorization;
+use Adnduweb\Ci4Admin\Models\UserModel;
+use Adnduweb\Ci4Admin\Models\LoginModel;
+use Adnduweb\Ci4Admin\Authorization\GroupModel;
+use Adnduweb\Ci4Admin\Authorization\PermissionModel;
+use Adnduweb\Ci4Admin\Authentication\Passwords\PasswordValidator;
+use Adnduweb\Ci4Admin\Authentication\Activators\UserActivator;
+use Adnduweb\Ci4Admin\Authentication\Resetters\UserResetter;
 use Config\Services as BaseService;
 
 class Services extends BaseService
@@ -23,7 +23,7 @@ class Services extends BaseService
         /**
          * config() checks first in app/Config
          *
-         * @var \Adnduweb\Admin\Config\Auth $config
+         * @var \Adnduweb\Ci4Admin\Config\Auth $config
          */
 		$config = config('Auth');
 

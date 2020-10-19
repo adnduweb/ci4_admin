@@ -1,6 +1,6 @@
 <?php
 
-namespace Adnduweb\Admin\Config;
+namespace Adnduweb\Ci4Admin\Config;
 
 use CodeIgniter\Config\BaseConfig;
 
@@ -276,7 +276,7 @@ class Theme extends BaseConfig
                     ]
                 ]
             ],
-            'css' => [ 
+            'css' => [
                 'plugins/global/plugins.bundle.css',
                 'plugins/custom/prismjs/prismjs.bundle.css',
                 'css/style.bundle.css',

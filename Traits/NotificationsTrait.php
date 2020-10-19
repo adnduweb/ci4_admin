@@ -1,12 +1,12 @@
 <?php
 
-namespace Adnduweb\Admin\Traits;
+namespace Adnduweb\Ci4Admin\Traits;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Config\Services;
-use Adnduweb\Admin\Entities\Notification;
-use Adnduweb\Admin\Models\NotificationModel;
-use Adnduweb\Admin\Exceptions\DataException;
+use Adnduweb\Ci4Admin\Entities\Notification;
+use Adnduweb\Ci4Admin\Models\NotificationModel;
+use Adnduweb\Ci4Admin\Exceptions\DataException;
 
 trait NotificationsTrait
 {

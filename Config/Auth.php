@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Config;
+<?php namespace Adnduweb\Ci4Admin\Config;
 
 use CodeIgniter\Config\BaseConfig;
 
@@ -24,7 +24,7 @@ class Auth extends BaseConfig
      * @var array
      */
     public $authenticationLibs = [
-        'local' => 'Adnduweb\Admin\Authentication\LocalAuthenticator',
+        'local' => 'Adnduweb\Ci4Admin\Authentication\LocalAuthenticator',
     ];
 
     /**
@@ -35,12 +35,12 @@ class Auth extends BaseConfig
      * @var array
      */
     public $views = [
-        'login'           => 'Adnduweb\Admin\Views\login',
-        'register'        => 'Adnduweb\Admin\Views\register',
-        'forgot'          => 'Adnduweb\Admin\Views\forgot',
-        'reset'           => 'Adnduweb\Admin\Views\reset',
-        'emailForgot'     => 'Adnduweb\Admin\Views\emails\forgot',
-        'emailActivation' => 'Adnduweb\Admin\Views\emails\activation',
+        'login'           => 'Adnduweb\Ci4Admin\Views\login',
+        'register'        => 'Adnduweb\Ci4Admin\Views\register',
+        'forgot'          => 'Adnduweb\Ci4Admin\Views\forgot',
+        'reset'           => 'Adnduweb\Ci4Admin\Views\reset',
+        'emailForgot'     => 'Adnduweb\Ci4Admin\Views\emails\forgot',
+        'emailActivation' => 'Adnduweb\Ci4Admin\Views\emails\activation',
     ];
 
     /**
@@ -50,7 +50,7 @@ class Auth extends BaseConfig
      *
      * @var string
      */
-    public $viewLayout = 'Adnduweb\Admin\Views\layout';
+    public $viewLayout = 'Adnduweb\Ci4Admin\Views\layout';
 
     /**
      * --------------------------------------------------------------------
@@ -147,7 +147,7 @@ class Auth extends BaseConfig
      *
      * @var string
      */
-    public $requireActivation = 'Adnduweb\Admin\Authentication\Activators\EmailActivator';
+    public $requireActivation = 'Adnduweb\Ci4Admin\Authentication\Activators\EmailActivator';
 
     /**
      * --------------------------------------------------------------------
@@ -159,7 +159,7 @@ class Auth extends BaseConfig
      *
      * @var string
      */
-    public $activeResetter = 'Adnduweb\Admin\Authentication\Resetters\EmailResetter';
+    public $activeResetter = 'Adnduweb\Ci4Admin\Authentication\Resetters\EmailResetter';
 
     /**
      * --------------------------------------------------------------------
@@ -285,10 +285,10 @@ class Auth extends BaseConfig
      * @var string[]
      */
     public $passwordValidators = [
-        'Adnduweb\Admin\Authentication\Passwords\CompositionValidator',
-        'Adnduweb\Admin\Authentication\Passwords\NothingPersonalValidator',
-        'Adnduweb\Admin\Authentication\Passwords\DictionaryValidator',
-        // 'Adnduweb\Admin\Authentication\Passwords\PwnedValidator',
+        'Adnduweb\Ci4Admin\Authentication\Passwords\CompositionValidator',
+        'Adnduweb\Ci4Admin\Authentication\Passwords\NothingPersonalValidator',
+        'Adnduweb\Ci4Admin\Authentication\Passwords\DictionaryValidator',
+        // 'Adnduweb\Ci4Admin\Authentication\Passwords\PwnedValidator',
     ];
 
     /**
@@ -301,7 +301,7 @@ class Auth extends BaseConfig
      * @var array
      */
     public $userActivators = [
-        'Adnduweb\Admin\Authentication\Activators\EmailActivator' => [
+        'Adnduweb\Ci4Admin\Authentication\Activators\EmailActivator' => [
             'fromEmail' => null,
             'fromName' => null,
         ],
@@ -317,7 +317,7 @@ class Auth extends BaseConfig
      * @var array
      */
     public $userResetters = [
-        'Adnduweb\Admin\Authentication\Resetters\EmailResetter' => [
+        'Adnduweb\Ci4Admin\Authentication\Resetters\EmailResetter' => [
             'fromEmail' => null,
             'fromName' => null,
         ],

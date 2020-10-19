@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Filters;
+<?php namespace Adnduweb\Ci4Admin\Filters;
 
 use Config\Services;
 use CodeIgniter\HTTP\RequestInterface;

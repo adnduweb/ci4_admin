@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Authentication\Passwords;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Passwords;
 
 class BaseValidator
 {

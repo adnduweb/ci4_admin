@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Exceptions;
+<?php namespace Adnduweb\Ci4Admin\Exceptions;
 
 class UserNotFoundException extends \RuntimeException implements ExceptionInterface
 {

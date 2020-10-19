@@ -1,11 +1,11 @@
-<?php namespace Adnduweb\Admin\Authentication\Activators;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Activators;
 
 use CodeIgniter\Entity;
 
 /**
  * Interface ActivatorInterface
  *
- * @package Adnduweb\Admin\Authentication\Activators
+ * @package Adnduweb\Ci4Admin\Authentication\Activators
  */
 interface ActivatorInterface
 {

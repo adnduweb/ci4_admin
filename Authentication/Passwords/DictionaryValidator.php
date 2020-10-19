@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Authentication\Passwords;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Passwords;
 
 use CodeIgniter\Entity;
 
@@ -8,7 +8,7 @@ use CodeIgniter\Entity;
  * Checks passwords against a list of 65k commonly used passwords
  * that was compiled by InfoSec.
  *
- * @package Adnduweb\Admin\Authentication\Passwords\Validators
+ * @package Adnduweb\Ci4Admin\Authentication\Passwords\Validators
  */
 class DictionaryValidator extends BaseValidator implements ValidatorInterface
 {

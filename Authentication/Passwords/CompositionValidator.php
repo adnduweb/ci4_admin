@@ -1,7 +1,7 @@
-<?php namespace Adnduweb\Admin\Authentication\Passwords;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Passwords;
 
 use CodeIgniter\Entity;
-use Adnduweb\Admin\Exceptions\AuthException;
+use Adnduweb\Ci4Admin\Exceptions\AuthException;
 
 /**
  * Class CompositionValidator
@@ -15,7 +15,7 @@ use Adnduweb\Admin\Exceptions\AuthException;
  * @see https://pages.nist.gov/800-63-3/sp800-63b.html#sec5
  *
  *
- * @package Adnduweb\Admin\Authentication\Passwords\Validators
+ * @package Adnduweb\Ci4Admin\Authentication\Passwords\Validators
  */
 class CompositionValidator extends BaseValidator implements ValidatorInterface
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Adnduweb\Admin\Controllers;
+namespace Adnduweb\Ci4Admin\Controllers;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;

@@ -1,8 +1,8 @@
-<?php namespace Adnduweb\Admin\Authentication\Passwords;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Passwords;
 
-use Adnduweb\Admin\Config\Auth;
-use Adnduweb\Admin\Entities\User;
-use Adnduweb\Admin\Exceptions\AuthException;
+use Adnduweb\Ci4Admin\Config\Auth;
+use Adnduweb\Ci4Admin\Entities\User;
+use Adnduweb\Ci4Admin\Exceptions\AuthException;
 
 class PasswordValidator
 {

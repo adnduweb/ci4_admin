@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Config;
+<?php namespace Adnduweb\Ci4Admin\Config;
 
 use Config\Services;
 

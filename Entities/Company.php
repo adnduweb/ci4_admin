@@ -1,13 +1,13 @@
 <?php
 
-namespace Adnduweb\Admin\Entities;
+namespace Adnduweb\Ci4Admin\Entities;
 
 use Michalsn\Uuid\UuidEntity;
 
 class Company extends UuidEntity
 {
     use \Tatter\Relations\Traits\EntityTrait;
-    use \Adnduweb\Admin\Traits\BuilderEntityTrait;
+    use \Adnduweb\Ci4Admin\Traits\BuilderEntityTrait;
     protected $table          = 'companies';
     protected $tableLang      = 'companies_langs';
     protected $primaryKey     = 'id';

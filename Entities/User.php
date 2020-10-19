@@ -1,9 +1,9 @@
 <?php
 
-namespace Adnduweb\Admin\Entities;
+namespace Adnduweb\Ci4Admin\Entities;
 
 use Michalsn\Uuid\UuidEntity;
-use Adnduweb\Admin\Models\PermissionsModel;
+use Adnduweb\Ci4Admin\Models\PermissionsModel;
 
 class User extends UuidEntity
 {

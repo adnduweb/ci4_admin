@@ -20,7 +20,7 @@ if (! function_exists('user'))
 	/**
 	 * Returns the User instance for the current logged in user.
 	 *
-	 * @return \Adnduweb\Admin\Entities\User|null
+	 * @return \Adnduweb\Ci4Admin\Entities\User|null
 	 */
 	function user()
 	{

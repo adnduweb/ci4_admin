@@ -1,6 +1,6 @@
 <?php
 
-namespace Adnduweb\Admin\Commands;
+namespace Adnduweb\Ci4Admin\Commands;
 
 use Config\Autoload;
 use CodeIgniter\CLI\BaseCommand;

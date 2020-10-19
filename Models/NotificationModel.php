@@ -1,9 +1,9 @@
 <?php
 
-namespace Adnduweb\Admin\Models;
+namespace Adnduweb\Ci4Admin\Models;
 
 use Michalsn\Uuid\UuidModel;
-use Adnduweb\Admin\Entities\Notification;
+use Adnduweb\Ci4Admin\Entities\Notification;
 
 class NotificationModel extends UuidModel
 {

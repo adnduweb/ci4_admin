@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Authentication\Resetters;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Resetters;
 
 class BaseResetter
 {

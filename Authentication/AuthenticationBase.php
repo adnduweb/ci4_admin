@@ -1,13 +1,13 @@
-<?php namespace Adnduweb\Admin\Authentication;
+<?php namespace Adnduweb\Ci4Admin\Authentication;
 
 use Config\App;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Model;
 use Config\Services;
-use Adnduweb\Admin\Entities\User;
-use Adnduweb\Admin\Exceptions\AuthException;
-use Adnduweb\Admin\Exceptions\UserNotFoundException;
-use Adnduweb\Admin\Models\LoginModel;
+use Adnduweb\Ci4Admin\Entities\User;
+use Adnduweb\Ci4Admin\Exceptions\AuthException;
+use Adnduweb\Ci4Admin\Exceptions\UserNotFoundException;
+use Adnduweb\Ci4Admin\Models\LoginModel;
 
 class AuthenticationBase
 {
@@ -68,7 +68,7 @@ class AuthenticationBase
      * NOTE: does not perform validation. All validation should
      * be done prior to using the login method.
      *
-     * @param \Adnduweb\Admin\Entities\User $user
+     * @param \Adnduweb\Ci4Admin\Entities\User $user
      * @param bool                     $remember
      *
      * @return bool
@@ -315,7 +315,7 @@ class AuthenticationBase
     /**
      * Returns the User instance for the current logged in user.
      *
-     * @return \Adnduweb\Admin\Entities\User|null
+     * @return \Adnduweb\Ci4Admin\Entities\User|null
      */
     public function user()
     {

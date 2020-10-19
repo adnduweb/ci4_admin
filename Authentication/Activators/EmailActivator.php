@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Authentication\Activators;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Activators;
 
 use Config\Email;
 use CodeIgniter\Entity;
@@ -9,7 +9,7 @@ use CodeIgniter\Config\Services;
  *
  * Sends an activation email to user.
  *
- * @package Adnduweb\Admin\Authentication\Activators
+ * @package Adnduweb\Ci4Admin\Authentication\Activators
  */
 class EmailActivator extends BaseActivator implements ActivatorInterface
 {

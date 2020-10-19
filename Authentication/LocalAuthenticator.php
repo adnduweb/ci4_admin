@@ -1,9 +1,9 @@
-<?php namespace Adnduweb\Admin\Authentication;
+<?php namespace Adnduweb\Ci4Admin\Authentication;
 
 use CodeIgniter\Router\Exceptions\RedirectException;
 use \Config\Services;
-use Adnduweb\Admin\Entities\User;
-use Adnduweb\Admin\Exceptions\AuthException;
+use Adnduweb\Ci4Admin\Entities\User;
+use Adnduweb\Ci4Admin\Exceptions\AuthException;
 
 class LocalAuthenticator extends AuthenticationBase implements AuthenticatorInterface
 {

@@ -1,7 +1,7 @@
-<?php namespace Adnduweb\Admin\Authentication\Resetters;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Resetters;
 
-use Adnduweb\Admin\Config\Auth;
-use Adnduweb\Admin\Entities\User;
+use Adnduweb\Ci4Admin\Config\Auth;
+use Adnduweb\Ci4Admin\Entities\User;
 
 class UserResetter
 {

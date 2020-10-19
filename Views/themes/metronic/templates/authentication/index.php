@@ -1,4 +1,4 @@
-<?= $this->extend('Adnduweb\Admin\themes\metronic\__layouts\layout_login') ?>
+<?= $this->extend('Adnduweb\Ci4Admin\themes\metronic\__layouts\layout_login') ?>
 <?= $this->section('main') ?>
 
     <!--begin::Main-->

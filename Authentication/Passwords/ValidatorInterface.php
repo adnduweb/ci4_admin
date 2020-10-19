@@ -1,4 +1,4 @@
-<?php namespace Adnduweb\Admin\Authentication\Passwords;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Passwords;
 
 use CodeIgniter\Entity;
 
@@ -7,7 +7,7 @@ use CodeIgniter\Entity;
  *
  * Forms the
  *
- * @package Adnduweb\Admin\Authentication\Passwords
+ * @package Adnduweb\Ci4Admin\Authentication\Passwords
  */
 interface ValidatorInterface
 {

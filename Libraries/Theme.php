@@ -1,6 +1,6 @@
 <?php
 
-namespace Adnduweb\Admin\Libraries;
+namespace Adnduweb\Ci4Admin\Libraries;
 
 class Theme
 {

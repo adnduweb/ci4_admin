@@ -1,6 +1,6 @@
-<?php namespace Adnduweb\Admin\Authentication;
+<?php namespace Adnduweb\Ci4Admin\Authentication;
 
-use Adnduweb\Admin\Entities\User;
+use Adnduweb\Ci4Admin\Entities\User;
 
 interface AuthenticatorInterface
 {
@@ -35,7 +35,7 @@ interface AuthenticatorInterface
     /**
      * Returns the User instance for the current logged in user.
      *
-     * @return \Adnduweb\Admin\Entities\User|null
+     * @return \Adnduweb\Ci4Admin\Entities\User|null
      */
     public function user();
 }

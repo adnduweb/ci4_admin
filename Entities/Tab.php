@@ -1,13 +1,13 @@
 <?php
 
-namespace Adnduweb\Admin\Entities;
+namespace Adnduweb\Ci4Admin\Entities;
 
 use CodeIgniter\Entity;
 
 class Tab extends Entity
 {
     use \Tatter\Relations\Traits\EntityTrait;
-    use \Adnduweb\Admin\Traits\BuilderEntityTrait;
+    use \Adnduweb\Ci4Admin\Traits\BuilderEntityTrait;
     protected $table          = 'tabs';
     protected $tableLang      = 'tabs_langs';
     protected $primaryKey     = 'id';

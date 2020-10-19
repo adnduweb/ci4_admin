@@ -1,6 +1,6 @@
 <?php
 
-namespace Adnduweb\Admin\Entities;
+namespace Adnduweb\Ci4Admin\Entities;
 
 use Michalsn\Uuid\UuidEntity;
 

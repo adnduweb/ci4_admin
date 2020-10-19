@@ -1,11 +1,11 @@
 <?php
 
-namespace Adnduweb\Admin\Authentication\Passwords;
+namespace Adnduweb\Ci4Admin\Authentication\Passwords;
 
 use CodeIgniter\Entity;
 use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use Adnduweb\Admin\Exceptions\AuthException;
+use Adnduweb\Ci4Admin\Exceptions\AuthException;
 
 /**
  * Class PwnedValidator
@@ -17,7 +17,7 @@ use Adnduweb\Admin\Exceptions\AuthException;
  * NIST recommend to check passwords against those obtained from previous data breaches.
  * @see https://pages.nist.gov/800-63-3/sp800-63b.html#sec5
  *
- * @package Adnduweb\Admin\Authentication\Passwords\Validators
+ * @package Adnduweb\Ci4Admin\Authentication\Passwords\Validators
  */
 class PwnedValidator extends BaseValidator implements ValidatorInterface
 {

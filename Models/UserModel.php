@@ -1,14 +1,14 @@
 <?php
 
-namespace Adnduweb\Admin\Models;
+namespace Adnduweb\Ci4Admin\Models;
 
 use Michalsn\Uuid\UuidModel;
-use Adnduweb\Admin\Entities\User;
+use Adnduweb\Ci4Admin\Entities\User;
 
 
 class UserModel extends UuidModel
 {
-    use \Tatter\Relations\Traits\ModelTrait, \Adnduweb\Ci4_logs\Traits\AuditsTrait, \Adnduweb\Admin\Models\BaseModel;
+    use \Tatter\Relations\Traits\ModelTrait, \Adnduweb\Ci4_logs\Traits\AuditsTrait, \Adnduweb\Ci4Admin\Models\BaseModel;
 
     protected $afterInsert = ['auditInsert'];
     protected $afterUpdate = ['auditUpdate'];

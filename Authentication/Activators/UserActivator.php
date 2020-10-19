@@ -1,7 +1,7 @@
-<?php namespace Adnduweb\Admin\Authentication\Activators;
+<?php namespace Adnduweb\Ci4Admin\Authentication\Activators;
 
-use Adnduweb\Admin\Config\Auth;
-use Adnduweb\Admin\Entities\User;
+use Adnduweb\Ci4Admin\Config\Auth;
+use Adnduweb\Ci4Admin\Entities\User;
 
 class UserActivator
 {
