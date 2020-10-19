@@ -2,13 +2,14 @@
 {
     "name": "adnduweb/ci4_admin",
     "license": "MIT",
+    "description": "An Example of CodeIgniter 4 Admin module",
     "autoload": {
         "psr-4": {
             "Adnduweb\\Admin\\" : ""
         }
     },
     "require": {
-        "myth/auth": "^1.0@beta",
+        "adnduweb/ci4_core": "*"
     }
 }
 

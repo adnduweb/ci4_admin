@@ -8,7 +8,7 @@ use Adnduweb\Admin\Models\LanguageModel;
 use Adnduweb\Admin\Models\CurrencyModel;
 use Adnduweb\Admin\Models\CountryModel;
 use Adnduweb\Admin\Models\TabModel;
-use Myth\Auth\Entities\User;
+use Adnduweb\Admin\Entities\User;
 use Adnduweb\Admin\Models\UserModel;
 use Adnduweb\Admin\Models\CompanyModel;
 use Adnduweb\Ci4_settings\Models\SettingModel;

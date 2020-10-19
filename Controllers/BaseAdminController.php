@@ -119,7 +119,6 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         $this->validation   = service('validation');
         $this->db           = Database::connect();
 
-
         // Arguments to be used in the callback remap
         $segments = $request->uri->getSegments();
         switch ($segments[0]) {

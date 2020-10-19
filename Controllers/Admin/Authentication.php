@@ -5,7 +5,7 @@ namespace Adnduweb\Admin\Controllers\Admin;
 use Config\Email;
 use Config\Services;
 use Adnduweb\Admin\Entities\User;
-use Myth\Auth\Models\UserModel;
+use Adnduweb\Admin\Models\UserModel;
 use CodeIgniter\API\ResponseTrait;
 
 class Authentication extends \Adnduweb\Admin\Controllers\BaseAdminController
@@ -18,7 +18,7 @@ class Authentication extends \Adnduweb\Admin\Controllers\BaseAdminController
     protected $page = 'login-back-off';
 
     /**
-	    /**
+	 *
      * An array of helpers to be loaded automatically upon
      * class instantiation. These helpers will be available
      * to all other controllers that extend BaseController.
@@ -26,7 +26,7 @@ class Authentication extends \Adnduweb\Admin\Controllers\BaseAdminController
      * @var array
      */
     //protected $helpers = ['auth', 'inflector', 'html', 'common', 'form', 'url'];
-    protected $helpers = ['form', 'date', 'detect'];
+    protected $helpers = ['form', 'date', 'Adnduweb\Helpers\detect', 'Adnduweb\Helpers\url'];
 
 
     /**
@@ -65,7 +65,7 @@ class Authentication extends \Adnduweb\Admin\Controllers\BaseAdminController
             return redirect()->to($redirectURL);
         }
 
-       return view('/admin/themes/'. $this->setting->setting_theme_admin.'/templates/authentication/index', ['config' => $this->config, 'data' => $this->data]);
+       return view('Adnduweb\Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\index', ['config' => $this->config, 'data' => $this->data]);
     }
 
     /**
