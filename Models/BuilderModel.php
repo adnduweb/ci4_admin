@@ -8,7 +8,7 @@ use Adnduweb\Ci4Admin\Entities\Builder;
 class BuilderModel extends Model
 {
     use \Tatter\Relations\Traits\ModelTrait;
-    use \Adnduweb\Ci4_logs\Traits\AuditsTrait;
+    use \Adnduweb\Ci4Core\Traits\AuditsTrait;
     protected $afterInsert        = ['auditInsert'];
     protected $afterUpdate        = ['auditUpdate'];
     protected $afterDelete        = ['auditDelete'];

@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class LanguageModel extends Model
 {
-	use \Adnduweb\Ci4_logs\Traits\AuditsTrait;
+	use \Adnduweb\Ci4Core\Traits\AuditsTrait;
 	protected $afterInsert = ['auditInsert'];
 	protected $afterUpdate = ['auditUpdate'];
 	protected $afterDelete = ['auditDelete'];

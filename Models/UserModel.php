@@ -8,7 +8,7 @@ use Adnduweb\Ci4Admin\Entities\User;
 
 class UserModel extends UuidModel
 {
-    use \Tatter\Relations\Traits\ModelTrait, \Adnduweb\Ci4_logs\Traits\AuditsTrait, \Adnduweb\Ci4Admin\Models\BaseModel;
+    use \Tatter\Relations\Traits\ModelTrait, \Adnduweb\Ci4Traits\AuditsTrait, \Adnduweb\Ci4Admin\Models\BaseModel;
 
     protected $afterInsert = ['auditInsert'];
     protected $afterUpdate = ['auditUpdate'];

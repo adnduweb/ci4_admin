@@ -12,7 +12,7 @@ use Adnduweb\Ci4Admin\Entities\User;
 use Adnduweb\Ci4Admin\Models\UserModel;
 use Adnduweb\Ci4Admin\Models\CompanyModel;
 use Adnduweb\Ci4_settings\Models\SettingModel;
-use Adnduweb\Ci4_logs\Models\AuditModel;
+use Adnduweb\Ci4Core\Models\AuditModel;
 use joshtronic\LoremIpsum;
 
 class InitialAppSeeder extends \CodeIgniter\Database\Seeder

@@ -7,7 +7,7 @@ use Michalsn\Uuid\UuidModel;
 
 class CompanyModel extends UuidModel
 {
-    use \Tatter\Relations\Traits\ModelTrait, \Adnduweb\Ci4_logs\Traits\AuditsTrait, \Adnduweb\Ci4Admin\Models\BaseModel;
+    use \Tatter\Relations\Traits\ModelTrait, \Adnduweb\Ci4Core\Traits\AuditsTrait, \Adnduweb\Ci4Admin\Models\BaseModel;
 
     protected $afterInsert = ['auditInsert'];
     protected $afterUpdate = ['auditUpdate'];
