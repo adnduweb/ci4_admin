@@ -1,4 +1,6 @@
-<?php namespace Adnduweb\Ci4Admin\Config;
+<?php 
+
+namespace Adnduweb\Ci4Admin\Config;
 
 use CodeIgniter\Config\BaseConfig;
 
@@ -135,7 +137,7 @@ class Auth extends BaseConfig
      *
      * @var bool
      */
-    public $allowRegistration = true;
+    public $allowRegistration = false;
 
     /**
      * --------------------------------------------------------------------

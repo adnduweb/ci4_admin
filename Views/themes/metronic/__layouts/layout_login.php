@@ -141,7 +141,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme; ?>
         <script src="<?= assetAdmin($script); ?>" type="text/javascript"></script>
     <?php } ?>
     <!-- <script src="<?= assetAdmin('/js/pages/custom/login/login-4.js'); ?>" type="text/javascript"></script> -->
-    <script src="admin/themes/Theme/resources/Theme/js/pages/custom/login/login-4.js" type="text/javascript"></script>
+    <script src="admin/themes/metronic/resources/metronic/js/pages/custom/login/login-4.js" type="text/javascript"></script>
 
     <!--begin::Lang Skins(used by all pages) -->
     <script src=<?= assetAdmin("/js/language/lang_" . service('request')->getLocale() . ".js"); ?> type="text/javascript"></script>

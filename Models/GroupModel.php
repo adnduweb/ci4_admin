@@ -55,6 +55,7 @@ class GroupModel extends Model
     public function addUserToGroup(int $userId, int $groupId)
     {
         cache()->delete("{$userId}_groups");
+        cache()->delete("{$userId}_permissions");
 
         $data = [
             'user_id'   => (int) $userId,
@@ -78,6 +79,8 @@ class GroupModel extends Model
     public function removeUserFromGroup(int $userId, $groupId)
     {
         cache()->delete("{$userId}_groups");
+        cache()->delete("{$userId}_permissions");
+
 
         return $this->db->table('auth_groups_users')
             ->where([
@@ -96,6 +99,7 @@ class GroupModel extends Model
     public function removeUserFromAllGroups(int $userId)
     {
         cache()->delete("{$userId}_groups");
+        cache()->delete("{$userId}_permissions");
 
         return $this->db->table('auth_groups_users')
             ->where('user_id', (int) $userId)
@@ -111,8 +115,6 @@ class GroupModel extends Model
      */
     public function getGroupsForUser(int $userId)
     {
-
-
         if (!$found = cache("{$userId}_groups")) {
             $found = $this->builder()
                 ->select('auth_groups_users.*, auth_groups.name, auth_groups.description, auth_groups.login_destination')
@@ -154,6 +156,38 @@ class GroupModel extends Model
     //--------------------------------------------------------------------
     // Permissions
     //--------------------------------------------------------------------
+
+     /**
+     * Gets all permissions for a group in a way that can be
+     * easily used to check against:
+     *
+     * [
+     *  id => name,
+     *  id => name
+     * ]
+     *
+     * @param int $groupId
+     *
+     * @return array
+     */
+    public function getPermissionsForGroup(int $groupId): array
+    {
+        $permissionModel = model(PermissionModel::class);
+        $fromGroup = $permissionModel
+            ->select('auth_permissions.*')
+            ->join('auth_groups_permissions', 'auth_groups_permissions.permission_id = auth_permissions.id', 'inner')
+            ->where('group_id', $groupId)
+            ->findAll();
+
+        $found = [];
+        foreach ($fromGroup as $permission)
+        {
+            $found[$permission['id']] = $permission;
+        }
+
+        return $found;
+    }
+
 
     /**
      * Add a single permission to a single group, by IDs.

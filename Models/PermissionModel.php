@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class PermissionModel extends Model
 {
-    use \Adnduweb\Ci4Core\Traits\AuditsTrait, \Adnduweb\Ci4Admin\Models\BaseModel;
+    use \Adnduweb\Ci4Core\Traits\AuditsTrait, \Adnduweb\Ci4Core\Models\BaseModel;
     protected $afterInsert = ['auditInsert'];
     protected $afterUpdate = ['auditUpdate'];
     protected $afterDelete = ['auditDelete'];

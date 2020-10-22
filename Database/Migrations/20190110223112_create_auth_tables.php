@@ -11,6 +11,13 @@ class CreateAuthTables extends Migration
          */
         $this->forge->addField([
             'id'               => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
+            'uuid'             => ['type' => 'BINARY', 'constraint' => 16, 'unique' => true],
+            'company_id'       => ['type' => 'INT', 'constraint' => 16, 'default' => 1],
+            'lang'             => ['type' => 'VARCHAR',  'constraint' => 255, 'default' => 1],
+            'id_country'       => ['type' => 'INT',  'constraint' => 11, 'default' => 1],
+            'lastname'         => ['type' => 'VARCHAR',  'constraint' => 255],
+            'firstname'        => ['type' => 'VARCHAR',  'constraint' => 255],
+            'fonction'         => ['type' => 'VARCHAR',  'constraint' => 255],
             'email'            => ['type' => 'varchar', 'constraint' => 255],
             'username'         => ['type' => 'varchar', 'constraint' => 30, 'null' => true],
             'password_hash'    => ['type' => 'varchar', 'constraint' => 255],
@@ -22,6 +29,9 @@ class CreateAuthTables extends Migration
             'status_message'   => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
             'active'           => ['type' => 'tinyint', 'constraint' => 1, 'null' => 0, 'default' => 0],
             'force_pass_reset' => ['type' => 'tinyint', 'constraint' => 1, 'null' => 0, 'default' => 0],
+            'phone'            => ['type' => 'VARCHAR',  'constraint' => 255],
+            'phone_mobile'     => ['type' => 'VARCHAR',  'constraint' => 255],
+            'is_principal'     => ['type' => 'INT', 'constraint' => 11,  'default' => 0],
             'created_at'       => ['type' => 'datetime', 'null' => true],
             'updated_at'       => ['type' => 'datetime', 'null' => true],
             'deleted_at'       => ['type' => 'datetime', 'null' => true],
@@ -39,8 +49,9 @@ class CreateAuthTables extends Migration
         $this->forge->addField([
             'id'         => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'ip_address' => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
+            'agent'      => ['type' => 'VARCHAR',  'constraint' => 255],
             'email'      => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
-            'user_id'    => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'null' => true], // Only for successful logins
+            'user_id'    => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'null' => true],             // Only for successful logins
             'date'       => ['type' => 'datetime'],
             'success'    => ['type' => 'tinyint', 'constraint' => 1],
         ]);
@@ -97,9 +108,14 @@ class CreateAuthTables extends Migration
          * Groups Table
          */
         $fields = [
-            'id'          => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
-            'name'        => ['type' => 'varchar', 'constraint' => 255],
-            'description' => ['type' => 'varchar', 'constraint' => 255],
+            'id'                => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
+            'name'              => ['type' => 'varchar', 'constraint' => 255],
+            'description'       => ['type' => 'varchar', 'constraint' => 255],
+            'login_destination' => ['type' => 'VARCHAR', 'constraint' => 255],
+            'is_hide'           => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
+            'created_at'        => ['type' => 'DATETIME', 'null' => true],
+            'updated_at'        => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at'        => ['type' => 'datetime', 'null' => true],
         ];
 
         $this->forge->addField($fields);
@@ -113,6 +129,7 @@ class CreateAuthTables extends Migration
             'id'          => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'name'        => ['type' => 'varchar', 'constraint' => 255],
             'description' => ['type' => 'varchar', 'constraint' => 255],
+            'is_natif'    => ['type' => 'INT', 'constraint' => 11, 'default' => 0]
         ];
 
         $this->forge->addField($fields);

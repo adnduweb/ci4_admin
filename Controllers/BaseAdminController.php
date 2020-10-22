@@ -142,10 +142,12 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             $this->request->uri->getSegment(1) . '/' . $this->request->uri->getSegment(2);
         }
 
-
-
-
     }
+
+    protected function _render(string $view, array $data = [])
+	{
+		return view($view, $data);
+	}
 
 
     /**

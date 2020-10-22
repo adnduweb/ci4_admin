@@ -146,7 +146,7 @@ class User extends UuidEntity
      */
     public function isActivated(): bool
     {
-        return isset($this->attributes['active']) && $this->attributes['active'] === true;
+        return isset($this->attributes['active']) && $this->attributes['active'] == true;
     }
 
     /**
@@ -244,7 +244,7 @@ class User extends UuidEntity
         $this->attributes['auth_groups_users'] = $this->auth_groups_users;
         if (!empty($this->attributes['auth_groups_users'])) {
             foreach ($this->attributes['auth_groups_users'] as &$auth_groups_users) {
-                $auth_groups_users->group =  (new \App\Models\GroupModel())->getGroupById($auth_groups_users->group_id);
+                $auth_groups_users->group =  (new \Adnduweb\Ci4Admin\Models\GroupModel())->getGroupById($auth_groups_users->group_id);
             }
         }
 

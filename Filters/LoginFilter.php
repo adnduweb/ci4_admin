@@ -35,17 +35,24 @@ class LoginFilter implements FilterInterface
 			->stripQuery('token');
 
 		// Make sure this isn't already a login route
-		if (in_array((string)$current, [route_to('login'), route_to('forgot'), route_to('reset-password'), route_to('register'), route_to('activate-account')]))
+		if (in_array((string)$current, [route_to('login-area'), route_to('forgot-password'), route_to('reset-password'), route_to('register'), route_to('activate-account')]))
 		{
 			return;
 		}
+
+		// Resend Account Activation
+		if ('/' .$request->uri->getPath() == route_to('resend-activate-account'))
+		{
+			return;
+		}
+
 
 		// if no user is logged in then send to the login form
 		$authenticate = Services::authentication();
 		if (! $authenticate->check())
 		{
 			session()->set('redirect_url', current_url());
-			return redirect('login');
+			return redirect('/' . env('app.areaAdmin') . '/login');
 		}
 	}
 

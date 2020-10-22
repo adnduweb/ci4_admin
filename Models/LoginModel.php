@@ -1,4 +1,6 @@
-<?php namespace Adnduweb\Ci4Admin\Models;
+<?php 
+
+namespace Adnduweb\Ci4Admin\Models;
 
 use CodeIgniter\Model;
 

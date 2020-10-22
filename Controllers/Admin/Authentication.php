@@ -99,7 +99,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             // Try to log them in...
             if (!$this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
                 $throttler = \Config\Services::throttler();
-                if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false) {
+                if ($throttler->check($this->request->getIPAddress(), 5, MINUTE) === false) {
                     $response = [
                         'token' => csrf_hash(),
                         'error' => true,
@@ -123,7 +123,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                     csrf_token() => csrf_hash(),
                     'status' => "success",
                     'message' => lang('Auth.loginSuccess'),
-                    'redirect' => '/' . env('CI_SITE_AREA') . '/change-pass'
+                    'redirect' => '/' . env('app.areaAdmin') . '/change-pass'
 
                 ];
                 return $this->respond($response);
@@ -157,13 +157,13 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             }
 
             // ON récupére le groupe principal
-            $groupModel = new Adnduweb\Ci4Admin\GroupModel();
+            $groupModel = new \Adnduweb\Ci4Admin\Models\GroupModel(); 
             $getGroupsForUser = $groupModel->getGroupsForUser($this->auth->user()->id);
             if (empty($getGroupsForUser[0]['login_destination']))
                 $getGroupsForUser[0]['login_destination'] = 'dashboard';
 
 
-            $redirectURL = session('previous_page') ?? '/' . env('CI_SITE_AREA') . '/' . $getGroupsForUser[0]['login_destination'];;
+            $redirectURL = session('previous_page') ?? '/' . env('app.areaAdmin') . '/' . $getGroupsForUser[0]['login_destination'];;
             unset($_SESSION['previous_page']);
             $response = [
                 csrf_token() => csrf_hash(),
@@ -185,7 +185,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             $this->auth->logout();
         }
 
-        return redirect()->to('/' . env('CI_SITE_AREA'));
+        return redirect()->to('/' . env('app.areaAdmin'));
     }
 
     //--------------------------------------------------------------------
@@ -302,7 +302,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 csrf_token() => csrf_hash(),
                 'status' => "success",
                 'message' => lang('Auth.forgotEmailSent'),
-                'redirect' => '/' . env('CI_SITE_AREA') . '/reset-password'
+                'redirect' => '/' . env('app.areaAdmin') . '/reset-password'
             ];
             //return redirect()->route('reset-password')->with('message', lang('Auth.forgotEmailSent'));
             return $this->respond($response);
@@ -391,7 +391,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 csrf_token() => csrf_hash(),
                 'status' => "success",
                 'message' => lang('Auth.resetSuccess'),
-                'redirect' => '/' . env('CI_SITE_AREA')
+                'redirect' => '/' . env('app.areaAdmin')
             ];
             return $this->respond($response);
         }
@@ -433,8 +433,169 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 $user->password         = $this->request->getPost('password');
                 $user->force_pass_reset = '0';
                 $users->save($user);
-                return $this->respond([csrf_token() => csrf_hash(), 'error' => false, 'message' => lang('Auth.passwordChangeSuccess'), 'redirect' => '/' . env('CI_SITE_AREA') . '/dashboard']);
+                return $this->respond([csrf_token() => csrf_hash(), 'error' => false, 'message' => lang('Auth.passwordChangeSuccess'), 'redirect' => '/' . env('app.areaAdmin') . '/dashboard']);
             }
         }
     }
+
+    /**
+	 * Activate account.
+	 *
+	 * @return mixed
+	 */
+	public function activateAccount()
+	{
+        if ($this->request->isAJAX()) {
+            $users = model('UserModel');
+
+            // First things first - log the activation attempt.
+            $users->logActivationAttempt(
+                $this->request->getGet('token'),
+                $this->request->getIPAddress(),
+                (string) $this->request->getUserAgent()
+            );
+
+            $throttler = service('throttler');
+
+            if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false) {
+                return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
+            }
+
+            $user = $users->where('activate_hash', $this->request->getGet('token'))
+                      ->where('active', 0)
+                      ->first();
+
+            if (is_null($user)) {
+                return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+            }
+
+            $user->activate();
+
+            $users->save($user);
+
+            return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
+        }
+	}
+
+	/**
+	 * Resend activation account.
+	 *
+	 * @return mixed
+	 */
+	public function resendActivateAccount()
+	{
+		if ($this->config->requireActivation === false)
+		{
+			return redirect()->route('login-area');
+		}
+
+		$throttler = service('throttler');
+
+		if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false)
+		{
+			return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
+		}
+
+		$login = urldecode($this->request->getGet('login'));
+		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+		$users = model('UserModel');
+
+		$user = $users->where($type, $login)
+					  ->where('active', 0)
+					  ->first();
+
+		if (is_null($user))
+		{
+			return redirect()->route('login-area')->with('error', lang('Auth.activationNoUser'));
+		}
+
+		$activator = service('activator');
+		$sent = $activator->send($user);
+
+		if (! $sent)
+		{
+			return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
+		}
+
+		// Success!
+		return redirect()->route('login-area')->with('message', lang('Auth.activationSuccess'));
+
+    }
+    
+    // /**
+	//  * Resend activation account.
+	//  *
+	//  * @return mixed
+	//  */
+	// public function resendActivateAccount()
+	// {
+    //     if ($this->request->isAJAX()) {
+    //         if ($this->config->requireActivation === false) {
+    //             return redirect()->route('login');
+    //         }
+
+    //         // $throttler = service('throttler');
+
+    //         // if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false) {
+    //         //     return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
+    //         // }
+
+    //         $throttler =  service('throttler');
+    //         if ($throttler->check($this->request->getIPAddress(), 5, MINUTE) === false) {
+    //             $response = [
+    //                 'token' => csrf_hash(),
+    //                 'error' => true,
+    //                 'message' => lang('Auth.tooManyRequests', [$throttler->getTokentime()])
+
+    //             ];
+    //             return $this->respond($response, 429);
+    //         }
+
+
+    //         $login = urldecode($this->request->getGet('login'));
+    //         $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+    //         $users = model('UserModel');
+
+    //         $user = $users->where($type, $login)
+    //                   ->where('active', 0)
+    //                   ->first();
+
+    //         if (is_null($user)) {
+    //             //return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+    //             $response = [
+    //                 csrf_token() => csrf_hash(),
+    //                 'error' => true,
+    //                 'message' =>  lang('Auth.activationNoUser'),
+    //             ];
+    //             return $this->respond($response);
+    //         }
+
+    //         $activator = service('activator');
+    //         $sent = $activator->send($user);
+
+    //         if (! $sent) {
+    //             //return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
+    //             $response = [
+    //                 csrf_token() => csrf_hash(),
+    //                 'error' => true,
+    //                 'message' =>  $activator->error() ?? lang('Auth.unknownError'),
+    //             ];
+    //             return $this->respond($response);
+    //         }
+
+    //         // Success!
+    //         //return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+    //         $response = [
+    //             csrf_token() => csrf_hash(),
+    //             'status' => "success",
+    //             'message' => lang('Auth.activationSuccess'),
+    //             'redirect' => '/' . env('app.areaAdmin')
+    //         ];
+    //         return $this->respond($response);
+    //     }
+
+
+
 }

@@ -17,6 +17,9 @@
 
                     <!--begin::Signin-->
                     <div class="login-form">
+
+                    <?= view('Adnduweb\Ci4Admin\themes\metronic\__partials\message_block') ?>
+
                         <!--begin::Form-->
                         <?= form_open('', ['id' => 'kt_login_singin_form', 'class' => 'form form-login']); ?>
                         <!--begin::Title-->
