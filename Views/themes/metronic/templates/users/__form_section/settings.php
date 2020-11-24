@@ -91,7 +91,7 @@
 
                 <div class="kt-list-timeline" style="padding:25px;">
                     <div class="kt-list-timeline__items">
-                        <?= $this->include('/admin/themes/metronic/controllers/users/__partials/lastconnexion') ?>
+                        <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\templates\users\__partials\lastconnexion') ?>
                     </div>
                 </div>
 
@@ -111,7 +111,7 @@
 
                 <div class="kt-list-timeline" style="padding:25px;">
                     <div class="">
-                        <?= $this->include('/admin/themes/metronic/controllers/users/__partials/session_encours') ?>
+                        <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\templates\users\__partials\session_encours') ?>
                     </div>
                 </div>
 

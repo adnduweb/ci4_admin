@@ -1,28 +1,29 @@
 <?php
 
-use \App\Libraries\Metronic;
+use \Adnduweb\Ci4Admin\Libraries\Theme; 
 
 ?>
 
 <link rel="shortcut icon" href="<?= assetAdmin('/favicons/favicon.ico'); ?>" />
 
 <!-- Fonts -->
-<?= Metronic::getGoogleFontsInclude(); ?>
+<?= Theme::getGoogleFontsInclude(); ?>
 <!--end::Fonts -->
-<link href="<?= assetAdmin('/css/app.css'); ?>" rel="stylesheet" type="text/css" />
+
 <!--begin::Page Vendors Styles(used by this page) -->
 <link href="<?= assetAdmin('/plugins/custom/fullcalendar/fullcalendar.bundle.css'); ?>" rel="stylesheet" type="text/css" />
 
 <!-- Global Theme Styles (used by all pages) -->
-<?php foreach (Config('Metronic')->layout['resources']['css'] as $style) { ?>
-    <link href="<?= assetAdmin($style); ?>" rel="stylesheet" type="text/css" />
+<?php foreach (Config('Theme')->layout['resources']['css'] as $style) { ?>
+<link href="<?= assetAdmin($style); ?>" rel="stylesheet" type="text/css" />
 <?php } ?>
 
 <!-- Layout Themes (used by all pages) -->
-<?php foreach (Metronic::initThemes() as $theme) { ?>
-    <link href="<?= (Config('Metronic')->layout['self']['rtl']) ? assetAdmin(Metronic::rtlCssPath($theme)) : assetAdmin($theme); ?>" rel="stylesheet" type="text/css" />
+<?php foreach (Theme::initThemes() as $theme) { ?>
+<link href="<?= (Config('Theme')->layout['self']['rtl']) ? assetAdmin(Theme::rtlCssPath($theme)) : assetAdmin($theme); ?>" rel="stylesheet" type="text/css" />
 <?php } ?>
 
 <!-- <link href="<?= assetAdmin('/css/custom.css'); ?>" rel="stylesheet" type="text/css" /> -->
+<link href="<?= assetAdmin('/css/app.css'); ?>" rel="stylesheet" type="text/css" />
 
-<?= $this->include('/admin/themes/' . $theme_admin . '/__partials/js_params') ?>
+<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\js_params') ?>

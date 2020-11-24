@@ -30,6 +30,21 @@ if (! function_exists('user'))
 	}
 }
 
+if (!function_exists('company')) {
+	/**
+	 * Returns the User instance for the current logged in user.
+	 *
+	 * @return \Adnduweb\Ci4Admin\Entities\Company|null
+	 */
+	function company()
+	{
+		$authenticate = Services::authentication();
+		$authenticate->check();
+		return $authenticate->company();
+	}
+}
+
+
 if (! function_exists('user_id'))
 {
 	/**
@@ -76,6 +91,37 @@ if (! function_exists('in_groups'))
 	}
 }
 
+
+if (!function_exists('inGroups')) {
+	/**
+	 * Ensures that the current user is in at least one of the passed in
+	 * groups. The groups can be passed in as either ID's or group names.
+	 * You can pass either a single item or an array of items.
+	 *
+	 * Example:
+	 *  in_groups([1, 2, 3]);
+	 *  in_groups(14);
+	 *  in_groups('admins');
+	 *  in_groups( ['admins', 'moderators'] );
+	 *
+	 * @param mixed  $groups
+	 *
+	 * @return bool
+	 */
+	function inGroups($groups, $id): bool
+	{
+		$authenticate = Services::authentication();
+		$authorize    = Services::authorization();
+
+		if ($authenticate->check()) {
+			return $authorize->inGroup($groups, $id);
+		}
+
+		return false;
+	}
+}
+
+
 if (! function_exists('has_permission'))
 {
 	/**
@@ -93,7 +139,12 @@ if (! function_exists('has_permission'))
 
         if ($authenticate->check())
         {
-            return $authorize->hasPermission($permission, $authenticate->id()) ?? false;
+			// SI je suis un Super User j'ai acès à tous
+			if (inGroups(1, $authenticate->id())) {
+				return true;
+			} else {
+				return $authorize->hasPermission($permission, $authenticate->id()) ?? false;
+			}
         }
 
         return false;

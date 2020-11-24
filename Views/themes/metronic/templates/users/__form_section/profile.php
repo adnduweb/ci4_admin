@@ -45,19 +45,18 @@
         <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
     </div>
 </div>
-<?php if (isset($form->id)) { ?>
     <div class="form-group row">
         <label for="username" class="col-xl-3 col-lg-3 col-form-label">
             <span data-skin="dark" data-toggle="tooltip" title="" data-html="true" data-content="" data-original-title="<b>Info</b><br><?= lang('Core.username_form_tooltip_info'); ?>">
-                <i class="flaticon2-help"></i> <?= ucfirst(lang('Core.username')); ?>* :
+                <i class="icon-1x text-dark-50 flaticon2-help"></i> <?= ucfirst(lang('Core.username')); ?>* :
             </span>
         </label>
         <div class="col-lg-9 col-xl-6">
-            <input class="form-control" disabled required type="text" value="<?= $form->username; ?>" name="username" id="username">
+            <input class="form-control" readonly required type="text" value="<?= old('username') ? old('username') : $form->username; ?>" name="username" id="username">
             <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
         </div>
     </div>
-<?php } ?>
+
 <div class="form-group row">
     <label for="lastname" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.lastname')); ?>* : </label>
     <div class="col-lg-9 col-xl-6">
@@ -82,20 +81,19 @@
 </div>
 
 <div class="form-group row">
-    <label for="phone_mobile" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.phone_mobile')); ?>* : </label>
-    <div class="col-lg-9 col-xl-6">
-        <input class="form-control " required type="tel" value="<?= old('full_phone_mobile') ? old('full_phone_mobile') : $form->phone_mobile; ?>" name="phone_mobile" id="mobile">
-        <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
-        <div class="invalid-feedback-mobile" class="hide"></div>
-    </div>
-</div>
-
-<div class="form-group row">
     <label for="phone" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.phone')); ?> : </label>
     <div class="col-lg-9 col-xl-6">
-        <input class="form-control phone " type="tel" value="<?= old('full_phone') ? old('full_phone') : $form->phone; ?>" name="phone" id="phone">
+        <input class="form-control phone_international phone_fixe" type="tel" value="<?= old('phone') ? old('phone') : $form->phone; ?>" name="phone" id="phone">
         <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
         <div class="invalid-feedback-phone" class="hide"></div>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="phone_mobile" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.phone_mobile')); ?> : </label>
+    <div class="col-lg-9 col-xl-6">
+        <input class="form-control phone_international phone_mobile" type="tel" value="<?= old('phone_mobile') ? old('phone_mobile') : $form->phone_mobile; ?>" name="phone_mobile" id="phone_mobile">
+        <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
+        <div class="invalid-feedback-phone_mobile" class="hide"></div>
     </div>
 </div>
 
@@ -126,7 +124,7 @@
 
 
 <?php if (inGroups(1, user()->id)) { ?>
-    <?= $this->include('/admin/themes/metronic/controllers/users/__partials/form_group_sp') ?>
+    <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\templates\users\__partials\form_group_sp') ?>
 <?php } else { ?>
     <?php if (!inGroups(1, user()->id) && $action == 'add') { ?>
         <!-- <?= $this->include('/admin/themes/metronic/controllers/users/__partials/form_group') ?> -->
@@ -134,7 +132,7 @@
         <?php if (user()->id == $form->id) { ?>
             <?= form_hidden('id_group', explode(',', $id_group)); ?>
         <?php } else { ?>
-            <?= $this->include('/admin/themes/metronic/controllers/users/__partials/form_group') ?>
+            <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\templates\users\__partials\form_group') ?>
         <?php } ?>
     <?php } ?>
 <?php } ?>

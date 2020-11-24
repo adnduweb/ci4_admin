@@ -52,7 +52,8 @@ class LoginFilter implements FilterInterface
 		if (! $authenticate->check())
 		{
 			session()->set('redirect_url', current_url());
-			return redirect('/' . env('app.areaAdmin') . '/login');
+            session()->set('previous_page', $request->uri->getPath());
+			return redirect()->to(route_to('login-area'));
 		}
 	}
 

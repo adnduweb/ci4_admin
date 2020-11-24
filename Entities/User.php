@@ -10,7 +10,7 @@ class User extends UuidEntity
     use \Tatter\Relations\Traits\EntityTrait;
     protected $table      = 'users';
     protected $primaryKey = 'id';
-    protected $uuids = ['uuid'];
+    protected $uuids      = ['uuid'];
 
     protected $datamap = [];
 
@@ -250,4 +250,13 @@ class User extends UuidEntity
 
         return  $this->attributes['auth_groups_users'];
     }
+
+     /**
+     * Update With uuid
+     */
+    public function updateWithUUID($data, string $uuid)
+    {
+        return in_array(strtolower($permission), $this->getPermissions());
+    }
+
 }

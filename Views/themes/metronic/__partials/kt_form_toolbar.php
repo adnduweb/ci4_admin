@@ -28,7 +28,7 @@
                 <?php   } ?>
             <?php   } ?>
             <?php if (isset($toolbarBack) && $toolbarBack == true) { ?>
-                <a href="/<?= env('CI_AREA_ADMIN'); ?><?= $backPathController; ?>" class="btn btn-default font-weight-bolder btn-sm">
+                <a href="/<?= env('app.areaAdmin'); ?>/<?= $backPathController; ?>" class="btn btn-default font-weight-bolder btn-sm">
                     <?= ucfirst(lang('Core.back')); ?>
                 </a>
             <?php } ?>

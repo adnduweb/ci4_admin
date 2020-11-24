@@ -1,8 +1,6 @@
 <?php
 
-use \App\Libraries\Metronic;
-use App\Libraries\AssetsBO;
-use App\Libraries\Tools;
+use \Adnduweb\Ci4Admin\Libraries\Theme;
 
 ?>
 <script>
@@ -10,7 +8,7 @@ use App\Libraries\Tools;
 </script>
 <!-- begin::Global Config(global config for global JS sciprts) -->
 <script>
-	var KTAppSettings = <?= json_encode(config('Metronic')->layout['js'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>;
+	var KTAppSettings = <?= json_encode(config('Theme')->layout['js'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>;
 	var optionsPortlet = {
 		bodyToggleSpeed: 400,
 		tooltips: true,
@@ -35,16 +33,15 @@ use App\Libraries\Tools;
 <!-- end::Global Config -->
 
 <!-- Global Theme JS Bundle (used by all pages)  -->
-<?php foreach (Config('Metronic')->layout['resources']['js'] as $script) { ?>
-	<script type="text/javascript" src="<?= assetAdmin($script); ?>?v=<?= Config('Metronic')->version; ?>"></script>
-<?php } ?>
+<?php foreach (Config('Theme')->layout['resources']['js'] as $script) { ?>
+<script type="text/javascript" src="<?= assetAdmin($script); ?>?v=<?= Config('Theme')->version; ?>&t<?= filemtime(env('DOCUMENT_ROOT') . '/admin/themes/'.$theme_admin.'/assets/' . $script); ?>"></script>
+<?php } ?> 
 
 <!-- Global Theme JS Bundle (used by all pages)  -->
-<script type="text/javascript" src="<?= assetAdmin('/js/app.js'); ?>?v=<?= Config('App')->sp_version; ?>"></script>
+<script type="text/javascript" src="<?= assetAdmin('/js/app.js'); ?>?v=<?= Config('Theme')->version; ?>&t<?= filemtime(env('DOCUMENT_ROOT') . '/admin/themes/'.$theme_admin.'/assets/js/app.js'); ?>"></script>
 
-<?= AssetsBO::js(); ?>
-
-
-<?= Tools::message(); ?>
+<?= Theme::js(); ?>
+<?= Theme::message(); ?>
 <!--end::Page Scripts -->
+
 <?= $this->renderSection('extra-js') ?>

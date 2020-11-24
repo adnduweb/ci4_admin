@@ -2,18 +2,38 @@
 
 namespace Adnduweb\Ci4Admin\Controllers\Admin;
 
+use Adnduweb\Ci4Admin\Models\DashboardModel;
 
 class Dashboard extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 {
-    // public function __construct()
-    // {
-    //     parent::__construct();
-    // }
+
+    
+    /**
+     * name controller
+     */
+    public $controller = 'dashboard';
+
+         /**
+     * Localize slug
+     */
+    public $pathcontroller  = '/';
+
+    /**
+     * Localize slug
+     */
+    public $nameController  = '';
+
+    /**
+     * name model
+     */
+    public $tableModel = DashboardModel::class;
+
+
     public function index()
     {
       
-        $this->setTag('title', lang('Core.dashboard'));
-        return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\dashboard\index', $this->data);
+        //$this->setTag('title', lang('Core.dashboard'));
+        return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\dashboard\index', $this->viewData);
     }
 
     public function environment()

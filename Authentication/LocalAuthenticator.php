@@ -187,4 +187,38 @@ class LocalAuthenticator extends AuthenticationBase implements AuthenticatorInte
             : true;
     }
 
+    public function updateSessionUser($old_session, $new_session)
+    {
+        $db = \Config\Database::connect();
+        return $db->table('sessions_users')->set('session_id', $new_session)->where('session_id', $old_session)->update();
+    }
+
+    public function getSessionActive()
+    {
+        $ipAddress = Services::request()->getIPAddress();
+
+        $countSessionActive =[];
+        $db = \Config\Database::connect();
+        $sessions_users = $db->table('sessions_users')->where(['user_id' => $this->user->id, 'ip_address !=' => $ipAddress])->get()->getResult();
+
+        if (!empty($sessions_users)) 
+        {
+            $i = 0;
+            foreach ($sessions_users as $sessions_user)
+             {
+             
+                $sessionLib = $db->table('sessions')->select('ip_address, id, data')->where('id = "' . $sessions_user->session_id . '" AND id != "' . session_id() . '"')->get()->getRow();
+               
+                if (!empty($sessionLib)) {
+                    if (stristr($sessionLib->data, 'administrator_login') == true) {
+                        $countSessionActive[$sessions_user->session_id] = $sessions_user->ip_address;
+                    }
+                }
+                $i++;
+            }
+        }
+        
+        return $countSessionActive;
+    }
+
 }

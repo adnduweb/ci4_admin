@@ -27,7 +27,7 @@ helper('form');
                 <div class="col-lg-4 action" style="padding: 25px;">
                     <input type="hidden" value="<?= $v['info_bundlename']; ?>" name="file" />
                     <input type="hidden" value="<?= $v['info_lang']; ?>" name="lang" />
-                    <button type="submit" class="btn btnTextTranslate btn-outline-brand btn-elevate btn-circle btn-icon"><i class="flaticon2-check-mark"></i></button>
+                    <button type="submit" class="btn btnTextTranslate btn-outline-success btn-elevate btn-circle btn-icon"><i class="flaticon2-check-mark"></i></button>
                     <button type="button" class="btn btnTextDeleteTranslate btn-danger delete btn-elevate btn-circle btn-icon"><i class="flaticon2-trash"></i></button>
                 </div>
             </div>

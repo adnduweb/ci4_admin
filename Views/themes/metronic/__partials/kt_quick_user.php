@@ -56,7 +56,7 @@
             <!--begin::Nav-->
             <div class="navi navi-spacer-x-0 p-0">
                 <!--begin::Item-->
-                <a href="<?= CI_AREA_ADMIN; ?>/settings-advanced/users/edit/<?= $user_uuid; ?>" class="navi-item">
+                <a href="<?= CI_AREA_ADMIN; ?>/settings-advanced/users/edit/<?= user()->uuid; ?>" class="navi-item">
                     <div class="navi-link">
                         <div class="symbol symbol-40 bg-light mr-3">
                             <div class="symbol-label">

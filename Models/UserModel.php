@@ -14,9 +14,9 @@ class UserModel extends UuidModel
     protected $afterUpdate = ['auditUpdate'];
     protected $afterDelete = ['auditDelete'];
 
-    protected $table = 'users';
-    protected $with = ['auth_groups_users', 'auth_users_permissions', 'settings'];
-    protected $without = [];
+    protected $table      = 'users';
+    protected $with       = ['auth_groups_users', 'auth_users_permissions', 'settings'];
+    protected $without    = [];
     protected $primaryKey = 'id';
     protected $uuidFields = ['uuid'];
 
@@ -88,8 +88,14 @@ class UserModel extends UuidModel
         ]);
     }
 
-    public function getAllList($idcompany, int $page, int $perpage, array $sort, array $query)
+    public function getAllList(int $page, int $perpage, array $sort, array $query)
     {
+        if (inGroups(1, user()->id)) {
+            $company_id = false;
+        }else{
+            $company_id = user()->company_id;
+        }
+
         $this->builder->select();
         $this->builder->select('users.created_at as date_create_at');
 
@@ -101,7 +107,7 @@ class UserModel extends UuidModel
                 $getLike = $getLike . ',';
             $like = str_replace(',', ' LIKE "%' . trim($query[0]) . '%" OR ', $getLike);
 
-            if ($idcompany == false) {
+            if ($company_id == false) {
                 $like = '(' . $like . ') ';
                 $like = str_replace(' OR )', ')', $like);
                 $this->builder->where($like);
@@ -109,15 +115,15 @@ class UserModel extends UuidModel
             } else {
                 $like = ' AND (' . $like . ') ';
                 $like = str_replace(' OR )', ')', $like);
-                $this->builder->where('(company_id = ' . $idcompany . ' ' .$like.')  AND  id!= 1');
+                $this->builder->where('(company_id = ' . $company_id . ' ' .$like.')  AND  id!= 1');
             }
 
             $this->builder->limit(0, $page);
         } else {
-            if ($idcompany == false) {
+            if ($company_id == false) {
                 $this->builder->where('deleted_at IS NULL');
             } else {
-                $this->builder->where(['company_id' => $idcompany]);
+                $this->builder->where(['company_id' => $company_id]);
                 $this->builder->where('deleted_at IS NULL  AND  id!= 1');
             }
             $page = ($page == '1') ? '0' : (($page - 1) * $perpage);
@@ -137,7 +143,7 @@ class UserModel extends UuidModel
                 $this->auth_groups_users->where('user_id', $row->id);
                 $auth_groups_users = $this->auth_groups_users->get();
                 $row->group = $auth_groups_users->getResult();
-                if ($idcompany == true) {
+                if ($company_id == true) {
                     if (!empty($row->group)) {
                         foreach ($row->group as $group) {
                             if ($group->group_id == '1') {
@@ -157,8 +163,15 @@ class UserModel extends UuidModel
         return $usersRow;
     }
 
-    public function getAllCount($idcompany, array $sort, array $query)
+    public function getAllCount(array $sort, array $query)
     {
+        if (inGroups(1, user()->id)) {
+            $company_id = false;
+        }else{
+            $company_id = user()->company_id;
+        }
+        
+
         $this->builder->select('id');
          if (isset($query[0]) && is_array($query)) {
             // On recherche dans les colonnes
@@ -167,7 +180,7 @@ class UserModel extends UuidModel
                 $getLike = $getLike . ',';
             $like = str_replace(',', ' LIKE "%' . trim($query[0]) . '%" OR ', $getLike);
 
-            if ($idcompany == false) {
+            if ($company_id == false) {
                 $like = '(' . $like . ') ';
                 $like = str_replace(' OR )', ')', $like);
                 $this->builder->where($like);
@@ -175,14 +188,14 @@ class UserModel extends UuidModel
             } else {
                 $like = ' AND (' . $like . ') ';
                 $like = str_replace(' OR )', ')', $like);
-                $this->builder->where('(company_id = ' . $idcompany . ' ' .$like.')  AND  id!= 1');
+                $this->builder->where('(company_id = ' . $company_id . ' ' .$like.')  AND  id!= 1');
             }
-
+ 
         } else {
-            if ($idcompany == false) {
+            if ($company_id == false) {
                 $this->builder->where('deleted_at IS NULL');
             } else {
-                $this->builder->where(['company_id' => $idcompany]);
+                $this->builder->where(['company_id' => $company_id]);
                 $this->builder->where('deleted_at IS NULL AND  id!= 1');
             }
         }
@@ -199,7 +212,7 @@ class UserModel extends UuidModel
                 $this->auth_groups_users->where('user_id', $row->id);
                 $auth_groups_users = $this->auth_groups_users->get();
                 $row->group = $auth_groups_users->getResult();
-                if ($idcompany == true) {
+                if ($company_id == true) {
                     if (!empty($row->group)) {
                         foreach ($row->group as $group) {
                             if ($group->group_id == '1') {
@@ -271,12 +284,28 @@ class UserModel extends UuidModel
     {
         $this->db->table('sessions')->where('id', $sessionId)->delete();
     }
+ 
+    /**
+     * 
+     * 
+     */
+    public function getUserByUUID(string $uuid)
+    {
+        $uuid = $this->uuid->fromString($uuid)->getBytes();
+        $this->builder->where('uuid', $uuid);
+        $user = $this->builder->get()->getRowArray();
+        return new User($user);
+    }
 
+    /**
+     * 
+     * 
+     */
     public function getIdUserByUUID(string $uuid)
     {
         $uuid = $this->uuid->fromString($uuid)->getBytes();
         $this->builder->select('id');
         $this->builder->where('uuid', $uuid);
-        return $this->builder->get()->getRow();
+        return $this->builder->get()->getRow()->id;
     }
 }

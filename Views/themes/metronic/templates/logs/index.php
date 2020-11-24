@@ -1,10 +1,10 @@
-
-<?= $this->extend('/admin/themes/metronic/__layouts/layout_1') ?>
+<?= $this->extend('Adnduweb\Ci4Admin\themes\metronic\__layouts\layout_1') ?>
 <?= $this->section('main') ?>
 <!-- end:: Header -->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
-<?= $this->include('/admin/themes/metronic/controllers/logs/kt_list_toolbar') ?>
+    <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\templates\logs\kt_list_toolbar') ?>
 
+    <!-- begin:: Content -->
     <div id="ContentUsers" class="d-flex flex-column-fluid">
 
         <div class="container-fluid">
@@ -17,7 +17,7 @@
                         </div>
                         <?php if ($toolbarExport == true) { ?>
                             <div class="card-toolbar">
-                                <?= $this->include('/admin/themes/metronic/__partials/kt_export_data') ?>
+                                <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\__partials\kt_export_data') ?>
                             </div>
                         <?php } ?>
                     </div>
@@ -29,11 +29,11 @@
                 </div>
             </div>
         </div>
-
+ 
         <!--end::Portlet-->
 
         <!--begin::Modal-->
-        <?= $this->include('/admin/themes/metronic/__partials/kt_datatable_records_fetch_modal') ?>
+        <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\__partials\kt_datatable_records_fetch_modal') ?>
         <!--end::Modal-->
     </div>
 

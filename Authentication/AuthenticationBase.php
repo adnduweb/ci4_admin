@@ -17,6 +17,11 @@ class AuthenticationBase
     protected $user;
 
     /**
+     * @var Company
+     */
+    protected $company;
+
+    /**
      * @var Model
      */
     protected $userModel;
@@ -212,13 +217,27 @@ class AuthenticationBase
      */
     public function recordLoginAttempt(string $email, string $ipAddress=null, int $userID=null, bool $success)
     {
-        return $this->loginModel->insert([
+        // return $this->loginModel->insert([
+        //     'ip_address' => $ipAddress,
+        //     'agent' => service('request')->getUserAgent()->getAgentString(),
+        //     'email' => $email,
+        //     'user_id' => $userID,
+        //     'date' => date('Y-m-d H:i:s'),
+        //     'success' => (int)$success
+        // ]);
+        $loginModel = [
             'ip_address' => $ipAddress,
+            'agent' => Services::request()->getUserAgent()->getAgentString(),
             'email' => $email,
             'user_id' => $userID,
             'date' => date('Y-m-d H:i:s'),
-            'success' => (int)$success
-        ]);
+            'success' => (int) $success
+        ];
+        $db = \Config\Database::connect();
+        if ($db->table('auth_logins')->insert($loginModel) == true) {
+            return $db->insertID();
+        }
+        return  false;
     }
 
     /**
@@ -320,6 +339,17 @@ class AuthenticationBase
     public function user()
     {
         return $this->user;
+    }
+
+        /**
+     * Returns the User instance for the current logged in user.
+     *
+     * @return  \Adnduweb\Ci4Admin\Entities\Company|null
+     */
+    public function company()
+    {
+        $db = \Config\Database::connect();
+        return $db->table('companies')->where('id', $this->user->company_id)->get()->getRow();
     }
 
     /**

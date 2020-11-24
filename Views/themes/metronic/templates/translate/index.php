@@ -1,9 +1,8 @@
-<?= $this->extend('/admin/themes/metronic/__layouts/layout_1') ?>
+<?= $this->extend('Adnduweb\Ci4Admin\themes\metronic\__layouts\layout_1') ?>
 <?= $this->section('main') ?>
 <!-- end:: Header -->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
-
-<?= $this->include('/admin/themes/metronic/__partials/kt_list_toolbar') ?>
+    <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\__partials\kt_list_toolbar') ?>
 
 
 

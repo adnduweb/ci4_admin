@@ -1,12 +1,14 @@
-<?php
+<?php 
 
-use \App\Libraries\Theme; ?>
+use \Adnduweb\Ci4Admin\Libraries\Theme;
+
+?>
 <!DOCTYPE html>
 <html class="<?= $html; ?>" lang="<?= service('request')->getLocale(); ?>">
 
 <head>
-	<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/head') ?>
-	<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/css_global') ?>
+	<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\head') ?>
+	<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\css_global') ?>
 </head>
 
 
@@ -14,7 +16,7 @@ use \App\Libraries\Theme; ?>
 
 <body id="kt_body"  <?= Theme::printAttrs('body'); ?> <?= Theme::printClasses('body'); ?> >
 	<?php if (Config('Theme')->layout['page-loader']['type'] != ''){ ?>
-		<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/kt_page_loader') ?>
+		<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_page_loader') ?>
 	<?php } ?>
 
 	<!-- begin:: Page -->
@@ -64,32 +66,32 @@ use \App\Libraries\Theme; ?>
 
 			<!-- begin:: Aside -->
 			<!-- <div id="__partialsKtSide"> -->
-			<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/kt_aside') ?>
+			<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_aside'); //,['cache' => 300, 'cache_name' => 'kt_aside_' . user()->id]); ?>
 			<!-- </div> -->
 			<!-- end:: Aside -->
 
 			<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
 
 				<!-- begin:: Header -->
-				<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/kt_header') ?>
+				<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_header') ?>
 				<!-- end:: Header -->
 
 				<?= $this->renderSection('main') ?>
 
 				<!-- begin:: Footer -->
-				<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/kt_footer') ?>
+				<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_footer') ?>
 				<!-- end:: Footer -->
 			</div>
 		</div>
+		<!-- end:: Page -->
 	</div>
-	<!-- end:: Page -->
 
 	<!-- begin::Quick User -->
-	<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/kt_quick_user') ?>
+	<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_quick_user') ?>
 	<!-- end::Quick User -->
 
 	<!-- begin::Quick Panel -->
-	<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/kt_quick_panel') ?>
+	<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_quick_panel') ?>
 	<!-- end::Quick Panel -->
 
 	<!-- begin::Outils de gestion de média -->
@@ -106,7 +108,7 @@ use \App\Libraries\Theme; ?>
 	<div id="kt_modal_loading_wrapper"></div>
 	<!-- end::Modal -->
 
-	<?= $this->include('/admin/themes/'.$theme_admin.'/__partials/js_global') ?>
+	<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\js_global') ?>
 </body>
 
 <!-- end::Body -->

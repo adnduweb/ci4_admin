@@ -1,6 +1,6 @@
     <meta name="robots" content="noindex,nofollow">
     <meta charset="utf-8" />
-    <title><?= (isset($meta)) ? ucfirst($meta['title']) : ''; ?> | ADN DU Web</title>
+    <title><?= (isset($metatitle)) ? ucfirst($metatitle) : ''; ?> | ADN DU Web</title>
     <base href="<?php echo base_url(); ?>" />
     <meta name="description" content="Updates and statistics">
     <meta http-equiv="X-UA-Compatible" content="requiresActiveX=true" />

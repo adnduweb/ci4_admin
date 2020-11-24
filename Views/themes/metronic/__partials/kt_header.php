@@ -7,7 +7,7 @@
  			<!--begin::Header Menu-->
  			<div id="kt_header_menu" class="header-menu header-menu-mobile  header-menu-layout-default ">
  				<ul class="menu-nav ">
- 					<?php if (Service('Settings')->setting_activer_front == true) { ?>
+ 					<?php if (service('settings')->setting_activer_front == true) { ?>
 
  						<?php if (class_exists('\Adnduweb\Ci4_page\Controllers\Admin\AdminPageController')) { ?>
  							<li class="menu-item" aria-haspopup="true">
@@ -37,7 +37,7 @@
  							</a>
  						</li>
  						<li class="menu-item " aria-haspopup="true">
- 							<a href="<?= CI_AREA_ADMIN; ?>/settings-advanced/cache/deleteFront" class="menu-link btn btn-light-danger rede">
+ 							<a href="<?= CI_AREA_ADMIN; ?>/cache/deleteFront" class="menu-link btn btn-light-danger rede">
  								<i class="icon-md la la-database"></i>&nbsp;&nbsp;
  								<span class="menu-text"><?= ucfirst(lang('Core.delete_cache')); ?></span>
 
@@ -54,7 +54,7 @@
  		<!-- begin:: Header Topbar -->
  		<div class="topbar">
 
- 			<?php if (Service('Settings')->setting_activer_front == true) { ?>
+ 			<?php if (service('settings')->setting_activer_front == true) { ?>
  				<div class="dropdown">
  					<div class="topbar-item">
  						<a target="_blank" href="<?= base_url(); ?>" id="kt_quick_website" data-container="body" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?= lang('Core.accéder au site'); ?>">
@@ -115,13 +115,13 @@
  						<!--end: Head -->
  						<div class="tab-content">
  							<div class="tab-pane active show p-8" id="topbar_notifications_notifications" role="tabpanel">
- 								<?= view('/admin/themes/' . $theme_admin . '/__partials/notifications/alerts', []); ?>
+							 <?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\notifications\alerts', []); ?>
  							</div>
  							<div class="tab-pane p-8" id="topbar_notifications_events" role="tabpanel">
- 								<?= view('/admin/themes/' . $theme_admin . '/__partials/notifications/event', []); ?>
+							 <?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\notifications\event', []); ?>
  							</div>
  							<div class="tab-pane p-8" id="topbar_notifications_logs" role="tabpanel">
- 								<?= view('/admin/themes/' . $theme_admin . '/__partials/notifications/logs', []); ?>
+							 <?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\notifications\logs', []); ?>
 
  							</div>
  						</div>

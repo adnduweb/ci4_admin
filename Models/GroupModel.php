@@ -3,7 +3,7 @@
 namespace Adnduweb\Ci4Admin\Models;
 
 use CodeIgniter\Model;
-use App\Entities\Group;
+use  Adnduweb\Ci4Admin\Entities\Group;
 
 class GroupModel extends Model
 {
@@ -306,7 +306,7 @@ class GroupModel extends Model
     }
 
     public function getAllCount(array $sort, array $query)
-    {
+    { 
         $this->auth_groups->select('id');
         if (isset($query[0]) && is_array($query)) {
             $this->auth_groups->where('deleted_at IS NULL AND (name LIKE "%' . $query[0] . '%" OR login_destination LIKE "%' . $query[0] . '%")');

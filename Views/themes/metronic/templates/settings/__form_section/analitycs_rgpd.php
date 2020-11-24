@@ -1,10 +1,3 @@
-<!-- <div class="row">
-    <label class="col-xl-3"></label>
-    <div class="col-lg-9 col-xl-6">
-        <h3 class="kt-section__title kt-section__title-sm"><?= ucfirst(lang('Core.info_rgpd')); ?>:</h3>
-    </div>
-</div> -->
-
 <div class="kt-separator kt-separator--border-dashed kt-separator--portlet-fit kt-separator--space-lg"></div>
 
 <div class="form-group row">
@@ -14,7 +7,6 @@
     </div>
 </div>
 
-<?php $setting_supportedLocales = array_flip(json_decode($form->setting_supportedLocales)); ?>
 <?php foreach ($languages as $language) { ?>
     <div class="form-group row">
         <label for="setting_google_analitycs_<?= $language->iso_code; ?>_code" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.setting_google_analitycs_' . $language->iso_code . '_code')); ?>* : </label>

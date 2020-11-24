@@ -1,6 +1,5 @@
-<?= $this->extend('/admin/themes/metronic/__layouts/layout_1') ?>
+<?= $this->extend('Adnduweb\Ci4Admin\themes\metronic\__layouts\layout_1') ?>
 <?= $this->section('main') ?>
-
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 						<!--begin::Subheader-->

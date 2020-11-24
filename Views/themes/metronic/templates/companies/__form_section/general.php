@@ -28,7 +28,7 @@
 <div class="form-group row">
     <label for="login_destination" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.email')); ?> : </label>
     <div class="col-lg-9 col-xl-6">
-        <input class="form-control" type="email" value="<?= old('email') ? old('email') : $form->email; ?>" name="email" id="email">
+        <input class="form-control" required type="email" value="<?= old('email') ? old('email') : $form->email; ?>" name="email" id="email">
         <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
     </div>
 </div>
@@ -65,17 +65,17 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="telephone_fixe" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.telephone_fixe')); ?> : </label>
+    <label for="phone" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.telephone_fixe')); ?> : </label>
     <div class="col-lg-9 col-xl-6">
-        <input class="form-control phone_fixe" type="tel" value="<?= old('telephone_fixe') ? old('telephone_fixe') : $form->telephone_fixe; ?>" name="telephone_fixe" id="phone_fixe">
+        <input class="form-control phone_international phone_fixe" type="tel" value="<?= old('phone') ? old('phone') : $form->phone; ?>" name="phone" id="phone">
         <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
-        <div class="invalid-feedback-phone_fixe" class="hide"></div>
+        <div class="invalid-feedback-phone" class="hide"></div>
     </div>
 </div>
 <div class="form-group row">
-    <label for="telephone_mobile" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.telephone_mobile')); ?> : </label>
+    <label for="phone_mobile" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.telephone_mobile')); ?> : </label>
     <div class="col-lg-9 col-xl-6">
-        <input class="form-control phone_mobile" type="tel" value="<?= old('telephone_mobile') ? old('telephone_mobile') : $form->telephone_mobile; ?>" name="telephone_mobile" id="phone_mobile">
+        <input class="form-control phone_international phone_mobile" type="tel" value="<?= old('phone_mobile') ? old('phone_mobile') : $form->phone_mobile; ?>" name="phone_mobile" id="phone_mobile">
         <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
         <div class="invalid-feedback-phone_mobile" class="hide"></div>
     </div>

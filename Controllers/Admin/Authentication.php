@@ -12,6 +12,27 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 {
     use ResponseTrait;
 
+
+    /**
+     * name controller
+     */
+    public $controller = 'authentication';
+
+     /**
+     * Localize slug
+     */
+    public $pathcontroller  = '/';
+
+    /**
+     * Localize slug
+     */
+    public $nameController  = '';
+
+    /**
+     * name model
+     */
+    public $tableModel = UserModel::class;
+
      /**
 	 * @var Auth
 	 */
@@ -65,7 +86,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             return redirect()->to($redirectURL);
         }
 
-       return view('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\index', ['config' => $this->config, 'data' => $this->data]);
+       return view('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\index', ['config' => $this->config, 'data' => $this->viewData]);
     }
 
     /**
@@ -179,13 +200,13 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     /**
      * Log the user out.
      */
-    public function logout()
+    public function doLogout()
     {
         if ($this->auth->check()) {
             $this->auth->logout();
         }
 
-        return redirect()->to('/' . env('app.areaAdmin'));
+        return redirect()->to(route_to('login-area'));
     }
 
     //--------------------------------------------------------------------
@@ -250,7 +271,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function forgotPassword()
     {
         //return view($this->config->views['forgot'], ['config' => $this->config]);
-        return view($this->get_current_theme_view('forgot-password', 'default'), ['config' => $this->config, 'data' => $this->data]);
+        return view($this->get_current_theme_view('forgot-password', 'default'), ['config' => $this->config, 'data' => $this->viewData]);
     }
 
     /**
@@ -315,7 +336,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function resetPassword()
     {
         $token = $this->request->getGet('token');
-        return view($this->get_current_theme_view('reset-password', 'default'), ['config' => $this->config, 'data' => $this->data, 'token'  => $token]);
+        return view($this->get_current_theme_view('reset-password', 'default'), ['config' => $this->config, 'data' => $this->viewData, 'token'  => $token]);
     }
 
     /**
@@ -402,7 +423,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         if ($this->auth->check()) {
             helper('auth');
             if (user()->force_pass_reset == '1') {
-                return view($this->get_current_theme_view('change-pass', 'default'), ['config' => $this->config, 'data' => $this->data]);
+                return view($this->get_current_theme_view('change-pass', 'default'), ['config' => $this->config, 'data' => $this->viewData]);
             } else {
                 unset($_SESSION['redirect_url']);
                 return redirect()->to('/');
