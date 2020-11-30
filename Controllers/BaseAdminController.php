@@ -238,9 +238,9 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     {
         $this->viewData['currentUrlSegment'] = array_flip($this->request->uri->getSegments());
 
-        if ($this->viewData['menu'] = cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id())) {
-            return $this->viewData['menu'];
-        }
+        // if ($this->viewData['menu'] = cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id())) {
+        //     return $this->viewData['menu'];
+        // }
 
         helper('array');
         $tab                 = new \Adnduweb\Ci4Core\Models\TabModel();
@@ -262,7 +262,8 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
                 $i++;
             }
         }
-        $this->cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id(), $this->viewData['menu']);
+        //print_r($this->viewData); exit;
+        // $this->cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id(), $this->viewData['menu']);
     }
     
     protected function initParamJs()
@@ -409,7 +410,6 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         {
             $this->id = (int) $id; 
         }
-        
 
         $this->getToolbar();
         $this->viewData['action'] = 'edit';
@@ -431,8 +431,6 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             Theme::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
             return $this->response->redirect(route_to('dashboard'));
          }
-
-        
 
         if($this->uuid->isValid($id))
         {

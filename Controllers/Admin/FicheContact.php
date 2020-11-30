@@ -1,6 +1,4 @@
-
 <?php
-
 
 namespace Adnduweb\Ci4Admin\Controllers\Admin;
 
@@ -12,7 +10,7 @@ use App\Models\UserModel;
 use Adnduweb\Ci4Core\Models\CountryModel;
 use CodeIgniter\API\ResponseTrait;
 
-class FicheContactController extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
+class FicheContact extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 {
 
     use ResponseTrait;
@@ -64,21 +62,12 @@ class FicheContactController extends \Adnduweb\Ci4Admin\Controllers\BaseAdminCon
 
 
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->tableModel  = new CompanyModel();
-        $this->tableUserModel  = new UserModel();
-        $this->tableSettingsModel  = new SettingModel();
-    }
+  
 
-    public function getCompteEntreprise()
+    public function index()
     {
-        if (!has_permission(ucfirst($this->controller) . '::views', user()->id)) {
-            Tools::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
-            return redirect()->to('/' . CI_SITE_AREA . '/dashboard');
-        }
-        AssetsBO::add_js([$this->get_current_theme_view('controllers/company/js/outils.js', 'default')]);
+       
+        Theme::add_js([$this->get_current_theme_view('controllers/company/js/outils.js', 'default')]);
         $this->data['aside_active'] = 'compte-entreprise';
         $this->data['company'] =  $this->tableModel->where([$this->tableModel->primaryKey => company()->{$this->tableModel->primaryKey}])->first();
         $this->data['company']->companyType = $this->tableModel->getCompanyType();

@@ -1,7 +1,8 @@
-<?= $this->extend('/admin/themes/metronic/__layouts/layout_1') ?>
+<?= $this->extend('Adnduweb\Ci4Admin\themes\metronic\__layouts\layout_1') ?>
 <?= $this->section('main') ?>
+<!-- end:: Header -->
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
-    <?= $this->include('/admin/themes/metronic/__partials/kt_list_toolbar') ?>
+    <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\__partials\kt_list_toolbar') ?>
     <div id="ContentTabs" class="d-flex flex-column-fluid">
 
         <div class="container-fluid">
@@ -17,7 +18,7 @@
                     </div>
                     <div class="card-body">
                         <div class="dd" id="nestable">
-                            <?= (afficher_menu_nestable(0, 0, $menu, 'tabs')); ?>
+                            <?= (afficher_menu_nestable(0, 0, $navs, 'navs')); ?>
                         </div>
                         <?php if (inGroups(1, user()->id)) {   ?>
                             <textarea id="nestable-output" rows="3" class="form-control"></textarea>
@@ -28,7 +29,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 <?= $this->endSection() ?>
 
 <?= $this->section('extra-js') ?>
@@ -50,13 +51,10 @@
             }
             $.ajax({
                 method: "POST",
-                url: basePath + segementAdmin + "/sp-admin-ajax",
+                url: current_url + "/sortmenu",
                 data: {
-                    ajax: true,
-                    controller: "AdminTabController",
-                    action: "sortmenu",
+                    [crsftoken]: $('meta[name="X-CSRF-TOKEN"]').attr('content'),
                     value: list.nestable('toArray'),
-                    module: false
                 },
                 responseType: 'json',
                 beforeSend: function(xhr) {
@@ -66,7 +64,7 @@
                     });
                     KTApp.block("#nestable", {
                         overlayColor: "#000000",
-                        state: "primary"
+                        state: "primary" 
                     })
                 },
                 success: function(response, status, xhr) {
@@ -78,7 +76,7 @@
                         $('#__partialsKtSide').html(response.htmlNav);
                         $.notify({
                             title: _LANG_.updated + "!",
-                            message: response.message
+                            message: response.success.message
                         }, {
                             type: "success"
                         });

@@ -65,9 +65,9 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 		<div class="d-flex flex-row flex-column-fluid page">
 
 			<!-- begin:: Aside -->
-			<!-- <div id="__partialsKtSide"> -->
-			<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_aside'); //,['cache' => 300, 'cache_name' => 'kt_aside_' . user()->id]); ?>
-			<!-- </div> -->
+			 <div id="__partialsKtSide">
+				<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_aside'); //,['cache' => 300, 'cache_name' => 'kt_aside_' . user()->id]); ?>
+			</div>
 			<!-- end:: Aside -->
 
 			<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
