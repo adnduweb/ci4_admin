@@ -86,7 +86,7 @@ class Permissions extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function create()
     {
-        helper('Tools');
+        helper('tools');
         parent::create();
 
         // Initialize form
@@ -149,7 +149,7 @@ class Permissions extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         parent::edit($id);
 
-        helper(['Tools']);
+        helper(['tools']);
 
         // Initialize form
         $this->viewData['form'] = $this->tableModel->where(['id' => $this->id])->first();

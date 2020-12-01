@@ -47,7 +47,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      * @var array
      */
     //protected $helpers = ['auth', 'inflector', 'html', 'common', 'form', 'url'];
-    protected $helpers = ['Form', 'Date', 'Detect', 'Url', 'Auth'];
+    protected $helpers = ['form', 'date', 'detect', 'url', 'auth'];
 
 
     /**
@@ -421,7 +421,6 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function changePassword()
     {
         if ($this->auth->check()) {
-            helper('auth');
             if (user()->force_pass_reset == '1') {
                 return view($this->get_current_theme_view('change-pass', 'default'), ['config' => $this->config, 'data' => $this->viewData]);
             } else {
@@ -436,7 +435,6 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
     public function attemptChangePass()
     {
-        helper('auth');
 
         if ($this->request->isAJAX()) {
             if ($this->auth->check()) {

@@ -91,7 +91,7 @@ class Companies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function create()
     {
-        helper('Tools');
+        helper('tools');
         parent::create();
 
         Theme::add_js(
@@ -195,7 +195,7 @@ class Companies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         parent::edit($uuid);
 
-        helper(['form', 'Tools', 'time']);
+        helper(['tools', 'time']);
 
         Theme::add_js(
             [

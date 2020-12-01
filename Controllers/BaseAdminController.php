@@ -28,7 +28,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     /**
      * @var helpers
      */
-    protected $helpers = ['Detect', 'Auth', 'Url', 'Form', 'Lang'];
+    protected $helpers = ['detect', 'auth', 'url', 'form', 'lang'];
 
     /**
      * Set default directory
@@ -242,7 +242,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             return $this->viewData['menu'];
         }
 
-        helper('Array');
+        helper('array');
         $tab                 = new \Adnduweb\Ci4Core\Models\TabModel();
         $menus               = $tab->getTab();
         $this->viewData['menu']              = [];

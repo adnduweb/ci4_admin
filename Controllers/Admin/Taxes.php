@@ -75,7 +75,7 @@ class Taxes extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function create()
     {
-        helper('Tools');
+        helper('tools');
         parent::create();
 
        // Initialize form

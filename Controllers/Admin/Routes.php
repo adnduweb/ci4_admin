@@ -68,11 +68,11 @@ class Routes extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
         if (!write_file(APPPATH . 'Config/Routes.php', $code)) {
             // Success!
-            Tools::set_message('danger', lang('Core.not_save_data'), lang('Core.not_cool_success'));
+            Theme::set_message('danger', lang('Core.not_save_data'), lang('Core.not_cool_success'));
             return redirect()->to('/' . CI_SITE_AREA .  $this->pathcontroller);
         } else {
             // Success!
-            Tools::set_message('success', lang('Core.save_data'), lang('Core.cool_success'));
+            Theme::set_message('success', lang('Core.save_data'), lang('Core.cool_success'));
             return redirect()->to('/' . CI_SITE_AREA . $this->pathcontroller);
         }
     }

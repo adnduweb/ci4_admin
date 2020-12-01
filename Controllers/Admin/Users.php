@@ -84,7 +84,7 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function create()
     {
-        helper('Tools');
+        helper('tools');
         parent::create();
         Theme::add_js('/resources/metronic/js/pages/custom/users/outils.users.js');
 
@@ -192,7 +192,7 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         parent::edit($uuid);
 
-        helper(['Tools', 'Time']);
+        helper(['tools', 'Time']);
 
         Theme::add_js(
             [
@@ -416,7 +416,7 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         if ($this->request->isAJAX())
         {
-            helper('Tools');
+            helper('tools');
 
             $throttler = \Config\Services::throttler();
 

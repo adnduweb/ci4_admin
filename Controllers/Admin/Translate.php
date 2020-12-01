@@ -51,7 +51,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function index()
     {
-        helper(['Array']);
+        helper(['array']);
 
         $this->copyFile();
 
@@ -86,7 +86,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         
         if ($this->request->isAJAX()) {
-            helper(['Array']);
+            helper(['array']);
             if ($value = $this->request->getPost('value')) {
                 $traitement = arrayToArray($value);
                 if (!empty($traitement['fileCore'])) {
@@ -143,7 +143,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
         if ($this->request->isAJAX()) {
 
-            helper(['Array']);
+            helper(['array']);
 
             if ($value = $this->request->getPost('value')) {
 
@@ -172,7 +172,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         if ($this->request->isAJAX()) {
 
-            helper(['Array']);
+            helper(['array']);
 
             if ($value = $this->request->getPost('value')) {
 
@@ -201,7 +201,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         if ($this->request->isAJAX()) {
 
-            helper(['Array']);
+            helper(['array']);
 
             if ($value = $this->request->getPost('value')) {
 
@@ -232,7 +232,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         if ($this->request->isAJAX()) {
 
-             helper(['Array']);
+             helper(['array']);
 
             if ($value = $this->request->getPost('value')) {
 
@@ -256,7 +256,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
     public function traitement(array $value)
     {
-       helper(['Array']);
+       helper(['array']);
 
         $newTraitement = [];
         $file = '';

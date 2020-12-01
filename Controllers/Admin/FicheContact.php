@@ -139,7 +139,7 @@ class FicheContact extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         Theme::add_js('/resources/metronic/js/pages/custom/users/outils.users.js');
 
         parent::index();
-        helper('Tools');
+        helper('tools');
 
         $this->viewData['aside_active'] = 'compte-personnel';
         $this->viewData['action'] = 'edit';
@@ -276,7 +276,7 @@ class FicheContact extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         if ($this->request->isAJAX())
         {
-            helper('Tools');
+            helper('tools');
 
             $throttler = \Config\Services::throttler();
 
