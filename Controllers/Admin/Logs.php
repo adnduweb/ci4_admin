@@ -139,36 +139,6 @@ class Logs extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     }
 
 
-
-    // public function ajaxProcessDelete()
-    // {
-    //     if ($value = $this->request->getPost('value')) {
-    //         if (!empty($value['selected'])) {
-    //             $itsme = false;
-    //             foreach ($value['selected'] as $id) {
-    //                 $this->tableModel->delete($id);
-    //             }
-    //             return $this->respond(['status' => true, 'type' => 'success', 'message' => lang('Js.your_selected_records_have_been_deleted')], 200);
-    //         }
-    //     }
-    //     return $this->failUnauthorized(lang('Js.not_autorized'));
-    // }
-
-    // public function ajaxProcessDeleteTraffic()
-    // {
-    //     if ($value = $this->request->getPost('value')) {
-    //         if (!empty($value['selected'])) {
-    //             $itsme = false;
-    //             foreach ($value['selected'] as $id) {
-    //                 $this->tableLogModel->delete($id);
-    //             }
-    //             return $this->respond(['status' => true, 'type' => 'success', 'message' => lang('Js.your_selected_records_have_been_deleted')], 200);
-    //         }
-    //     }
-    //     return $this->failUnauthorized(lang('Js.not_autorized'));
-    // }
-
-
     public function deleteConnexions()
     {
         $rawInput = $this->request->getRawInput('uuid');

@@ -132,7 +132,7 @@ class Nav extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         parent::edit($id);
 
-        helper(['form', 'tools']);
+        helper(['Tools']);
 
         // Initialize form
         $this->viewData['form'] = $this->tableModel->where(['id' => $this->id])->first();

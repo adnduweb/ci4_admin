@@ -47,7 +47,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      * @var array
      */
     //protected $helpers = ['auth', 'inflector', 'html', 'common', 'form', 'url'];
-    protected $helpers = ['form', 'date', 'Adnduweb\Ci4Core\Helpers\detect', 'Adnduweb\Ci4Core\Helpers\url'];
+    protected $helpers = ['Form', 'Date', 'Detect', 'Url', 'Auth'];
 
 
     /**

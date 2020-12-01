@@ -92,7 +92,7 @@ class Groups extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function create()
     {
-        helper('tools');
+        helper('Tools');
         parent::create();
 
         // Initialize form
@@ -149,7 +149,7 @@ class Groups extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         parent::edit($id);
 
-        helper(['form', 'tools']);
+        helper(['Tools']);
 
         Theme::add_js(
             [

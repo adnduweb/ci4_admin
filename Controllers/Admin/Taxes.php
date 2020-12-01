@@ -75,7 +75,7 @@ class Taxes extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function create()
     {
-        helper('tools');
+        helper('Tools');
         parent::create();
 
        // Initialize form
@@ -133,8 +133,6 @@ class Taxes extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function edit(string $id)
     {
         parent::edit($id);
-
-        helper(['form']);
 
         // Initialize form
         $this->viewData['form'] = $this->tableModel->where($this->tableModel->primaryKey, $id)->first();

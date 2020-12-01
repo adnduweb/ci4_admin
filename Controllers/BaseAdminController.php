@@ -28,7 +28,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     /**
      * @var helpers
      */
-    protected $helpers = ['Detect', 'Auth'];
+    protected $helpers = ['Detect', 'Auth', 'Url', 'Form', 'Lang'];
 
     /**
      * Set default directory
@@ -242,7 +242,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             return $this->viewData['menu'];
         }
 
-        helper('array');
+        helper('Array');
         $tab                 = new \Adnduweb\Ci4Core\Models\TabModel();
         $menus               = $tab->getTab();
         $this->viewData['menu']              = [];
@@ -315,7 +315,6 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     */
     public function index(){
        
-        helper('form');
 
         if (!has_permission(ucfirst($this->controller) . '::view', user()->id)) {
             Theme::set_message('danger', lang('Core.not_acces_permissions'), lang('Core.warning_error'));
@@ -370,7 +369,6 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
      */
     public function create()
     { 
-        helper('form');
 
         $this->getToolbar();
         $this->viewData['action'] = 'create';
@@ -389,13 +387,11 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
      */
     public function store(){
 
-        helper('form');
     }
 
 
     public function edit(string $id)
     {
-        helper('form');
 
         if (!has_permission(ucfirst($this->controller) . '::edit', user()->id)) {
             Theme::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));

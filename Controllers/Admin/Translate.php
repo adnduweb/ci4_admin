@@ -51,11 +51,12 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function index()
     {
+        helper(['Array']);
 
         $this->copyFile();
 
         Theme::add_js('/resources/metronic/js/pages/custom/translate/app.translate.js');
-        helper(['Lang', 'Array']);
+        
         parent::index();
 
         $filesCore = array();
@@ -85,7 +86,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         
         if ($this->request->isAJAX()) {
-            helper(['Lang', 'Array']);
+            helper(['Array']);
             if ($value = $this->request->getPost('value')) {
                 $traitement = arrayToArray($value);
                 if (!empty($traitement['fileCore'])) {
@@ -141,7 +142,9 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
 
         if ($this->request->isAJAX()) {
-            helper(['Lang', 'Array']);
+
+            helper(['Array']);
+
             if ($value = $this->request->getPost('value')) {
 
                 $newTraitement = $this->traitement($value);
@@ -168,7 +171,9 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function deleteTexte()
     {
         if ($this->request->isAJAX()) {
-            helper(['Lang', 'Array']);
+
+            helper(['Array']);
+
             if ($value = $this->request->getPost('value')) {
 
                 $newTraitement = $this->traitement($value);
@@ -195,7 +200,9 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function searchTexte()
     {
         if ($this->request->isAJAX()) {
-            helper(['Lang', 'Array']);
+
+            helper(['Array']);
+
             if ($value = $this->request->getPost('value')) {
 
                 $newTraitement = $this->traitement($value);
@@ -224,7 +231,9 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function saveTextfile()
     {
         if ($this->request->isAJAX()) {
-            helper(['Lang', 'Array']);
+
+             helper(['Array']);
+
             if ($value = $this->request->getPost('value')) {
 
                 $newTraitement = $this->traitement($value);
@@ -247,7 +256,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
     public function traitement(array $value)
     {
-        helper(['Lang', 'Array']);
+       helper(['Array']);
 
         $newTraitement = [];
         $file = '';
