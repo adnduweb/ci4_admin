@@ -28,7 +28,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     /**
      * @var helpers
      */
-    protected $helpers = ['detect', 'auth'];
+    protected $helpers = ['Detect', 'Auth'];
 
     /**
      * Set default directory
@@ -227,7 +227,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
              return cache()->delete($key);
          }
  
-         if ($duration = env('cache.CacheDuration')) {
+         if ($duration = env('cache.cacheDuration')) {
              cache()->save($key, $content, $duration);
          }
          return $content;
@@ -238,9 +238,9 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     {
         $this->viewData['currentUrlSegment'] = array_flip($this->request->uri->getSegments());
 
-        // if ($this->viewData['menu'] = cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id())) {
-        //     return $this->viewData['menu'];
-        // }
+        if ($this->viewData['menu'] = cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id())) {
+            return $this->viewData['menu'];
+        }
 
         helper('array');
         $tab                 = new \Adnduweb\Ci4Core\Models\TabModel();
@@ -263,7 +263,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             }
         }
         //print_r($this->viewData); exit;
-        // $this->cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id(), $this->viewData['menu']);
+        $this->cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id(), $this->viewData['menu']);
     }
     
     protected function initParamJs()

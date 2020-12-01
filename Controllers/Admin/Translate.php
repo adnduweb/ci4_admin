@@ -55,7 +55,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         $this->copyFile();
 
         Theme::add_js('/resources/metronic/js/pages/custom/translate/app.translate.js');
-        helper(['lang', 'array']);
+        helper(['Lang', 'Array']);
         parent::index();
 
         $filesCore = array();
@@ -83,9 +83,9 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
     public function getFile()
     {
-
+        
         if ($this->request->isAJAX()) {
-
+            helper(['Lang', 'Array']);
             if ($value = $this->request->getPost('value')) {
                 $traitement = arrayToArray($value);
                 if (!empty($traitement['fileCore'])) {
@@ -141,6 +141,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
 
         if ($this->request->isAJAX()) {
+            helper(['Lang', 'Array']);
             if ($value = $this->request->getPost('value')) {
 
                 $newTraitement = $this->traitement($value);
@@ -167,6 +168,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function deleteTexte()
     {
         if ($this->request->isAJAX()) {
+            helper(['Lang', 'Array']);
             if ($value = $this->request->getPost('value')) {
 
                 $newTraitement = $this->traitement($value);
@@ -193,7 +195,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function searchTexte()
     {
         if ($this->request->isAJAX()) {
-
+            helper(['Lang', 'Array']);
             if ($value = $this->request->getPost('value')) {
 
                 $newTraitement = $this->traitement($value);
@@ -222,6 +224,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function saveTextfile()
     {
         if ($this->request->isAJAX()) {
+            helper(['Lang', 'Array']);
             if ($value = $this->request->getPost('value')) {
 
                 $newTraitement = $this->traitement($value);
@@ -229,34 +232,8 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 $fileOrigin = include($newTraitement['file']);
                 $oldValue = $fileOrigin[$firstKey];
 
-                helper(['string']);
+                helper(['String']);
                 if (replaceInfile($newTraitement['file'], $firstKey, $oldValue, $newTraitement['trad'][$firstKey])) {
-                    $response = ['success' => ['code' => 200, 'message' => lang('Core.success_update')], 'error' => false, csrf_token() => csrf_hash()];
-                    return $this->respond($response, 200, 'Update translate');
-                } else {
-                    $response = ['error' => ['code' => 500, 'message' => lang('Core.error_saved_data') ?? $e->getMessage()], 'success' => false, csrf_token() => csrf_hash()];
-                    return $this->respond($response, 500);
-                }
-            }
-        }
-    }
-
-    /**
-     * Delete text in file
-     * 
-     */
-    public function ajaxProcessDeleteTextfile()
-    {
-        if ($this->request->isAJAX()) {
-            if ($value = $this->request->getPost('value')) {
-
-                $newTraitement = $this->traitement($value);
-                // print_r($newTraitement);exit;
-                $firstKey = array_key_first($newTraitement['trad']);
-                $fileOrigin = include($newTraitement['file']);
-                unset($fileOrigin[$firstKey]);
-
-                if (save_all_lang_file($newTraitement['file'], $newTraitement['lang'], $fileOrigin)) {
                     $response = ['success' => ['code' => 200, 'message' => lang('Core.success_update')], 'error' => false, csrf_token() => csrf_hash()];
                     return $this->respond($response, 200, 'Update translate');
                 } else {
@@ -270,7 +247,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
     public function traitement(array $value)
     {
-        helper(['lang', 'array']);
+        helper(['Lang', 'Array']);
 
         $newTraitement = [];
         $file = '';
@@ -337,7 +314,7 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             if ($namespace != 'Translations' && $namespace != 'CodeIgniter') {
 
                 // Get files under this namespace's "/translate" path
-                foreach ($locator->listNamespaceFiles($namespace, '/language/' . $lang . '/') as $file) {
+                foreach ($locator->listNamespaceFiles($namespace, '/Language/' . $lang . '/') as $file) {
                     //$translate[] = $file;
                     if (is_file($file) && pathinfo($file, PATHINFO_EXTENSION) == 'php') {
                         $pathinfo = (pathinfo($file));
@@ -366,8 +343,8 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             $temp[$lang] = $files = $this->getCoreNatif($lang);
 
             foreach ($files  as $k => $v) {
-                if (!is_file(APPPATH . '/language/' . $lang . '/' . $k . '.php')) {
-                    if (!copy($v, APPPATH . '/language/' . $lang . '/' . $k . '.php')) {
+                if (!is_file(APPPATH . '/Language/' . $lang . '/' . $k . '.php')) {
+                    if (!copy($v, APPPATH . '/Language/' . $lang . '/' . $k . '.php')) {
                         throw new \RuntimeException(lang('Core.noCopyFile', [$k, $lang])  . ' ' . $lang);
                     }
                 }
@@ -384,11 +361,11 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         foreach (Config('App')->supportedLocales as $lang) {
 
-            if (!is_dir(APPPATH . '/language/' . $lang)) {
-                mkdir(APPPATH . '/language/' . $lang, 0777, true);
+            if (!is_dir(APPPATH . '/Language/' . $lang)) {
+                mkdir(APPPATH . '/Language/' . $lang, 0777, true);
                 //create the index.html file
-                if (!is_file(APPPATH . '/language/' . $lang . '/index.html')) {
-                    $file = fopen(APPPATH . '/language/' . $lang . '/index.html', 'x+');
+                if (!is_file(APPPATH . '/Language/' . $lang . '/index.html')) {
+                    $file = fopen(APPPATH . '/Language/' . $lang . '/index.html', 'x+');
                     fclose($file);
                 }
             }
