@@ -147,11 +147,11 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
         $routes->get('/', 'Nav::index', ['as' => 'nav']);
 
         $routes->get("create", "Nav::create", ['as' => 'nav-create']);
-        $routes->post('create', 'Nav::store', ['as' => 'nav-store']);
+        $routes->post('create', 'Nav::store');
 
 
         $routes->get('edit/(:any)', 'Nav::edit/$2', ['as' => 'nav-edit']);
-        $routes->post('edit/(:any)', 'Nav::update/$2', ['as' => 'nav-update']);
+        $routes->post('edit/(:any)', 'Nav::update/$2');
 
         $routes->post('sortmenu', 'Nav::sortMenu', ['as' => 'nav-sortmenu']);
         $routes->get('trash/(:any)', 'Nav::trash/$2', ['as' => 'nav-trash']);
@@ -160,11 +160,52 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
     // Gestionde la fiche Entreprise
     $routes->group('fiche-contact', function ($routes) {
         $routes->get('compte-entreprise', 'FicheContact::index', ['as' => 'fiche-contact-entreprise']);
-        $routes->post('compte-entreprise', 'FicheContact::renderForm');
-        $routes->get('compte-personnel', 'FicheContact::getComptePersonnel', ['as' => 'fiche-contact-personnel']);
-        $routes->post('compte-personnel', 'FicheContact::renderForm');
-        $routes->get('reseaux-sociaux', 'FicheContact::getResauxSociaux', ['as' => 'fiche-contact-reseaux-sociaux']);
-        $routes->post('reseaux-sociaux', 'FicheContact::renderForm');
+        $routes->post('compte-entreprise', 'FicheContact::updateEntreprise');
+        $routes->get('compte-personnel', 'FicheContact::indexPersonnel', ['as' => 'fiche-contact-personnel']);
+        $routes->post('compte-personnel', 'FicheContact::updatePersonnel');
+        $routes->get('reseaux-sociaux', 'FicheContact::indexResauxSociaux', ['as' => 'fiche-contact-reseaux-sociaux']);
+        $routes->post('reseaux-sociaux', 'FicheContact::updateResauxSociaux');
+
+        $routes->post('getPassword', 'FicheContact::getPassword', ['as' => 'fiche-getpassword']);
+    });
+
+     // Currency
+     $routes->group('(:any)/currencies', function ($routes) {
+
+        $routes->get('/', 'Currencies::index', ['as' => 'currencies']);
+        $routes->get('list', 'Currencies::ajaxProcessList', ['as' => 'currencies-listajax']);
+
+        $routes->get("create", "Currencies::create", ['as' => 'currency-create']);
+        $routes->post('create', 'Currencies::store', ['as' => 'currencies-store']);
+
+        $routes->get("show/(:any)", "Currencies::show/$2", ['as' => 'currency-show']);
+
+        $routes->get('edit/(:any)', 'Currencies::edit/$2', ['as' => 'currency-edit']);
+        $routes->post('edit/(:any)', 'Currencies::update/$2', ['as' => 'currency-update']);
+        $routes->post('ajaxUpdate', 'Currencies::ajaxUpdate', ['as' => 'currency-ajaxUpdate']);
+
+        $routes->delete('delete', 'Currencies::delete', ['as' => 'currency-delete']);
+
+        $routes->post('getPassword', 'Currencies::getPassword', ['as' => 'currency-getpassword']);
+        $routes->post('savePermissions', 'Currencies::savePermissions', ['as' => 'currency-savepermissions']);
+    });
+
+     // Taxes
+     $routes->group('(:any)/taxes', function ($routes) {
+
+        $routes->get('/', 'Taxes::index', ['as' => 'taxes']);
+        $routes->get('list', 'Taxes::ajaxProcessList', ['as' => 'taxes-listajax']);
+
+        $routes->get("create", "Taxes::create", ['as' => 'taxe-create']);
+        $routes->post('create', 'Taxes::store', ['as' => 'taxes-store']);
+
+        $routes->get("show/(:any)", "Taxes::show/$2", ['as' => 'taxe-show']);
+
+        $routes->get('edit/(:any)', 'Taxes::edit/$2', ['as' => 'taxe-edit']);
+        $routes->post('edit/(:any)', 'Taxes::update/$2', ['as' => 'taxe-update']);
+        $routes->post('ajaxUpdate', 'Taxes::ajaxUpdate', ['as' => 'taxe-ajaxUpdate']);
+
+        $routes->delete('delete', 'Taxes::delete', ['as' => 'taxe-delete']);
     });
 
 

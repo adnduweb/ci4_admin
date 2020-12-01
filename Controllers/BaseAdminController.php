@@ -213,11 +213,11 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
                     return redirect()->to('/' . CI_AREA_ADMIN . $this->pathcontroller . '/' .  $this->controller);
                     break;
                 default:
-                    return redirect()->to('/' . CI_AREA_ADMIN . $this->pathcontroller . '/' .  $this->controller);
+                    return redirect()->to('/' . CI_AREA_ADMIN . $this->pathcontroller . '/' .  $this->controller . $url ?? '');
             }
         }
 
-		return redirect()->to('/' . CI_AREA_ADMIN . $this->pathcontroller . '/' .  $this->controller . $url);
+		return redirect()->to('/' . CI_AREA_ADMIN . $this->pathcontroller . '/' .  $this->controller . $url ?? '');
     }
 
      // try to cache a setting and pass it back

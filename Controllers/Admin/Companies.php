@@ -242,6 +242,7 @@ class Companies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
         // Try to create the user
         $company = new Company($this->request->getPost());
+        $this->lang = $this->request->getPost('lang');
 
         // Format Phone
         if(($response =  $this->sanitizePhone($company)) == true){
@@ -255,6 +256,7 @@ class Companies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         try {
 
             $companies->save($company);
+            $company->saveLang($this->lang, $company->id);
 
         } catch (\Exception $e) {
 

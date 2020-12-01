@@ -518,27 +518,6 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         }
     }
 
-    // protected function sanitizePhone(object $user){
-
-    //     $phoneInternationalMobile = $this->phoneInternational($user->full_phone_mobile);
-    //     if ($phoneInternationalMobile['status'] == 200) {
-    //         $user->phone_mobile = $phoneInternationalMobile['message'];
-    //     } else {
-    //         Theme::set_message('danger', lang('Core.' . $phoneInternationalMobile['message'] . ': mobile'), lang('Core.warning_error'));
-    //         return redirect()->back()->withInput();
-    //     }
-    //     if (!empty($user->full_phone)) {
-    //         $phoneInternationalPhone = $this->phoneInternational($user->full_phone);
-    //         if ($phoneInternationalPhone['status'] == 200) {
-    //             $user->phone = $phoneInternationalPhone['message'];
-    //         } else {
-    //             Theme::set_message('danger', lang('Core.' . $phoneInternationalPhone['message'] . ': phone'), lang('Core.warning_error'));
-    //             return redirect()->back()->withInput();
-    //         }
-    //     }
-
-    // }
-
     public function workCrudGroup($user)
     {
         $groupModel = new  \Adnduweb\Ci4Admin\Models\GroupModel();

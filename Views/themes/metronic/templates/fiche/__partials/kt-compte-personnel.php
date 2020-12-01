@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="card-body py-0">
-        <?= $this->include('/admin/themes/metronic/controllers/fiche/__form_section/profile.php') ?>
+        <?= view('Adnduweb\Ci4Admin\themes\metronic\templates\fiche\__form_section\profile.php') ?>
         </div>
         <div class="card-footer d-flex justify-content-between">
              <button type="submit" class="btn btn-success"><?= lang('Core.valider votre fiche'); ?></button>

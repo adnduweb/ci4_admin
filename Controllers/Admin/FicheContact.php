@@ -5,176 +5,182 @@ namespace Adnduweb\Ci4Admin\Controllers\Admin;
 use Adnduweb\Ci4Admin\Libraries\Theme;
 use Adnduweb\Ci4Admin\Entities\Company;
 use Adnduweb\Ci4Admin\Models\CompanyModel;
-use App\Entities\User;
-use App\Models\UserModel;
+use Adnduweb\Ci4Admin\Entities\User;
+use Adnduweb\Ci4Admin\Models\UserModel;
 use Adnduweb\Ci4Core\Models\CountryModel;
+use Adnduweb\Ci4Core\Models\SettingModel;
 use CodeIgniter\API\ResponseTrait;
 
 class FicheContact extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 {
 
-    use ResponseTrait;
-
-    /**
-     *  uuidUser Object
-     */
-    protected $uuidCompany;
-
-    /**
-     *  uuidUser Object
-     */
-    protected $uuidUser;
-
-    /**
-     *  Module Object
-     */
-    public $module = false;
+    use ResponseTrait, \Adnduweb\Ci4Core\Traits\LibphoneTraits;
 
     /**
      * name controller
      */
-    public $controller = 'fiche';
+    public $controller = 'fiche-contact';
 
-    /**
+     /**
      * Localize slug
      */
-    public $pathcontroller  = '/fiche-contact';
+    public $pathcontroller  = '/';
 
     /**
+     * name model
+     */
+    public $tableModel = CompanyModel::class;
+
+    /**
+     * Bouton add
+     */
+    public $add = false;
+
+     /**
+     * Update Listing
+     */
+    public $toolbarUpdate = false;
+
+     /**
      * Display Multilangue
      */
     public $multilangue = false;
 
     /**
-     * Event fake data
+     * Display Multilangue
      */
-    public $fake = false;
+    public $back = false;
+
+
 
     /**
-     * Update item List
+     * Display a listing of the resource.
+     *
      */
-    public $toolbarUpdate = false;
-
-    /**
-     * @var \App\Models\FormModel
-     */
-    public $tableModel;
-
-
-
-  
 
     public function index()
     {
-       
-        Theme::add_js([$this->get_current_theme_view('controllers/company/js/outils.js', 'default')]);
-        $this->data['aside_active'] = 'compte-entreprise';
-        $this->data['company'] =  $this->tableModel->where([$this->tableModel->primaryKey => company()->{$this->tableModel->primaryKey}])->first();
-        $this->data['company']->companyType = $this->tableModel->getCompanyType();
-        $this->data['countries'] = (new CountryModel())->getAllCountry();
+        Theme::add_js('/resources/metronic/js/pages/custom/companies/outils.companies.js');
 
-        return view($this->get_current_theme_view('controllers/' . $this->controller . '/index', 'default'), $this->data);
+        parent::index();
+
+        $this->viewData['aside_active'] = 'compte-entreprise';
+        $this->viewData['company'] =  $this->tableModel->where([$this->tableModel->primaryKey => company()->{$this->tableModel->primaryKey}])->first();
+        $this->viewData['company']->companyType = $this->tableModel->getCompanyType();
+        $this->viewData['countries'] = (new CountryModel())->getAllCountry();
+
+        return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\fiche\index', $this->viewData);
     }
 
-    public function getComptePersonnel()
+
+     /**
+     * Update the specified resource in storage.
+     */
+    public function updateEntreprise()
     {
-        if (!has_permission(ucfirst($this->controller) . '::views', user()->id)) {
-            Tools::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
-            return redirect()->to('/' . CI_SITE_AREA . '/dashboard');
-        }
-        AssetsBO::add_js([$this->get_current_theme_view('controllers/users/js/outils.js', 'default')]);
-        $this->data['aside_active'] = 'compte-personnel';
-        $this->data['action'] = 'edit';
-        $this->data['form'] = $this->tableUserModel->where([$this->tableModel->primaryKeyLang => user()->company_id, 'is_principal' => true])->first();
-        // Si je ne suis pas un super user et que je modifie mon compte
+        $company_id = $this->tableModel->getIdCompanyByUUID($this->request->getPost('uuid_company'));
+        parent::update($this->request->getPost('uuid_company'));
 
-        foreach ($this->data['form']->auth_groups_users as $auth_groups_users) {
-            $this->data['id_group'] = $auth_groups_users->group_id;
-        }
+        $companies = new CompanyModel();
 
-        $this->data['company'] = $this->data['form']->company =  $this->tableModel->where([$this->tableModel->primaryKey => company()->id])->first();
-        $this->data['groups'] = $this->tableUserModel->getGroups();
-
-
-        return view($this->get_current_theme_view('controllers/' . $this->controller . '/index', 'default'), $this->data);
-    }
-
-    public function postProcessEditEntreprise()
-    {
-        // Je recupére l'id Company
-        $this->uuidCompany =  $this->request->getPost('uuid_company');
-        $uuidCompany = $this->getIdCompanyByUUID();
-        //echo $uuidCompany;
-
-        // validate
-        $companyList = new CompanyModel();
-        $rules = [
-            'raison_social' => 'required|is_unique[companies.raison_social,id,' . $uuidCompany . ']',
+        $this->rules = [
+            'raison_social' => 'required|is_unique[companies.raison_social,id,' . $company_id . ']',
+            'email'    => 'required|valid_email',
         ];
-        // print_r($rules);
-        // exit;
-        if (!$this->validate($rules)) {
-            Tools::set_message('danger', $this->validator->getErrors(), lang('Core.warning_error'));
+
+        if (!$this->validate($this->rules)) {
+
+            Theme::set_message('danger', $this->validator->getErrors(), lang('Core.warning_error'));
             return redirect()->back()->withInput();
+
         }
 
-        // Try to create the Company
+        // Try to create the user
         $company = new Company($this->request->getPost());
         $this->lang = $this->request->getPost('lang');
 
         // Format Phone
-        if (!empty($company->full_phone_fixe)) {
-            $phoneInternationalPhone = Tools::phoneInternational($company->full_phone_fixe);
-            if ($phoneInternationalPhone['status'] == 200) {
-                $company->telephone_fixe = $phoneInternationalPhone['message'];
-            } else {
-                Tools::set_message('danger', lang('Core.' . $phoneInternationalPhone['message'] . ': phone'), lang('Core.warning_error'));
-                return redirect()->back()->withInput();
-            }
-        }
-        if (!empty($company->full_phone_mobile)) {
-            //print_r($company); exit;
-            $phoneInternationalPhone = Tools::phoneInternational($company->full_phone_mobile);
-            if ($phoneInternationalPhone['status'] == 200) {
-                $company->telephone_mobile = $phoneInternationalPhone['message'];
-            } else {
-                Tools::set_message('danger', lang('Core.' . $phoneInternationalPhone['message'] . ': phone'), lang('Core.warning_error'));
-                return redirect()->back()->withInput();
-            }
-        }
-
-        $company->id = $uuidCompany;
-
-        // On sauvegarde
-        if (!$companyList->save($company)) {
-            Tools::set_message('danger', $companyList->errors(), lang('Core.warning_error'));
+        if(($response =  $this->sanitizePhone($company)) == true){
+            Theme::set_message('danger', $response['error']['message'], lang('Core.warning_error'));
             return redirect()->back()->withInput();
         }
-        $company->saveLang($this->lang, $company->id);
+        
+        $company->id = $company_id;
 
-        // On regenere le cache
-        cache()->delete('front:getCompany');
+       //Save
+        try {
 
-        Tools::set_message('success', lang('Core.saved_data'), lang('Core.cool_success'));
-        return redirect()->back();
+            $companies->save($company);
+            $company->saveLang($this->lang, $company->id);
+
+        } catch (\Exception $e) {
+
+            Theme::set_message('danger', $e->getMessage(), lang('Core.warning_error'));
+            return redirect()->back()->withInput();
+
+        }
+
+        // Success!
+        Theme::set_message('success', lang('Core.saved_data'), lang('Core.cool_success'));
+        return $this->_redirect('/compte-entreprise');
+
     }
 
-    public function postProcessEditPersonnel()
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     */
+
+    public function indexPersonnel()
     {
 
-        // Je recupére l'id user
-        $this->uuidUser = $this->request->getPost('uuid');
-        $idUser = $this->getIdUserByUUID();
+        Theme::add_js('/resources/metronic/js/pages/custom/users/outils.users.js');
 
-        // validate
+        parent::index();
+        helper('tools');
+
+        $this->viewData['aside_active'] = 'compte-personnel';
+        $this->viewData['action'] = 'edit';
+        $this->viewData['form'] = (new UserModel())->where([$this->tableModel->primaryKeyLang => user()->company_id, 'is_principal' => true])->first();
+        // Si je ne suis pas un super user et que je modifie mon compte
+
+        foreach ($this->viewData['form']->auth_groups_users as $auth_groups_users) {
+            $this->viewData['id_group'] = $auth_groups_users->group_id;
+        }
+
+        $this->viewData['company'] = $this->viewData['form']->company =  $this->tableModel->where([$this->tableModel->primaryKey => company()->id])->first();
+        $this->viewData['groups'] = (new UserModel())->getGroups();
+
+        return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\fiche\index', $this->viewData);
+
+    }
+
+
+     /**
+     * Update the specified resource in storage.
+     */
+    public function updatePersonnel()
+    {
         $users = new UserModel();
-        $rules = [
-            'email'    => 'required|valid_email|is_unique[users.email,id,' . $idUser . ']',
+
+        $user_id = $users->getIdUserByUUID($this->request->getPost('uuid'));
+
+        parent::update($this->request->getPost('uuid'));
+
+        
+
+        $this->rules = [
+            'email'    => 'required|valid_email|is_unique[users.email,id,' . $user_id . ']',
             'id_group' => 'required',
         ];
-        if (!$this->validate($rules)) {
-            Tools::set_message('danger', $this->validator->getErrors(), lang('Core.warning_error'));
+
+        if (!$this->validate($this->rules)) {
+
+            Theme::set_message('danger', $this->validator->getErrors(), lang('Core.warning_error'));
             return redirect()->back()->withInput();
+
         }
 
         // Try to create the user
@@ -189,57 +195,62 @@ class FicheContact extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             unset($user->password_hash);
         } else {
             if ($password != $pass_confirm) {
-                Tools::set_message('danger', lang('Core.not_concordance_mote_de_passe'), lang('Core.warning_error'));
+                Theme::set_message('danger', lang('Core.not_concordance_mote_de_passe'), lang('Core.warning_error'));
                 return redirect()->back()->withInput();
             }
         }
 
         // Format Phone
-        $phoneInternationalMobile = Tools::phoneInternational($user->full_phone_mobile);
-        if ($phoneInternationalMobile['status'] == 200) {
-            $user->phone_mobile = $phoneInternationalMobile['message'];
-        } else {
-            Tools::set_message('danger', lang('Core.' . $phoneInternationalMobile['message'] . ': mobile'), lang('Core.warning_error'));
+        if(($response =  $this->sanitizePhone($user)) == true){
+            Theme::set_message('danger', $response['error']['message'], lang('Core.warning_error'));
             return redirect()->back()->withInput();
         }
-        if (!empty($user->full_phone)) {
-            $phoneInternationalPhone = Tools::phoneInternational($user->full_phone);
-            if ($phoneInternationalPhone['status'] == 200) {
-                $user->phone = $phoneInternationalPhone['message'];
-            } else {
-                Tools::set_message('danger', lang('Core.' . $phoneInternationalPhone['message'] . ': phone'), lang('Core.warning_error'));
-                return redirect()->back()->withInput();
-            }
-        }
-        $user->id = $idUser;
+        
+        $user->id = $user_id;
+        //$user->username = ucfirst(trim(strtolower($user->firstname))) . ucfirst($user->lastname[0]) . time();
         $user->force_pass_reset = ($user->force_pass_reset == '1') ? $user->force_pass_reset : '0';
 
-        // On sauvegarde
-        if (!$users->save($user)) {
-            Tools::set_message('danger', $users->errors(), lang('Core.warning_error'));
+        //Save
+        try {
+
+            $users->save($user);
+
+        } catch (\Exception $e) {
+
+            Theme::set_message('danger', $e->getMessage(), lang('Core.warning_error'));
             return redirect()->back()->withInput();
+
         }
 
         // Success!
-        Tools::set_message('success', lang('Core.saved_data'), lang('Core.cool_success'));
-        return redirect()->back();
+        Theme::set_message('success', lang('Core.saved_data'), lang('Core.cool_success'));
+        return $this->_redirect('/compte-personnel');
+
     }
 
-    public function getResauxSociaux()
+
+ /**
+     * Display a listing of the resource.
+     *
+     */
+
+    public function indexResauxSociaux()
     {
-        if (!has_permission(ucfirst($this->controller) . '::views', user()->id)) {
-            Tools::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
-            return redirect()->to('/' . CI_SITE_AREA . '/dashboard');
-        }
-        $this->data['aside_active'] = 'reseaux-sociaux';
-        $this->data['action'] = 'edit';
-        $this->data['form'] =  $this->tableUserModel->where([$this->tableModel->primaryKeyLang => user()->company_id, 'is_principal' => true])->first();
-        $this->data['company'] = $this->data['form']->company = $this->tableModel->where([$this->tableModel->primaryKey => company()->id])->first();
 
-        return view($this->get_current_theme_view('controllers/' . $this->controller . '/index', 'default'), $this->data);
+        parent::index();
+
+        $this->viewData['aside_active'] = 'reseaux-sociaux';
+        $this->viewData['action'] = 'edit';
+        $this->viewData['form'] = (new UserModel())->where([$this->tableModel->primaryKeyLang => user()->company_id, 'is_principal' => true])->first();
+        $this->viewData['company'] = $this->viewData['form']->company = $this->tableModel->where([$this->tableModel->primaryKey => company()->id])->first();
+
+
+        return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\fiche\index', $this->viewData);
+
     }
 
-    public function postProcessEditReseauxSociaux()
+
+    public function updateResauxSociaux()
     {
         // print_r($_POST);
         // exit;
@@ -251,13 +262,32 @@ class FicheContact extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                     $v = serialize($v);
                 }
                 cache()->delete('settings:templates:{$k}');
-                $this->tableSettingsModel->getExist($k, 'global', $v);
+                (new SettingModel())->getExist($k, 'global', $v);
                 service('settings')->{$k} = $v;
             }
         }
 
         // Success!
-        Tools::set_message('success', lang('Core.save_data'), lang('Core.cool_success'));
+        Theme::set_message('success', lang('Core.saved_data'), lang('Core.cool_success'));
         return redirect()->back();
+    }
+
+    public function getPassword()
+    {
+        if ($this->request->isAJAX())
+        {
+            helper('tools');
+
+            $throttler = \Config\Services::throttler();
+
+            if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false) 
+            {
+                $response = [ 'error' =>['code' => 429, 'message' =>  lang('Auth.tooManyRequests', [$throttler->getTokentime()])], 'success' => false, csrf_token() => csrf_hash()];
+                return $this->respond($response, 429);
+            }
+
+            $response = [ 'success' =>['code' => 200, 'message' => lang('Core.Good!!'), 'password' => generer_mot_de_passe(15)], 'error' => false, csrf_token() => csrf_hash()];
+            return $this->respond($response, 200, 'génération de mot de passe');
+        }
     }
 }

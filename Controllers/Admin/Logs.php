@@ -23,7 +23,7 @@ class Logs extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         'application/json' => \CodeIgniter\Format\JSONFormatter::class
     ];
 
-    /**
+    /** 
      *  UUID unique User
      */
     protected $uuidUser;

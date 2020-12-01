@@ -51,11 +51,11 @@ class Company extends UuidEntity
 
     public function getTelephoneFixe()
     {
-        return $this->attributes['telephone_fixe'] ?? null;
+        return $this->attributes['phone'] ?? null;
     }
     public function getTelephoneMobile()
     {
-        return $this->attributes['telephone_mobile'] ?? null;
+        return $this->attributes['phone_mobile'] ?? null;
     }
 
     public function getLocation()

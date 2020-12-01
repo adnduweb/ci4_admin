@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="card-body py-0">
-            <?= view('/admin/themes/metronic/controllers/company/__form_section/general.php', ['form' => $company]) ?>
+            <?= view('Adnduweb\Ci4Admin\themes\metronic\templates\companies\__form_section\general.php', ['form' => $company]) ?>
         </div>
         <div class="card-footer d-flex justify-content-between">
             <button type="submit" class="btn btn-light-primary font-weight-bold"><?= lang('Core.valider votre fiche'); ?></button>
