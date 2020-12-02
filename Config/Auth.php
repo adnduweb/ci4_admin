@@ -37,12 +37,12 @@ class Auth extends BaseConfig
      * @var array
      */
     public $views = [
-        'login'           => 'Adnduweb\Ci4Admin\Views\login',
-        'register'        => 'Adnduweb\Ci4Admin\Views\register',
-        'forgot'          => 'Adnduweb\Ci4Admin\Views\forgot',
-        'reset'           => 'Adnduweb\Ci4Admin\Views\reset',
-        'emailForgot'     => 'Adnduweb\Ci4Admin\Views\emails\forgot',
-        'emailActivation' => 'Adnduweb\Ci4Admin\Views\emails\activation',
+        'login'           => 'Adnduweb\Ci4Admin\Views\themes\metronic\authentication\index',
+        'register'        => 'Adnduweb\Ci4Admin\Views\themes\metronic\authentication\register',
+        'forgot'          => 'Adnduweb\Ci4Admin\Views\themes\metronic\authentication\forgot-password.php',
+        'reset'           => 'Adnduweb\Ci4Admin\Views\themes\metronic\authentication\reset-password',
+        'emailForgot'     => 'Adnduweb\Ci4Admin\Views\themes\metronic\emails\fr\forgot',
+        'emailActivation' => 'Adnduweb\Ci4Admin\Views\themes\metronic\emails\fr\activation',
     ];
 
     /**

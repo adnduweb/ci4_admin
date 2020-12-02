@@ -55,6 +55,16 @@ class LoginFilter implements FilterInterface
             session()->set('previous_page', $request->uri->getPath());
 			return redirect()->to(route_to('login-area'));
 		}
+
+		if(user()->isActivated() == false){
+
+			$authenticate->logout();
+			session()->set('info', lang('Core.deconnexion_compte_desactive'));
+			session()->set('redirect_url', current_url());
+            session()->set('previous_page', $request->uri->getPath());
+			return redirect()->to(route_to('login-area'));
+
+		}
 	}
 
 	//--------------------------------------------------------------------

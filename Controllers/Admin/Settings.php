@@ -141,7 +141,7 @@ class Settings extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
 
         $dirTheme = [];
-        foreach (glob(VENDORPATH . '\adnduweb\Ci4_admin\Views\themes\*', GLOB_ONLYDIR) as $dir) {
+        foreach (glob(VENDORPATH . '/adnduweb/ci4_admin/Views/themes/*', GLOB_ONLYDIR) as $dir) {
             $dirTheme[] = basename($dir);
         }
         return $dirTheme;

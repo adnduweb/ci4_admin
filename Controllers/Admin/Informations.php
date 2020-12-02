@@ -52,7 +52,7 @@ class Informations extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
     public function index($id = null)
     {
-        helper(['Time', 'Text']);
+        helper(['time', 'text']);
 
         parent::index();
 

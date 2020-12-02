@@ -22,8 +22,9 @@
             </span>
         </div>
     </div>
-    <?php if (!empty($form->id)) { ?> <?= form_hidden('active', $form->active); ?> <?php } ?>
+   
 <?php } ?>
+<?php  '';//if (!empty($form->id)) { ?> <?=  '';//form_hidden('active', $form->active); ?> <?php '';//} ?>
 <?php if (inGroups(1, user()->id)) { ?>
     <div class="form-group row">
         <label for="id_group" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.company_type')); ?>* : </label>

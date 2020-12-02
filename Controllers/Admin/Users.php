@@ -192,7 +192,7 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         parent::edit($uuid);
 
-        helper(['tools', 'Time']);
+        helper(['tools', 'time']);
 
         Theme::add_js(
             [
@@ -226,7 +226,6 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         $user_id = $this->tableModel->getIdUserByUUID($uuid);
         parent::update($uuid);
-        
 
         $users = new UserModel();
 
@@ -266,8 +265,12 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         }
         
         $user->id = $user_id;
+        
         //$user->username = ucfirst(trim(strtolower($user->firstname))) . ucfirst($user->lastname[0]) . time();
         $user->force_pass_reset = ($user->force_pass_reset == '1') ? $user->force_pass_reset : '0';
+        //$user->active = (!$this->request->getPost('active')) ? '0' : '1';
+        $active = $this->request->getPost('active');
+        $user->active = (!$active) ? false : true;
         $workCrudGroup = $this->workCrudGroup($user);
         if ($workCrudGroup != true) {
             if ($workCrudGroup['status'] == 406) {
@@ -276,13 +279,13 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             }
         }
 
-        //Si le connecté n'est égal au user
-        if (user()->id != $user->id) {
-            $active = $this->request->getPost('active');
-            if (!$active) {
-                $user->active = '0';
-            }
-        }
+        // //Si le connecté n'est égal au user
+        // if (user()->id != $user->id) {
+        //     $active = $this->request->getPost('active');
+        //     if (!$active) {
+        //         $user->active = '0';
+        //     }
+        // }
 
         //Save
         try {
