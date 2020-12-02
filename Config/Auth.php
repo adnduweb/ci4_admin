@@ -336,4 +336,19 @@ class Auth extends BaseConfig
      * @var int
      */
     public $resetTime = 3600;
+
+    /**
+     * --------------------------------------------------------------------
+     * Status user
+     * --------------------------------------------------------------------
+     *
+     * Available status
+     *
+     * @var array
+     */
+    public $status = [
+        'activated' => 'explain_activated',
+        'disabled' => 'explain_disabled',
+        'banned' => 'explain_banned',
+    ];
 }

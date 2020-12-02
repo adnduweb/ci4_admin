@@ -1,33 +1,28 @@
-<div class="row">
+<!-- <div class="row">
     <label class="col-xl-3"></label>
     <div class="col-lg-9 col-xl-6">
         <h3 class="kt-section__title kt-section__title-sm"><?= lang('Core.info_users'); ?>:</h3>
     </div>
-</div>
+</div> -->
 
-<?php if ($form->id != user()->id) { ?>
+<?php if (config('Auth')->requireActivation !== false) { ?>
     <div class="form-group form-group-sm row">
-        <label class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.active')); ?> </label>
+        <label class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Auth.code_activation')); ?> </label>
         <div class="col-lg-9 col-xl-6">
             <span class="switch">
                 <label>
-                    <?php if ($action == 'edit') { ?>
-                        <input type="checkbox" <?= ($form->active == '1') ? 'checked="checked"' : ''; ?> value="1" name="active">
-                    <?php } else { ?>
-                        <input type="checkbox" checked="checked" value="1" name="active">
-                    <?php } ?>
-
+                    <input type="checkbox" value="1" name="requireactivation">
                     <span></span>
                 </label>
             </span>
+            <span class="form-text text-muted"><?= lang('Auth.explain_activation'); ?></span>
         </div>
     </div>
-   
 <?php } ?>
 <?php  '';//if (!empty($form->id)) { ?> <?=  '';//form_hidden('active', $form->active); ?> <?php '';//} ?>
 <?php if (inGroups(1, user()->id)) { ?>
     <div class="form-group row">
-        <label for="id_group" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.company_type')); ?>* : </label>
+        <label for="id_group" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.companies')); ?>* : </label>
         <div class="col-lg-9 col-xl-6">
             <select required name="company_id" class="form-control kt-selectpicker" id="company_id" data-actions-box="true" title="<?= ucfirst(lang('Core.choose_one_of_the_following')); ?>">
                 <?php foreach ($form->company as $company) { ?>

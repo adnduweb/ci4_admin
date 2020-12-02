@@ -93,4 +93,17 @@ return [
     'newPassword'               => 'Nouveau mot de passe',
     'newPasswordRepeat'         => 'Répétez le mot de passe',
     'resetPassword'             => 'Réinitialiser le mot de passe',
+
+    'explain_activation' => 'L\'utilisateur recevra un mail avec un code d\'activation pour vérifier son adresse mail',
+	'banni_on_account' => 'Bannir le compte',
+	'reason_banni_on_account' => 'Raison du banissement',
+	
+	'code_activation' => 'Code d\'activation',
+	'status_account' => 'Etat du compte',
+	'explain_activated' => 'Le compte est activé',
+	'activated' => 'Activé',
+	'explain_disabled' => 'Le compte est désactivé',
+	'disabled' => 'Désactivé',
+	'explain_banned' => 'Votre compte a été banni',
+	'banned' => 'Banni',
 ];

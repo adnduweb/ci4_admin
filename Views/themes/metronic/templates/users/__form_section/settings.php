@@ -48,6 +48,18 @@
                 <h3 class="kt-section__title kt-section__title-sm"><?= lang('Core.activity_from_account'); ?>:</h3>
             </div>
         </div>
+
+        <div class="form-group form-group-sm form-group-last row">
+            <label class="col-xl-3 col-lg-3 col-form-label"><?= lang('Core.status_account'); ?></label>
+            <div class="col-lg-9 col-xl-6">
+            <select required name="status" class="form-control kt-selectpicker" id="status">
+                <?php foreach (config('Auth')->status as $k => $v) { ?>
+                    <option <?= ($form->status == $k) ? 'selected' : ''; ?> value="<?= $k; ?>" ><?= lang('Auth.' . $v); ?></option>
+                <?php } ?>
+            </select>
+            </div>
+        </div>
+
         <div class="form-group form-group-sm row">
             <label class="col-xl-3 col-lg-3 col-form-label"><?= lang('Core.connexion_unique'); ?></label>
             <div class="col-lg-9 col-xl-6">
