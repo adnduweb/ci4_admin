@@ -31,11 +31,12 @@ class EmailResetter extends BaseResetter implements ResetterInterface
         $config = new Email();
 
         $settings = $this->getResetterSettings();
+        $templateEmailForgot = str_replace('metronic', service('settings')->setting_theme_admin, $this->config->views['emailForgot']);
 
-        $sent = $email->setFrom($settings->fromEmail ?? $config->fromEmail, $settings->fromName ?? $config->fromName)
+        $sent = $email->setFrom(service('settings')->setting_email_fromEmail, service('settings')->setting_email_fromName)
               ->setTo($user->email)
               ->setSubject(lang('Auth.forgotSubject'))
-              ->setMessage(view($this->config->views['emailForgot'], ['hash' => $user->reset_hash]))
+              ->setMessage(view($templateEmailForgot, ['hash' => $user->reset_hash]))
               ->setMailType('html')
               ->send();
 

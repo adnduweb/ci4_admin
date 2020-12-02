@@ -118,7 +118,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
 
             // Try to log them in...
-            if (!$this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
+            if (!$this->auth->attempt([$type => $login, 'password' => $password], $remember)) {  
                 $throttler = \Config\Services::throttler();
                 if ($throttler->check($this->request->getIPAddress(), 5, MINUTE) === false) {
                     $response = [
@@ -141,7 +141,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             // Is the user being forced to reset their password?
             if ($this->auth->user()->force_pass_reset === true) {
                 $response = [
-                    csrf_token() => csrf_hash(),
+                    'token' => csrf_hash(),
                     'status' => "success",
                     'message' => lang('Auth.loginSuccess'),
                     'redirect' => '/' . env('app.areaAdmin') . '/change-pass'
@@ -168,7 +168,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 if (count($this->auth->getSessionActive()) > 0) {
                     $this->auth->logout();
                     $response = [
-                        csrf_token() => csrf_hash(),
+                        'token' => csrf_hash(),
                         'error' => true,
                         'message' => lang('Core.attention_deja_connexion_unique') ?? lang('Auth.badAttempt')
 
@@ -187,7 +187,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             $redirectURL = session('previous_page') ?? '/' . env('app.areaAdmin') . '/' . $getGroupsForUser[0]['login_destination'];;
             unset($_SESSION['previous_page']);
             $response = [
-                csrf_token() => csrf_hash(),
+                'token' => csrf_hash(),
                 'status' => "success",
                 'message' => lang('Auth.loginSuccess'),
                 'redirect' => $redirectURL
@@ -258,7 +258,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         }
 
         // Success!
-        return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
+        return redirect()->route('login-area')->with('message', lang('Auth.registerSuccess'));
     }
 
     //--------------------------------------------------------------------
@@ -268,10 +268,14 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     /**
      * Displays the forgot password form.
      */
-    public function forgotPassword()
+    public function forgotPassword() 
     {
-        //return view($this->config->views['forgot'], ['config' => $this->config]);
-        return view($this->get_current_theme_view('forgot-password', 'default'), ['config' => $this->config, 'data' => $this->viewData]);
+        if ($this->config->activeResetter === false)
+		{
+			return redirect()->route('login-area')->with('error', lang('Auth.forgotDisabled'));
+        }
+        
+        return view('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\forgot-password', ['config' => $this->config, 'data' => $this->viewData]);
     }
 
     /**
@@ -281,13 +285,25 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function attemptForgot()
     {
         if ($this->request->isAJAX()) {
-            $users = new UserModel();
+
+            if ($this->config->activeResetter === false)
+            {
+                $response = [
+                    'token' => csrf_hash(),
+                    'error' => true,
+                    'message' => lang('Auth.forgotDisabled'),
+                ];
+                return $this->respond($response);
+            }
+        
+
+            $users = model(UserModel::class);
 
             $user = $users->where('email', $this->request->getPost('email'))->first();
 
             if (is_null($user)) {
                 $response = [
-                    csrf_token() => csrf_hash(),
+                    'token' => csrf_hash(),
                     'error' => true,
                     'message' => lang('Auth.forgotNoUser'),
                 ];
@@ -298,29 +314,22 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             $user->generateResetHash();
             $users->save($user);
 
-            $email = Services::email();
-            $config = new Email();
+            $resetter = service('resetter');
+		    $sent = $resetter->send($user);
 
-            $sent = $email->setFrom($config->fromEmail, $config->fromName)
-                ->setTo($user->email)
-                ->setSubject(lang('Auth.forgotSubject'))
-                ->setMessage(view('admin/themes/' . env("app.themeAdmin") . '/emails/' . $this->request->getLocale() . '/forgot', ['hash' => $user->reset_hash]))
-                ->setMailType('html')
-                ->send();
-
-
-            if (!$sent) {
-                log_message('error', "Failed to send forgotten password email to: {$user->email}");
+            //fabrice@adnduweb.com
+            if (! $sent)
+            {
                 $response = [
-                    csrf_token() => csrf_hash(),
+                    'token' => csrf_hash(),
                     'error' => true,
-                    'message' => lang('Auth.unknownError'),
+                    'message' => $resetter->error() ?? lang('Auth.unknownError'),
                 ];
                 return $this->respond($response);
             }
 
             $response = [
-                csrf_token() => csrf_hash(),
+                'token' => csrf_hash(),
                 'status' => "success",
                 'message' => lang('Auth.forgotEmailSent'),
                 'redirect' => '/' . env('app.areaAdmin') . '/reset-password'
@@ -335,8 +344,14 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function resetPassword()
     {
+        if ($this->config->activeResetter === false)
+		{
+			return redirect()->route('login-area')->with('error', lang('Auth.forgotDisabled'));
+        }
+        
         $token = $this->request->getGet('token');
-        return view($this->get_current_theme_view('reset-password', 'default'), ['config' => $this->config, 'data' => $this->viewData, 'token'  => $token]);
+
+        return view('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\reset-password', ['config' => $this->config, 'data' => $this->viewData, 'token'  => $token]);
     }
 
     /**
@@ -348,7 +363,13 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function attemptReset()
     {
         if ($this->request->isAJAX()) {
-            $users = new UserModel();
+
+            if ($this->config->activeResetter === false)
+		{
+			return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+        }
+        
+            $users = model(UserModel::class);
 
             // First things first - log the reset attempt.
             $users->logResetAttempt(
@@ -368,7 +389,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             if (!$this->validate($rules)) {
                 // return redirect()->back()->withInput()->with('errors', $users->errors());
                 $response = [
-                    csrf_token() => csrf_hash(),
+                    'token' => csrf_hash(),
                     'error' => true,
                     'message' =>  $this->validator->listErrors(),
                 ];
@@ -382,7 +403,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             if (is_null($user)) {
                 //return redirect()->back()->with('error', lang('Auth.forgotNoUser'));
                 $response = [
-                    csrf_token() => csrf_hash(),
+                    'token' => csrf_hash(),
                     'error' => true,
                     'message' =>  lang('Auth.forgotNoUser'),
                 ];
@@ -393,7 +414,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             if (!empty($user->reset_expires) && time() > $user->reset_expires->getTimestamp()) {
                 //return redirect()->back()->withInput()->with('error', lang('Auth.resetTokenExpired'));
                 $response = [
-                    csrf_token() => csrf_hash(),
+                    'token' => csrf_hash(),
                     'error' => true,
                     'message' =>  lang('Auth.resetTokenExpired'),
                 ];
@@ -409,7 +430,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             $users->save($user);
 
             $response = [
-                csrf_token() => csrf_hash(),
+                'token' => csrf_hash(),
                 'status' => "success",
                 'message' => lang('Auth.resetSuccess'),
                 'redirect' => '/' . env('app.areaAdmin')
@@ -447,12 +468,12 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                     'pass_confirm' => 'required|matches[password]',
                 ];
                 if (!$this->validate($rules)) {
-                    return $this->respond([csrf_token() => csrf_hash(), 'error' => true, 'message' => $this->validator->listErrors()]);
+                    return $this->respond(['token' => csrf_hash(), 'error' => true, 'message' => $this->validator->listErrors()]);
                 }
                 $user->password         = $this->request->getPost('password');
                 $user->force_pass_reset = '0';
                 $users->save($user);
-                return $this->respond([csrf_token() => csrf_hash(), 'error' => false, 'message' => lang('Auth.passwordChangeSuccess'), 'redirect' => '/' . env('app.areaAdmin') . '/dashboard']);
+                return $this->respond(['token' => csrf_hash(), 'error' => false, 'message' => lang('Auth.passwordChangeSuccess'), 'redirect' => '/' . env('app.areaAdmin') . '/dashboard']);
             }
         }
     }
@@ -464,7 +485,6 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 	 */
 	public function activateAccount()
 	{
-        if ($this->request->isAJAX()) {
             $users = model('UserModel');
 
             // First things first - log the activation attempt.
@@ -485,15 +505,14 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                       ->first();
 
             if (is_null($user)) {
-                return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+                return redirect()->route('login-area')->with('error', lang('Auth.activationNoUser'));
             }
 
             $user->activate();
 
             $users->save($user);
 
-            return redirect()->route('login')->with('message', lang('Auth.registerSuccess'));
-        }
+            return redirect()->route('login-area')->with('message', lang('Auth.registerSuccess'));
 	}
 
 	/**
@@ -515,7 +534,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 			return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
 		}
 
-		$login = urldecode($this->request->getGet('login'));
+		$login = urldecode($this->request->getGet('login-area'));
 		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
 		$users = model('UserModel');
@@ -551,7 +570,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 	// {
     //     if ($this->request->isAJAX()) {
     //         if ($this->config->requireActivation === false) {
-    //             return redirect()->route('login');
+    //             return redirect()->route('login-area');
     //         }
 
     //         // $throttler = service('throttler');
@@ -572,7 +591,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     //         }
 
 
-    //         $login = urldecode($this->request->getGet('login'));
+    //         $login = urldecode($this->request->getGet('login-area'));
     //         $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
     //         $users = model('UserModel');
@@ -582,9 +601,9 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     //                   ->first();
 
     //         if (is_null($user)) {
-    //             //return redirect()->route('login')->with('error', lang('Auth.activationNoUser'));
+    //             //return redirect()->route('login-area')->with('error', lang('Auth.activationNoUser'));
     //             $response = [
-    //                 csrf_token() => csrf_hash(),
+    //                 'token' => csrf_hash(),
     //                 'error' => true,
     //                 'message' =>  lang('Auth.activationNoUser'),
     //             ];
@@ -597,7 +616,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     //         if (! $sent) {
     //             //return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
     //             $response = [
-    //                 csrf_token() => csrf_hash(),
+    //                 'token' => csrf_hash(),
     //                 'error' => true,
     //                 'message' =>  $activator->error() ?? lang('Auth.unknownError'),
     //             ];
@@ -605,9 +624,9 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     //         }
 
     //         // Success!
-    //         //return redirect()->route('login')->with('message', lang('Auth.activationSuccess'));
+    //         //return redirect()->route('login-area')->with('message', lang('Auth.activationSuccess'));
     //         $response = [
-    //             csrf_token() => csrf_hash(),
+    //             'token' => csrf_hash(),
     //             'status' => "success",
     //             'message' => lang('Auth.activationSuccess'),
     //             'redirect' => '/' . env('app.areaAdmin')

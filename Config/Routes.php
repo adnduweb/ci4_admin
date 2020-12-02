@@ -19,8 +19,12 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
     $routes->get('resend-activate-account', 'Authentication::resendActivateAccount', ['as' => 'resend-activate-account']);
 
     // Forgot password
-    $routes->get('forgot-password', 'AdminLoginController::forgotPassword', ['as' => 'forgot-password']);
-    $routes->post('forgot-password', 'AdminLoginController::attemptForgot');
+    $routes->get('forgot-password', 'Authentication::forgotPassword', ['as' => 'forgot-password']);
+    $routes->post('forgot-password', 'Authentication::attemptForgot');
+
+    // Reset password
+    $routes->get('reset-password', 'Authentication::resetPassword', ['as' => 'reset-password']);
+    $routes->post('reset-password', 'Authentication::attemptReset');
 
     // Dashboard
     $routes->get('dashboard', 'Dashboard::index',  ['as' => 'dashboard']);

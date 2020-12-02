@@ -105,5 +105,7 @@ return [
 	'explain_disabled' => 'Le compte est désactivé',
 	'disabled' => 'Désactivé',
 	'explain_banned' => 'Votre compte a été banni',
-	'banned' => 'Banni',
+    'banned' => 'Banni',
+    'valider' => 'Valider',
+    'cancel' => 'Annuler',
 ];

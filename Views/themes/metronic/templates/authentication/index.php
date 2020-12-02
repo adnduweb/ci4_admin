@@ -48,6 +48,15 @@
                         </div>
                         <!--end::Form group-->
 
+                        <?php if ($config->allowRemembering): ?>
+                        <div class="form-group">
+                            <label class="checkbox">
+                                <input type="checkbox" name="remember" class="form-check-input" <?php if(old('remember')) : ?> checked <?php endif ?>>
+                                <span></span>&nbsp;<?=lang('Auth.rememberMe')?>
+                            </label>
+						</div>
+                        <?php endif; ?>
+
                         <!--begin::Action-->
                         <div class="pb-lg-0 pb-5">
                             <button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"><?= lang('Auth.loginAction') ?></button>
