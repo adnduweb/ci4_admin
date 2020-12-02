@@ -41,7 +41,7 @@ class RoleFilter implements FilterInterface
 		if (! $authenticate->check())
 		{
 			session()->set('redirect_url', current_url());
-			return redirect('/' . env('app.areaAdmin') . '/login');
+			return redirect()->to(route_to('login-area'));
 		}
 
 		$authorize = Services::authorization();

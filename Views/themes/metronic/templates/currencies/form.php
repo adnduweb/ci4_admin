@@ -22,7 +22,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 				<div class="card card-custom py-5 px-5">
 					<ul class="nav nav-tabs nav-tabs-line mb-5" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" data-toggle="tab" href="#kt_user_edit_tab_1" role="tab">
+							<a class="nav-link active" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_1" role="tab">
 								<?= Theme::getSVG('assets/media/svg/icons/Design/Layers.svg', 'svg-icon svg-icon-sm', true); ?> 	
 								<?= lang('Core.tab_general'); ?>
 							</a>

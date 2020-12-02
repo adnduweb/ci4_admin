@@ -290,6 +290,11 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         $user->id = $user_id;
         $user->force_pass_reset = ($user->force_pass_reset == '1') ? $user->force_pass_reset : '0';
 
+        if($user->force_pass_reset == 1){
+            $user->generateResetHash();
+        }
+       
+
         if ($user->status == 'activated') {
             $user->status = null;
             $user->status_message = null;

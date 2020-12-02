@@ -18,7 +18,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public $controller = 'authentication';
 
-     /**
+    /**
      * Localize slug
      */
     public $pathcontroller  = '/';
@@ -33,13 +33,13 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public $tableModel = UserModel::class;
 
-     /**
-	 * @var Auth
-	 */
+    /**
+     * @var Auth
+     */
     protected $page = 'login-back-off';
 
     /**
-	 *
+     *
      * An array of helpers to be loaded automatically upon
      * class instantiation. These helpers will be available
      * to all other controllers that extend BaseController.
@@ -51,8 +51,8 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
 
     /**
-	 * @var Auth
-	 */
+     * @var Auth
+     */
     protected $setting_theme_admin;
 
     public function __construct()
@@ -60,10 +60,9 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
         $this->session = service('session');
 
-		$this->config = config('Auth');
+        $this->config = config('Auth');
         $this->auth = service('authentication');
         $this->setting = service('settings');
-
     }
 
     //--------------------------------------------------------------------
@@ -80,13 +79,15 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         // No need to show a login form if the user
         // is already logged in.
         if ($this->auth->check()) {
-            $redirectURL = session('redirect_url') ?? '/';
-            unset($_SESSION['redirect_url']);
+            if (user()->force_pass_reset == '0') {
+                $redirectURL = session('redirect_url') ?? '/';
+                unset($_SESSION['redirect_url']);
 
-            return redirect()->to($redirectURL);
+                return redirect()->to($redirectURL);
+            }
         }
 
-       return view('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\index', ['config' => $this->config, 'data' => $this->viewData]);
+        return view('Adnduweb\Ci4Admin\themes\/' . $this->setting->setting_theme_admin . '/\templates\authentication\index', ['config' => $this->config, 'data' => $this->viewData]);
     }
 
     /**
@@ -118,7 +119,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
 
             // Try to log them in...
-            if (!$this->auth->attempt([$type => $login, 'password' => $password], $remember)) {  
+            if (!$this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
                 $throttler = \Config\Services::throttler();
                 if ($throttler->check($this->request->getIPAddress(), 5, MINUTE) === false) {
                     $response = [
@@ -144,7 +145,8 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                     'token' => csrf_hash(),
                     'status' => "success",
                     'message' => lang('Auth.loginSuccess'),
-                    'redirect' => '/' . env('app.areaAdmin') . '/change-pass'
+                    //'redirect' => route_to('reset-password') .'?token='.$this->auth->user()->reset_hash
+                    'redirect' => route_to('dashboard')
 
                 ];
                 return $this->respond($response);
@@ -178,7 +180,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             }
 
             // ON récupére le groupe principal
-            $groupModel = new \Adnduweb\Ci4Admin\Models\GroupModel(); 
+            $groupModel = new \Adnduweb\Ci4Admin\Models\GroupModel();
             $getGroupsForUser = $groupModel->getGroupsForUser($this->auth->user()->id);
             if (empty($getGroupsForUser[0]['login_destination']))
                 $getGroupsForUser[0]['login_destination'] = 'dashboard';
@@ -268,14 +270,13 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     /**
      * Displays the forgot password form.
      */
-    public function forgotPassword() 
+    public function forgotPassword()
     {
-        if ($this->config->activeResetter === false)
-		{
-			return redirect()->route('login-area')->with('error', lang('Auth.forgotDisabled'));
+        if ($this->config->activeResetter === false) {
+            return redirect()->route('login-area')->with('error', lang('Auth.forgotDisabled'));
         }
-        
-        return view('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\forgot-password', ['config' => $this->config, 'data' => $this->viewData]);
+
+        return view('Adnduweb\Ci4Admin\themes\/' . $this->setting->setting_theme_admin . '/\templates\authentication\forgot-password', ['config' => $this->config, 'data' => $this->viewData]);
     }
 
     /**
@@ -286,8 +287,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         if ($this->request->isAJAX()) {
 
-            if ($this->config->activeResetter === false)
-            {
+            if ($this->config->activeResetter === false) {
                 $response = [
                     'token' => csrf_hash(),
                     'error' => true,
@@ -295,7 +295,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 ];
                 return $this->respond($response);
             }
-        
+
 
             $users = model(UserModel::class);
 
@@ -315,11 +315,10 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             $users->save($user);
 
             $resetter = service('resetter');
-		    $sent = $resetter->send($user);
+            $sent = $resetter->send($user);
 
             //fabrice@adnduweb.com
-            if (! $sent)
-            {
+            if (!$sent) {
                 $response = [
                     'token' => csrf_hash(),
                     'error' => true,
@@ -344,14 +343,17 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function resetPassword()
     {
-        if ($this->config->activeResetter === false)
-		{
-			return redirect()->route('login-area')->with('error', lang('Auth.forgotDisabled'));
+        if ($this->config->activeResetter === false) {
+            return redirect()->route('login-area')->with('error', lang('Auth.forgotDisabled'));
         }
-        
+
+        if ($this->auth->user()->force_pass_reset === false) {
+            return redirect()->route('dashboard');
+        }
+
         $token = $this->request->getGet('token');
 
-        return view('Adnduweb\Ci4Admin\themes\/'. $this->setting->setting_theme_admin.'/\templates\authentication\reset-password', ['config' => $this->config, 'data' => $this->viewData, 'token'  => $token]);
+        return view('Adnduweb\Ci4Admin\themes\/' . $this->setting->setting_theme_admin . '/\templates\authentication\reset-password', ['config' => $this->config, 'data' => $this->viewData, 'token'  => $token]);
     }
 
     /**
@@ -364,11 +366,10 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         if ($this->request->isAJAX()) {
 
-            if ($this->config->activeResetter === false)
-		{
-			return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
-        }
-        
+            if ($this->config->activeResetter === false) {
+                return redirect()->route('login')->with('error', lang('Auth.forgotDisabled'));
+            }
+
             $users = model(UserModel::class);
 
             // First things first - log the reset attempt.
@@ -439,135 +440,91 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         }
     }
 
-    public function changePassword()
+    /**
+     * Activate account.
+     *
+     * @return mixed
+     */
+    public function activateAccount()
     {
-        if ($this->auth->check()) {
-            if (user()->force_pass_reset == '1') {
-                return view($this->get_current_theme_view('change-pass', 'default'), ['config' => $this->config, 'data' => $this->viewData]);
-            } else {
-                unset($_SESSION['redirect_url']);
-                return redirect()->to('/');
-            }
-        } else {
-            unset($_SESSION['redirect_url']);
-            return redirect()->to('/');
+        $users = model('UserModel');
+
+        // First things first - log the activation attempt.
+        $users->logActivationAttempt(
+            $this->request->getGet('token'),
+            $this->request->getIPAddress(),
+            (string) $this->request->getUserAgent()
+        );
+
+        $throttler = service('throttler');
+
+        if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false) {
+            return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
         }
-    }
 
-    public function attemptChangePass()
-    {
+        $user = $users->where('activate_hash', $this->request->getGet('token'))
+            ->where('active', 0)
+            ->first();
 
-        if ($this->request->isAJAX()) {
-            if ($this->auth->check()) {
-                $user =  user();
-                $users = new UserModel();
-
-                $rules = [
-                    'email'        => 'required|valid_email',
-                    'password'     => 'required|strong_password',
-                    'pass_confirm' => 'required|matches[password]',
-                ];
-                if (!$this->validate($rules)) {
-                    return $this->respond(['token' => csrf_hash(), 'error' => true, 'message' => $this->validator->listErrors()]);
-                }
-                $user->password         = $this->request->getPost('password');
-                $user->force_pass_reset = '0';
-                $users->save($user);
-                return $this->respond(['token' => csrf_hash(), 'error' => false, 'message' => lang('Auth.passwordChangeSuccess'), 'redirect' => '/' . env('app.areaAdmin') . '/dashboard']);
-            }
+        if (is_null($user)) {
+            return redirect()->route('login-area')->with('error', lang('Auth.activationNoUser'));
         }
+
+        $user->activate();
+
+        $users->save($user);
+
+        return redirect()->route('login-area')->with('message', lang('Auth.registerSuccess'));
     }
 
     /**
-	 * Activate account.
-	 *
-	 * @return mixed
-	 */
-	public function activateAccount()
-	{
-            $users = model('UserModel');
+     * Resend activation account.
+     *
+     * @return mixed
+     */
+    public function resendActivateAccount()
+    {
+        if ($this->config->requireActivation === false) {
+            return redirect()->route('login-area');
+        }
 
-            // First things first - log the activation attempt.
-            $users->logActivationAttempt(
-                $this->request->getGet('token'),
-                $this->request->getIPAddress(),
-                (string) $this->request->getUserAgent()
-            );
+        $throttler = service('throttler');
 
-            $throttler = service('throttler');
+        if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false) {
+            return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
+        }
 
-            if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false) {
-                return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
-            }
+        $login = urldecode($this->request->getGet('login-area'));
+        $type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-            $user = $users->where('activate_hash', $this->request->getGet('token'))
-                      ->where('active', 0)
-                      ->first();
+        $users = model('UserModel');
 
-            if (is_null($user)) {
-                return redirect()->route('login-area')->with('error', lang('Auth.activationNoUser'));
-            }
+        $user = $users->where($type, $login)
+            ->where('active', 0)
+            ->first();
 
-            $user->activate();
+        if (is_null($user)) {
+            return redirect()->route('login-area')->with('error', lang('Auth.activationNoUser'));
+        }
 
-            $users->save($user);
+        $activator = service('activator');
+        $sent = $activator->send($user);
 
-            return redirect()->route('login-area')->with('message', lang('Auth.registerSuccess'));
-	}
+        if (!$sent) {
+            return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
+        }
 
-	/**
-	 * Resend activation account.
-	 *
-	 * @return mixed
-	 */
-	public function resendActivateAccount()
-	{
-		if ($this->config->requireActivation === false)
-		{
-			return redirect()->route('login-area');
-		}
-
-		$throttler = service('throttler');
-
-		if ($throttler->check($this->request->getIPAddress(), 2, MINUTE) === false)
-		{
-			return service('response')->setStatusCode(429)->setBody(lang('Auth.tooManyRequests', [$throttler->getTokentime()]));
-		}
-
-		$login = urldecode($this->request->getGet('login-area'));
-		$type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-		$users = model('UserModel');
-
-		$user = $users->where($type, $login)
-					  ->where('active', 0)
-					  ->first();
-
-		if (is_null($user))
-		{
-			return redirect()->route('login-area')->with('error', lang('Auth.activationNoUser'));
-		}
-
-		$activator = service('activator');
-		$sent = $activator->send($user);
-
-		if (! $sent)
-		{
-			return redirect()->back()->withInput()->with('error', $activator->error() ?? lang('Auth.unknownError'));
-		}
-
-		// Success!
-		return redirect()->route('login-area')->with('message', lang('Auth.activationSuccess'));
-
+        // Success!
+        return redirect()->route('login-area')->with('message', lang('Auth.activationSuccess'));
     }
-    
+
     // /**
-	//  * Resend activation account.
-	//  *
-	//  * @return mixed
-	//  */
-	// public function resendActivateAccount()
-	// {
+    //  * Resend activation account.
+    //  *
+    //  * @return mixed
+    //  */
+    // public function resendActivateAccount()
+    // {
     //     if ($this->request->isAJAX()) {
     //         if ($this->config->requireActivation === false) {
     //             return redirect()->route('login-area');

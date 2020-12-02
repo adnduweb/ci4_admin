@@ -72,7 +72,9 @@ class LocalAuthenticator extends AuthenticationBase implements AuthenticatorInte
             // Do we need to force the user to reset their password?
             if ($this->user && $this->user->force_pass_reset)
             {
-                throw new RedirectException(route_to('reset-password') .'?token='.$this->user->reset_hash);
+                if ('/' .Services::request()->uri->getPath() != route_to('reset-password')){
+                    throw new RedirectException(route_to('reset-password') .'?token='.$this->user->reset_hash); 
+                }
             }
 
             return true;
