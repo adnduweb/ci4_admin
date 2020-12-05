@@ -23,7 +23,6 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 <link href="<?= (Config('Theme')->layout['self']['rtl']) ? assetAdmin(Theme::rtlCssPath($theme)) : assetAdmin($theme); ?>" rel="stylesheet" type="text/css" />
 <?php } ?>
 
-<!-- <link href="<?= assetAdmin('/css/custom.css'); ?>" rel="stylesheet" type="text/css" /> -->
 <link href="<?= assetAdmin('/css/app.css'); ?>" rel="stylesheet" type="text/css" />
 
 <?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\js_params') ?>

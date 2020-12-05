@@ -2,8 +2,7 @@
 
 namespace Adnduweb\Ci4Admin\Controllers\Admin;
 
-use Config\Email;
-use Config\Services;
+use Adnduweb\Ci4Admin\Libraries\Theme;
 use Adnduweb\Ci4Admin\Entities\User;
 use Adnduweb\Ci4Admin\Models\UserModel;
 use CodeIgniter\API\ResponseTrait;
@@ -86,6 +85,8 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 return redirect()->to($redirectURL);
             }
         }
+
+        $this->viewData['metatitle'] = lang('Auth.loginTitle');
 
         return view('Adnduweb\Ci4Admin\themes\/' . $this->setting->setting_theme_admin . '/\templates\authentication\index', ['config' => $this->config, 'data' => $this->viewData]);
     }
@@ -186,8 +187,8 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 $getGroupsForUser[0]['login_destination'] = 'dashboard';
 
 
-            $redirectURL = session('previous_page') ?? '/' . env('app.areaAdmin') . '/' . $getGroupsForUser[0]['login_destination'];;
-            unset($_SESSION['previous_page']);
+            $redirectURL = session('redirect_url') ?? '/' . env('app.areaAdmin') . '/' . $getGroupsForUser[0]['login_destination']; 
+            unset($_SESSION['redirect_url']);
             $response = [
                 'token' => csrf_hash(),
                 'status' => "success",
@@ -195,8 +196,10 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 'redirect' => $redirectURL
 
             ];
+            // print_r($response); exit;
             return $this->respond($response);
         }
+        return redirect()->to(route_to('login-area'));
     }
 
     /**
@@ -224,6 +227,8 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         if (!$this->config->allowRegistration) {
             return redirect()->back()->withInput()->with('error', lang('Auth.registerDisabled'));
         }
+
+        $this->viewData['metatitle'] = lang('Auth.register');
 
         return view($this->config->views['register'], ['config' => $this->config]);
     }
@@ -275,6 +280,8 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         if ($this->config->activeResetter === false) {
             return redirect()->route('login-area')->with('error', lang('Auth.forgotDisabled'));
         }
+
+        $this->viewData['metatitle'] = lang('Auth.forgotYourPassword');
 
         return view('Adnduweb\Ci4Admin\themes\/' . $this->setting->setting_theme_admin . '/\templates\authentication\forgot-password', ['config' => $this->config, 'data' => $this->viewData]);
     }
@@ -336,22 +343,36 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             //return redirect()->route('reset-password')->with('message', lang('Auth.forgotEmailSent'));
             return $this->respond($response);
         }
+        return redirect()->to(route_to('forgot-password'));
     }
 
     /**
      * Displays the Reset Password form.
      */
-    public function resetPassword()
+    public function resetPassword() 
     {
         if ($this->config->activeResetter === false) {
             return redirect()->route('login-area')->with('error', lang('Auth.forgotDisabled'));
         }
 
+        if (!$this->auth->check()) {
+            unset($_SESSION['redirect_url']);
+            return redirect()->to(route_to('login-area'));
+        }
+        
         if ($this->auth->user()->force_pass_reset === false) {
             return redirect()->route('dashboard');
         }
 
+        Theme::add_js(
+            [
+                'https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js',
+            ]
+        );
+
         $token = $this->request->getGet('token');
+
+        $this->viewData['metatitle'] = lang('Auth.resetYourPassword');
 
         return view('Adnduweb\Ci4Admin\themes\/' . $this->setting->setting_theme_admin . '/\templates\authentication\reset-password', ['config' => $this->config, 'data' => $this->viewData, 'token'  => $token]);
     }
@@ -438,6 +459,7 @@ class Authentication extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             ];
             return $this->respond($response);
         }
+        return redirect()->to(route_to('reset-password'));
     }
 
     /**

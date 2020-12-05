@@ -14,7 +14,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 
 <!-- begin::Body -->
 
-<body id="kt_body"  <?= Theme::printAttrs('body'); ?> <?= Theme::printClasses('body'); ?> >
+<body id="kt_body" <?= Theme::printAttrs('body'); ?> <?= Theme::printClasses('body'); ?> >
 	<?php if (Config('Theme')->layout['page-loader']['type'] != ''){ ?>
 		<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_page_loader') ?>
 	<?php } ?>
@@ -99,7 +99,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 	<!-- end::Outils de gestion de média -->
 
 	<!-- begin::Scrolltop -->
-	<div id="kt_scrolltop" class="kt-scrolltop">
+	<div id="kt_scrolltop" class="scrolltop">
 		<i class="fa fa-arrow-up"></i>
 	</div>
 	<!-- end::Scrolltop -->

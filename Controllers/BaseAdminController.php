@@ -1,4 +1,5 @@
 <?php
+
 namespace Adnduweb\Ci4Admin\Controllers;
 
 use CodeIgniter\HTTP\RequestInterface;
@@ -11,12 +12,12 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
 {
 
 
-      /**
+    /**
      * @var back
      */
     protected $isBack = false;
 
-         /**
+    /**
      * @var back
      */
     protected $isFront = false;
@@ -41,10 +42,10 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     protected $view = null; // Set default yield view
 
     /**
-    * Refactored class-wide data array variable
-    * 
-    * @var array
-    */
+     * Refactored class-wide data array variable
+     * 
+     * @var array
+     */
     protected $viewData = [];
 
     /**
@@ -88,7 +89,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
      */
     protected $session;
 
-        /**
+    /**
      * @var \CodeIgniter\Services\encrypter
      */
     protected $encrypter;
@@ -98,10 +99,15 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
      */
     protected $validation;
 
-     /**
+    /**
      * @array array ;
      */
     protected $rules;
+
+    /**
+     * Silent
+     */
+    public $silent = true;
 
     /**
      * Display Data datatable
@@ -177,29 +183,31 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         $this->settings   = service('settings');
         $this->validation = service('validation');
         $this->db         = Database::connect();
-        $this->tableModel = (!is_null( $this->tableModel)) ? new $this->tableModel : null;
+        $this->tableModel = (!is_null($this->tableModel)) ? new $this->tableModel : null;
 
         // Display theme information
         $this->viewData['theme_admin'] = $this->settings->setting_theme_admin;
         $this->viewData['metatitle']   = $this->controller;
+
+        //On écrire le fichier ajax de traduction
+        $this->invokeJs();
 
         // Display param js
         $this->initParamJs();
 
         //Display menu
         $this->initMenu();
-
     }
 
     protected function _render(string $view, array $data = [])
-	{
-		return view($view, $data);
+    {
+        return view($view, $data);
     }
 
     protected function _redirect(string $url)
-	{
-        if($this->request->getMethod() == 'post'){
-            
+    {
+        if ($this->request->getMethod() == 'post') {
+
             $submithandler = $this->request->getPost('submithandler');
 
             switch ($submithandler) {
@@ -217,21 +225,31 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             }
         }
 
-		return redirect()->to('/' . CI_AREA_ADMIN . $this->pathcontroller . '/' .  $this->controller . $url ?? '');
+        return redirect()->to('/' . CI_AREA_ADMIN . $this->pathcontroller . '/' .  $this->controller . $url ?? '');
     }
 
-     // try to cache a setting and pass it back
-     protected function cache($key, $content)
-     {
-         if ($content === null) {
-             return cache()->delete($key);
-         }
- 
-         if ($duration = env('cache.cacheDuration')) {
-             cache()->save($key, $content, $duration);
-         }
-         return $content;
-     }
+    // try to cache a setting and pass it back
+    protected function cache($key, $content)
+    {
+        if ($content === null) {
+            return cache()->delete($key);
+        }
+
+        if ($duration = env('cache.cacheDuration')) {
+            cache()->save($key, $content, $duration);
+        }
+        return $content;
+    }
+
+    protected function redirect(string $url)
+    {
+        return service('response')->redirect($url);
+    }
+
+    protected function goDashboard()
+    {
+        return $this->redirect(route_to('dashboard'));
+    }
 
 
     protected function initMenu()
@@ -246,7 +264,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         $tab                 = new \Adnduweb\Ci4Core\Models\TabModel();
         $menus               = $tab->getTab();
         $this->viewData['menu']              = [];
-        
+
         if (!empty($menus)) {
             $i = 0;
             foreach ($menus as $menu) {
@@ -265,7 +283,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         //print_r($this->viewData); exit;
         $this->cache(config('cache')->cacheQueryString . "admin-" . $this->settings->setting_theme_admin . "-initMenu-" . user_id(), $this->viewData['menu']);
     }
-    
+
     protected function initParamJs()
     {
 
@@ -274,7 +292,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             'current_url'    => current_url(),
             'uri'            => $this->request->uri->getPath(),
             'basePath'       => '\/',
-            'baseController' => base_url('/' . env('app.areaAdmin') . $this->pathcontroller . '/'. $this->controller),
+            'baseController' => base_url('/' . env('app.areaAdmin') . $this->pathcontroller . '/' . $this->controller),
             'segementAdmin'  => env('app.areaAdmin'),
             'startUrl'       => '\/' . env('app.areaAdmin'),
             'lang_iso'       => $this->settings->setting_lang_iso,
@@ -283,7 +301,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             'SP_VERSION'     => config('Core')->version
         ];
 
-        if(logged_in() == true){
+        if (logged_in() == true) {
 
             $user = new   \Adnduweb\Ci4Admin\Entities\User(array('id' => user()->id));
             $id_group = [];
@@ -296,9 +314,43 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             $this->viewData['paramJs']['activer_multilangue'] = $this->settings->setting_activer_multilangue;
             $this->viewData['paramJs']['supportedLocales']    = implode('|', $this->langue->supportedLocales());
             $this->viewData['paramJs']['crsftoken']           = csrf_token();
-            $this->viewData['paramJs']['tokenHash']           = md5($user->uuid.$this->controller);
+            $this->viewData['paramJs']['tokenHash']           = md5($user->uuid . $this->controller);
         }
         return $this->viewData['paramJs'];
+    }
+
+    /**
+     * 
+     * Mettre à jour le fichier JS de langue
+     */
+    public function invokeJs()
+    {
+        helper('filesystem');
+        $files = \Config\Services::locator()->search('Language/' . service('request')->getLocale() . '/Js.php');
+
+        if (!empty($files)) {
+            $file  = include($files[0]);
+            $htmlJs  = 'var _LANG_ = {';
+            $htmlJs .= "\n";
+            foreach ($file as $k => $v) {
+                $htmlJs .= '"' . $k . '" : ';
+                $htmlJs .= '"' . $v . '"';
+                $htmlJs .= ', ' . "\n";
+            }
+            $htmlJs .= "\n";
+            $htmlJs .= '}';
+            try {
+                $write = write_file('admin/themes/' . $this->settings->setting_theme_admin . '/assets/js/language/lang_' . service('request')->getLocale() . '.js', $htmlJs);
+            } catch (\Exception $e) {
+                //die($e->getMessage());
+                throw \App\Exceptions\AdnduwebException::forInvalidFile('admin/themes/' . $this->settings->setting_theme_admin . '/assets/js/language/lang_' . service('request')->getLocale() . '.js');
+                exit;
+            }
+        } else {
+            $write = write_file('admin/themes/' . $this->settings->setting_theme_admin . '/assets/js/language/lang_' . service('request')->getLocale() . '.js', '');
+        }
+
+        //exit;
     }
 
 
@@ -310,25 +362,26 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
      */
 
     /**
-    * Display view only
-    *
-    */
-    public function index(){
-       
+     * Display view only
+     *
+     */
+    public function index()
+    {
 
-        if (!has_permission(ucfirst($this->controller) . '::view', user()->id)) {
-            Theme::set_message('danger', lang('Core.not_acces_permissions'), lang('Core.warning_error'));
-            return redirect()->to(route_to('dashboard'));
-        }
+
+        // if (!has_permission(ucfirst($this->controller) . '::view', user()->id)) {
+        //     Theme::set_message('danger', lang('Core.not_acces_permissions'), lang('Core.warning_error'));
+        //     return redirect()->to(base_url('admin/login'));
+        // }
 
         $this->getToolbar();
-        $this->viewData['addPathController'] = $this->pathcontroller . '/'. $this->controller .  '/create';
+        $this->viewData['addPathController'] = $this->pathcontroller . '/' . $this->controller .  '/create';
 
         if (isset($this->add) && $this->add == true)
             $this->viewData['add'] = lang('Core.add_' . $this->controller);
-     }
+    }
 
-    
+
 
     /**
      * Store a newly created resource in storage in ajax.
@@ -336,7 +389,6 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
      */
     public function storeAjax($params = null)
     {
-        
     }
 
     /**
@@ -345,75 +397,75 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
      */
     public function show(string $id)
     {
-       // Permission
-       if (!has_permission(ucfirst($this->controller) . '::view', user()->id))
-       {
-           Theme::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
-           return $this->response->redirect(route_to('dashboard'));
+
+        if ($this->uuid->isValid($id)) {
+            $this->id = $this->uuid->fromString($id)->getBytes();
+        } else {
+            $this->id = (int) $id;
         }
-
-
-       if($this->uuid->isValid($id))
-       {
-           $this->id = $this->uuid->fromString($id)->getBytes();
-       }
-       else
-       {
-           $this->id = (int) $id; 
-       }
-       
     }
 
     /**
      *
      */
     public function create()
-    { 
+    {
 
         $this->getToolbar();
         $this->viewData['action'] = 'create';
         $this->viewData['create_title']  = lang('Core.create_' . $this->controller);
-
-        if (!has_permission(ucfirst($this->controller) . '::create', user()->id)) {
-            Theme::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
-            return $this->response->redirect(route_to('dashboard'));
-         }
-
     }
 
-     /**
+    /**
      * Store a newly created resource in storage.
      *
      */
-    public function store(){
-
+    public function store()
+    {
     }
 
 
     public function edit(string $id)
     {
 
-        if (!has_permission(ucfirst($this->controller) . '::edit', user()->id)) {
-            Theme::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
-            return $this->response->redirect(route_to('dashboard'));
-         }
 
-        if($this->uuid->isValid($id))
-        {
+        if ($this->uuid->isValid($id)) {
             $this->id = $this->uuid->fromString($id)->getBytes();
+        } else {
+            $this->id = (int) $id;
         }
-        else
+
+        // Check if uuid exist
+        if (isset($this->tableModel->uuidFields)) {
+
+            // Initialize form
+            $this->viewData['form'] = $this->tableModel->where([$this->tableModel->uuidFields[0] => $this->id])->first();
+        } else {
+
+            // Initialize form
+            $this->viewData['form'] = $this->tableModel->where([$this->tableModel->primaryKey => $this->id])->first();
+        }
+
+        if (empty($this->viewData['form']))
         {
-            $this->id = (int) $id; 
+            if ($this->silent == true) {
+
+                Theme::set_message('danger', lang('Core.not_exist_item'), lang('Core.warning_error'));
+                throw new \CodeIgniter\Router\Exceptions\RedirectException(route_to('dashboard'));
+
+            }else{
+
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            }
+            
         }
 
         $this->getToolbar();
         $this->viewData['action'] = 'edit';
         $this->viewData['edit_title']  = lang('Core.edit_' . $this->controller);
 
-        
     }
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -421,23 +473,11 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     public function update(string $id)
     {
 
-        // Permission
-        if (!has_permission(ucfirst($this->controller) . '::update', user()->id))
-        {
-            Theme::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
-            return $this->response->redirect(route_to('dashboard'));
-         }
-
-        if($this->uuid->isValid($id))
-        {
+        if ($this->uuid->isValid($id)) {
             $this->id = $this->uuid->fromString($id)->getBytes();
+        } else {
+            $this->id = (int) $id;
         }
-        else
-        {
-            $this->id = (int) $id; 
-        }
-        
-        
     }
 
     /**
@@ -445,15 +485,11 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
      */
     public function delete()
     {
-        // Permission
-        if (!has_permission(ucfirst($this->controller) . '::delete', user()->id))
-        {
-            Theme::set_message('danger', lang('Core.not_acces_permission'), lang('Core.warning_error'));
-            return $this->response->redirect(route_to('dashboard'));
-         }
+
     }
 
-    protected function getToolbar(){
+    protected function getToolbar()
+    {
 
         $this->viewData['controller'] = lang('Core.' . $this->controller);
         $this->viewData['addPathController'] = $this->pathcontroller . '/create';
@@ -470,8 +506,8 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     {
         $list                        = $this->request->getVar();
         (isset($list['model'])) ? $this->tableModel =  new $list['model']() : $this->tableModel = $this->tableModel;
-        (isset($list['handle'])) ? $getAllCount =  'getAll'.ucfirst($list['handle']).'Count' : $getAllCount = 'getAllCount';
-        (isset($list['handle'])) ? $getAllList =  'getAll'.ucfirst($list['handle']).'List' : $getAllList = 'getAllList';
+        (isset($list['handle'])) ? $getAllCount =  'getAll' . ucfirst($list['handle']) . 'Count' : $getAllCount = 'getAllCount';
+        (isset($list['handle'])) ? $getAllList =  'getAll' . ucfirst($list['handle']) . 'List' : $getAllList = 'getAllList';
         (!isset($list['sort']['field'])) ? $fieldList = $this->fieldList : $fieldList = $list['sort']['field'];
         (!isset($list['sort']['sort'])) ? $fieldListSort = 'DESC' : $fieldListSort = $list['sort']['sort'];
 
@@ -495,7 +531,14 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
                     $getInfosAllPaginations[$i]->date_create_format = date('d/m/Y', strtotime($getInfosAllPagination->date_create_at));
                     $getInfosAllPaginations[$i]->date_create_format_full = date('d/m/Y H:i:s', strtotime($getInfosAllPagination->date_create_at));
                 }
-                
+
+                //Encode/decode data
+                if (isset($this->tableModel->fieldEncode)) {
+                    foreach ($this->tableModel->fieldEncode as $encode) {
+                        $getInfosAllPaginations[$i]->{$encode} = json_decode($getInfosAllPaginations[$i]->{$encode});
+                    }
+                }
+
                 // GESTION DES UUID
                 if (isset($this->tableModel->uuidFields) && is_array($this->tableModel->uuidFields)) {
                     foreach ($this->tableModel->uuidFields as $key => $value) {
@@ -543,32 +586,30 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         return $this->listDatatable;
     }
 
-    protected function sanitizePhone(object $object){
-       
-        if(isset($object->full_phone) && !empty($object->full_phone)){
+    protected function sanitizePhone(object $object)
+    {
+
+        if (isset($object->full_phone) && !empty($object->full_phone)) {
             $phoneInternationalPhone = $this->phoneInternational($object->full_phone);
             if ($phoneInternationalPhone['status'] == 200) {
-               
-                $object->phone = $phoneInternationalPhone['message'];
 
+                $object->phone = $phoneInternationalPhone['message'];
             } else {
-                return [ 'error' =>['code' => 400, 'message' => lang('Core.' . $phoneInternationalPhone['message'] . ': phone')], 'success' => false, csrf_token() => csrf_hash()];
+                return ['error' => ['code' => 400, 'message' => lang('Core.' . $phoneInternationalPhone['message'] . ': phone')], 'success' => false, csrf_token() => csrf_hash()];
             }
         }
 
-        if(isset($object->full_phone_mobile) && !empty($object->full_phone_mobile)){
+        if (isset($object->full_phone_mobile) && !empty($object->full_phone_mobile)) {
             $phoneInternationalMobile = $this->phoneInternational($object->full_phone_mobile);
             if ($phoneInternationalMobile['status'] == 200) {
 
                 $object->phone_mobile = $phoneInternationalMobile['message'];
-
             } else {
-                return [ 'error' =>['code' => 400, 'message' => lang('Core.' . $phoneInternationalMobile['message'] . ': phone_mobile')], 'success' => false, csrf_token() => csrf_hash()];
+                return ['error' => ['code' => 400, 'message' => lang('Core.' . $phoneInternationalMobile['message'] . ': phone_mobile')], 'success' => false, csrf_token() => csrf_hash()];
             }
         }
 
         //return $object;
 
     }
-
 }

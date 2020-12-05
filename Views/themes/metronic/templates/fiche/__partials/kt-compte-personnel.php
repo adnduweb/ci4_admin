@@ -10,7 +10,7 @@
         <?= view('Adnduweb\Ci4Admin\themes\metronic\templates\fiche\__form_section\profile.php') ?>
         </div>
         <div class="card-footer d-flex justify-content-between">
-             <button type="submit" class="btn btn-success"><?= lang('Core.valider votre fiche'); ?></button>
+             <button id="kt_form_submit_utilisateurs" type="submit" class="btn btn-success"><?= lang('Core.valider votre fiche'); ?></button>
         </div>
     </div>
 </div>

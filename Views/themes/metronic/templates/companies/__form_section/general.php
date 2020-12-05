@@ -1,10 +1,3 @@
-<div class="row">
-    <label class="col-xl-3"></label>
-    <div class="col-lg-9 col-xl-6">
-        <h3 class="kt-section__title kt-section__title-sm"><?= lang('Core.info_company'); ?>:</h3>
-    </div>
-</div>
-
 <?php if (!empty($form->company_id)) { ?>
     <div class="form-group row">
         <label for="name" class="col-xl-3 col-lg-3 col-form-label">
@@ -54,7 +47,7 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="id_group" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.country_id')); ?>* : </label>
+    <label for="id_group" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.country')); ?>* : </label>
     <div class="col-lg-9 col-xl-6">
         <select required name="country_id" class="form-control kt-selectpicker" id="country_id" data-live-search="true" data-actions-box="true" title="<?= ucfirst(lang('Core.choose_one_of_the_following')); ?>">
             <?php foreach ($countries as $country) { ?>

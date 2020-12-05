@@ -136,8 +136,6 @@ class Currencies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         parent::edit($id);
 
-        // Initialize form
-        $this->viewData['form'] =  $this->tableModel->where('id', $id)->first();
         $this->viewData['title_detail'] = $this->viewData['form']->name ;
 
         return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\currencies\form', $this->viewData);
@@ -268,7 +266,7 @@ class Currencies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     /**
      * get Currency API
      */
-    public function ajaxProcessUpdateCurrencyrate()
+    public function updateCurrencyrate()
     {
         if ($this->request->isAJAX()) {
 

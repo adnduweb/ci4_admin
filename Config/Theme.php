@@ -8,7 +8,7 @@ class Theme extends BaseConfig
 {
     public $default = 'metronic';
 
-    public $version = '7.0.0';
+    public $version = '7.1.6';
 
     public $layout = [
 

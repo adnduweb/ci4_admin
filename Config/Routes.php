@@ -27,7 +27,7 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
     $routes->post('reset-password', 'Authentication::attemptReset');
 
     // Dashboard
-    $routes->get('dashboard', 'Dashboard::index',  ['as' => 'dashboard']);
+    $routes->get('dashboard', 'Dashboard::index',  ['as' => 'dashboard', 'filter' => 'permission:dashboard-view']);
     $routes->get('cache/(:any)', 'Cache::$1',  ['as' => 'cache-$1']);
 
     // Réglages système
@@ -40,19 +40,19 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
     // Users
     $routes->group('(:any)/users', function ($routes) {
 
-        $routes->get('/', 'Users::index', ['as' => 'users']);
+        $routes->get('/', 'Users::index', ['as' => 'users', 'filter' => 'permission:users-view']);
         $routes->get('list', 'Users::ajaxProcessList', ['as' => 'users-listajax']);
 
-        $routes->get("create", "Users::create", ['as' => 'user-create']);
+        $routes->get("create", "Users::create", ['as' => 'user-create', 'filter' => 'permission:users-create']);
         $routes->post('create', 'Users::store', ['as' => 'users-store']);
 
-        $routes->get("show/(:any)", "Users::show/$2", ['as' => 'user-show']);
+        $routes->get("show/(:any)", "Users::show/$2", ['as' => 'user-show', 'filter' => 'permission:users-view']);
 
-        $routes->get('edit/(:any)', 'Users::edit/$2', ['as' => 'user-edit']);
+        $routes->get('edit/(:any)', 'Users::edit/$2', ['as' => 'user-edit', 'filter' => 'permission:users-editOnly,users-edit']);
         $routes->post('edit/(:any)', 'Users::update/$2', ['as' => 'user-update']);
         $routes->post('ajaxUpdate', 'Users::ajaxUpdate', ['as' => 'user-ajaxUpdate']);
 
-        $routes->delete('delete', 'Users::delete', ['as' => 'user-delete']);
+        $routes->delete('delete', 'Users::delete', ['as' => 'user-delete', 'filter' => 'permission:users-delete']);
 
         $routes->post('getPassword', 'Users::getPassword', ['as' => 'user-getpassword']);
         $routes->post('savePermissions', 'Users::savePermissions', ['as' => 'user-savepermissions']);
@@ -192,6 +192,9 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
 
         $routes->post('getPassword', 'Currencies::getPassword', ['as' => 'currency-getpassword']);
         $routes->post('savePermissions', 'Currencies::savePermissions', ['as' => 'currency-savepermissions']);
+
+        $routes->post('updateCurrencyrate', 'Currencies::updateCurrencyrate');
+        
     });
 
      // Taxes
@@ -219,7 +222,10 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
     // Routes
     $routes->get('(:any)/routes', 'Routes::index',  ['as' => 'routes']);
     $routes->post('(:any)/routes', 'Routes::updateAjax', ['as' => 'routes-update']);
+
 });
+
+$routes->get('vie-privee', '\Adnduweb\Ci4Admin\Controllers\Pages::viePrivee',  ['as' => 'vie-privee']);
 
 /**
  * --------------------------------------------------------------------------------------

@@ -66,7 +66,7 @@ class Settings extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         $this->viewData['back']           = $this->back;
         $this->viewData['action'] = 'edit';
         $this->viewData['edit_title']  = lang('Core.edit_' . $this->controller);
-        $this->viewData['title_detail']  = lang('Core.liste_reglages');
+        $this->viewData['title_detail']  = '';
 
         return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\settings\index', $this->viewData);
     }

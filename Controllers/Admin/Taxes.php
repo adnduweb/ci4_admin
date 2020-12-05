@@ -134,8 +134,6 @@ class Taxes extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         parent::edit($id);
 
-        // Initialize form
-        $this->viewData['form'] = $this->tableModel->where($this->tableModel->primaryKey, $id)->first();
         $this->viewData['title_detail'] = $this->viewData['form']->name ;
 
         return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\taxes\form', $this->viewData);

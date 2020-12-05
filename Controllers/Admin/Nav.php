@@ -134,8 +134,6 @@ class Nav extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
         helper(['tools']);
 
-        // Initialize form
-        $this->viewData['form'] = $this->tableModel->where(['id' => $this->id])->first();
         $this->viewData['title_detail'] = $this->viewData['form']->class_name;
         $this->viewData['menus'] = $this->tableModel->join('tabs_langs', 'tabs.id = tabs_langs.tab_id')->where('id_lang', 1)->orderBy('left', 'ACS')->get()->getResult();
 

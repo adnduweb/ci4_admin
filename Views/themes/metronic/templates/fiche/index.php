@@ -8,7 +8,12 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
 
-    <?= form_open('', ['id' => 'kt_apps_fiche_form', 'class' => 'kt-form', 'novalidate' => false]); ?>
+<?php if($aside_active == 'compte-personnel'){ ?>
+    <?= form_open('', ['id' => 'kt_apps_fiche'.$aside_active.'_form', 'class' => '', 'novalidate' => false]); ?>
+<?php }else{ ?>
+    <?= form_open('', ['id' => 'kt_apps_fiche'.$aside_active.'_form', 'class' => 'kt-form', 'novalidate' => false]); ?>
+<?php } ?>
+    
     <input type="hidden" name="controller" value="AdminFicheContactController" />
     <?= $this->include('Adnduweb\Ci4Admin\themes\metronic\templates\fiche\__partials\kt_form_toolbar') ?>
 

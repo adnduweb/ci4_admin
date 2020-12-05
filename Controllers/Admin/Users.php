@@ -86,7 +86,12 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     {
         helper('tools');
         parent::create();
-        Theme::add_js('/resources/metronic/js/pages/custom/users/outils.users.js');
+        Theme::add_js(
+            [
+                'https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js',
+                '/resources/metronic/js/pages/custom/users/outils.users.js'
+            ]
+        );
 
         // Initialize form
         $this->viewData['form'] = new User();
@@ -148,7 +153,6 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             $user->active = 1;
         }
 
-
         //Save
         try {
 
@@ -194,7 +198,7 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function show(string $uuid)
     {
         parent::edit($uuid);
-        //
+        helper(['tools', 'time']);
 
         if ($this->request->isAJAX()) {
         }
@@ -215,19 +219,24 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function edit(string $uuid)
     {
-        parent::edit($uuid);
-
         helper(['tools', 'time']);
 
         Theme::add_js(
             [
+                'https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js',
                 '/resources/metronic/js/pages/custom/users/outils.users.js',
                 '/resources/metronic/js/pages/custom/users/permission.users.js'
             ]
         );
 
-        // Initialize form
-        $this->viewData['form'] = $this->tableModel->where(['uuid' => $this->id])->first();
+        parent::edit($uuid);
+
+        if (has_permission(ucfirst($this->controller) . '-editOnly', user()->id) && user()->uuid != $uuid && isSuperUser() == false) {
+            Theme::set_message('danger', lang('Auth.notEnoughPrivilege'), lang('Core.warning_error'));
+            return redirect()->to(route_to('dashboard'));
+        }
+
+
         $this->viewData['title_detail'] = $this->viewData['form']->lastname  . ' ' . $this->viewData['form']->fistname;
 
         //Get Permissions User
@@ -540,7 +549,7 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
         // Si je ne suis pas un super user et que je modifie mon compte
         if (!inGroups(1, user()->id) && user()->id == $this->viewData['form']->id) {
-            foreach ($this->data['form']->auth_groups_users as $auth_groups_users) {
+            foreach ($this->viewData['form']->auth_groups_users as $auth_groups_users) {
                 $this->viewData['id_group'] = $auth_groups_users->group_id;
             }
         }

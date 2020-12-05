@@ -24,13 +24,13 @@
                         <?= form_open('', ['id' => 'kt_login_singin_form', 'class' => 'form form-login']); ?>
                         <!--begin::Title-->
                         <div class="pb-5 pb-lg-15">
-                            <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"><?= lang("Core.login__sign_in"); ?></h3>
+                            <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"><?= lang("Core.sign_in"); ?></h3>
                         </div>
                         <!--begin::Title-->
 
                         <!--begin::Form group-->
                         <div class="form-group">
-                            <label class="font-size-h6 font-weight-bolder text-dark"><?= lang("Core.login__your_email"); ?></label>
+                            <label class="font-size-h6 font-weight-bolder text-dark"><?= lang("Core.your_email"); ?></label>
                             <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="email" placeholder="<?= lang('Auth.emailOrUsername') ?>" name="login" autocomplete="off" value="admin@admin.com">
                         </div>
                         <!--end::Form group-->
@@ -38,7 +38,7 @@
                         <!--begin::Form group-->
                         <div class="form-group">
                             <div class="d-flex justify-content-between mt-n5">
-                                <label class="font-size-h6 font-weight-bolder text-dark pt-5"><?= lang("Core.login__your_password"); ?></label>
+                                <label class="font-size-h6 font-weight-bolder text-dark pt-5"><?= lang("Core.your_password"); ?></label>
 
                                 <a href="/<?= CI_AREA_ADMIN; ?>/forgot-password" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">
                                     <?= lang('Auth.forgotYourPassword') ?>

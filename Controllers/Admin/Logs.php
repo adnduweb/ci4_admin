@@ -3,7 +3,8 @@
 namespace Adnduweb\Ci4Admin\Controllers\Admin;
 
 use Adnduweb\Ci4Admin\Libraries\Theme;
-use App\Models\UserModel;
+use Adnduweb\Ci4Admin\Models\UserModel;
+use Adnduweb\Ci4Core\Entities\Audit;
 use Adnduweb\Ci4Core\Models\AuditModel;
 use Adnduweb\Ci4Core\Models\LogModel;
 use CodeIgniter\API\ResponseTrait;

@@ -19,8 +19,8 @@
                     <?= form_open(uri_string(), ['id' => 'kt_login_forgot_form', 'class' => 'kt-form form fv-plugins-bootstrap fv-plugins-framework', 'novalidate' => 'novalidate']); ?>
                     <!--begin::Title-->
                     <div class="pb-5 pb-lg-15">
-                        <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Forgotten Password ?</h3>
-                        <p class="text-muted font-weight-bold font-size-h4">Enter your email to reset your password</p>
+                        <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"><?= lang('Auth.forgotYourPassword'); ?></h3> 
+                        <p class="text-muted font-weight-bold font-size-h4"><?= lang('Auth.enterYourPassword'); ?></p>
                     </div>
                     <!--end::Title-->
                     <!--begin::Form group-->

@@ -34,21 +34,21 @@
             <?php } ?>
 
             <div class="btn-group" role="group">
-                <button id="btnGroupDrop1" type="submit" name="submithandler" value="save_continue" class="btn btn-light-primary font-weight-bolder btn-sm">
+                <button id="btnGroupDrop1" type="submit" name="submithandler" value="save_continue" class="btn btn-light-primary font-weight-bolder btn-sm kt_form_submit kt_form_submit_<?= strtolower($controller); ?>">
                     <?= ucfirst(lang('Core.saves_changes')); ?>
                 </button>
                 <button type="button" class="btn btn-light-primary font-weight-bolder btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <button type="submit" name="submithandler" value="save_continue" class="link dropdown-item">
+                    <button type="submit" name="submithandler" value="save_continue" class="link dropdown-item kt_form_submit kt_form_submit_<?= strtolower($controller); ?>">
                         <i class="kt-nav__link-icon flaticon2-writing"></i>
                         <?= ucfirst(lang('Core.save_continue')); ?>
                     </button>
-                    <button type="submit" name="submithandler" value="save_and_new" class="link dropdown-item">
+                    <button type="submit" name="submithandler" value="save_and_new" class="link dropdown-item kt_form_submit kt_form_submit_<?= strtolower($controller); ?>">
                         <i class="kt-nav__link-icon flaticon2-medical-records"></i>
                         <?= ucfirst(lang('Core.save_and_new')); ?>
                     </button>
-                    <button type="submit" name="submithandler" value="save_and_exit" class="link dropdown-item">
+                    <button type="submit" name="submithandler" value="save_and_exit" class="link dropdown-item kt_form_submit kt_form_submit_<?= strtolower($controller); ?>">
                         <i class="kt-nav__link-icon flaticon2-hourglass-1"></i>
                         <?= ucfirst(lang('Core.save_and_exit')); ?>
                     </button>

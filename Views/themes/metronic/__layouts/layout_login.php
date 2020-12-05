@@ -8,7 +8,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme; ?>
     <base href="/">
     <meta charset="utf-8" />
     <link rel="canonical" href="<?= base_url(CI_AREA_ADMIN); ?>">
-    <title>Connexion au Back Office | <?= env('app.nameApp'); ?></title>
+    <title><?= (isset($data['metatitle'])) ? ucfirst($data['metatitle']) : ''; ?> | <?= service('settings')->setting_naneApp; ?></title>
     <style amp-boilerplate>
         body {
             -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
@@ -120,6 +120,8 @@ use \Adnduweb\Ci4Admin\Libraries\Theme; ?>
         <link href="<?= (Config('Theme')->layout['self']['rtl']) ? assetAdmin(Theme::rtlCssPath($theme)) : assetAdmin($theme); ?>" rel="stylesheet" type="text/css" />
     <?php } ?>
 
+    <link href="<?= assetAdmin('/css/app.css'); ?>" rel="stylesheet" type="text/css" />
+
 </head>
 
 <!-- end::Head -->
@@ -140,11 +142,13 @@ use \Adnduweb\Ci4Admin\Libraries\Theme; ?>
     <?php foreach (Config('Theme')->layout['resources']['js'] as $script) { ?>
         <script src="<?= assetAdmin($script); ?>" type="text/javascript"></script>
     <?php } ?>
-    <!-- <script src="<?= assetAdmin('/js/pages/custom/login/login-4.js'); ?>" type="text/javascript"></script> -->
+
+    <?= Theme::js(); ?>
     <script src="admin/themes/metronic/resources/metronic/js/pages/custom/login/login-4.js" type="text/javascript"></script>
 
     <!--begin::Lang Skins(used by all pages) -->
     <script src=<?= assetAdmin("/js/language/lang_" . service('request')->getLocale() . ".js"); ?> type="text/javascript"></script>
+    
 </body>
 
 </html>

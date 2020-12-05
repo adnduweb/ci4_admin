@@ -210,15 +210,15 @@ class Translate extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 if (isset($newTraitement['searchDirect'])) {
                     // SEARCH
                     $this->viewData['searchTextLang'] = search_text_lang($newTraitement['searchDirect'], $newTraitement['lang']);
-                    if ($this->viewData['searchTextLang'] == true) {
+                    // if ($this->viewData['searchTextLang'] == true) {
 
                         $viewSearchDirect = $this->_render('Adnduweb\Ci4Admin\themes\/' . $this->settings->setting_theme_admin . '/\templates\translate\viewSearchDirect', $this->viewData);
                         $response = ['success' => ['code' => 200, 'message' => lang('Core.success_update')], 'error' => false, csrf_token() => csrf_hash(), 'html' => $viewSearchDirect];
                         return $this->respond($response, 200, 'search translate');
-                    } else {
-                        $response = ['error' => ['code' => 500, 'message' => lang('Core.no_data_search') ?? $e->getMessage()], 'success' => false, csrf_token() => csrf_hash()];
-                        return $this->respond($response, 500);
-                    }
+                    // } else {
+                    //     $response = ['error' => ['code' => 500, 'message' => lang('Core.no_data_search') ?? $e->getMessage()], 'success' => false, csrf_token() => csrf_hash()];
+                    //     return $this->respond($response, 500);
+                    // }
                 }
             }
         }

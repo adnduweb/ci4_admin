@@ -113,7 +113,7 @@ class Permissions extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         }
 
         $name = $this->request->getPost('name');
-        if (!stristr($this->request->getPost('name'), '::')) {
+        if (!stristr($this->request->getPost('name'), '-')) {
            Theme::set_message('danger', lang('Core.mauvais_formattage_name'), lang('Core.warning_error'));
             return redirect()->back()->withInput();
         }
@@ -151,8 +151,6 @@ class Permissions extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
         helper(['tools']);
 
-        // Initialize form
-        $this->viewData['form'] = $this->tableModel->where(['id' => $this->id])->first();
         $this->viewData['title_detail'] = $this->viewData['form']->name  . ' - ' . $this->viewData['form']->description;
 
         return $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\permissions\form', $this->viewData);
@@ -178,7 +176,7 @@ class Permissions extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         }
 
         $name = $this->request->getPost('name');
-        if (!stristr($this->request->getPost('name'), '::')) {
+        if (!stristr($this->request->getPost('name'), '-')) {
            Theme::set_message('danger', lang('Core.mauvais_formattage_name'), lang('Core.warning_error'));
             return redirect()->back()->withInput();
         }

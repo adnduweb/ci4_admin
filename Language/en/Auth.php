@@ -79,6 +79,7 @@ return [
     'rememberMe'                => 'Remember me',
     'needAnAccount'             => 'Need an account?',
     'forgotYourPassword'        => 'Forgot your password?',
+    'enterYourPassword'         => 'Enter your email to reset your password',
     'password'                  => 'Password',
     'repeatPassword'            => 'Repeat Password',
     'emailOrUsername'           => 'Email or username',

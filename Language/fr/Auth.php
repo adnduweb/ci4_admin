@@ -79,6 +79,7 @@ return [
     'rememberMe'                => 'Se souvenir de moi',
     'needAnAccount'             => 'Besoin d’un compte ?',
     'forgotYourPassword'        => 'Mot de passe oublié ?',
+    'enterYourPassword'         => 'Entrez votre e-mail pour réinitialiser votre mot de passe',
     'password'                  => 'Mot de passe',
     'repeatPassword'            => 'Répéter le mot de passe',
     'emailOrUsername'           => 'E-mail ou nom d’utilisateur',

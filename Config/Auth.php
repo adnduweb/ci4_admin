@@ -199,7 +199,7 @@ class Auth extends BaseConfig
      *
      * @var bool
      */
-    public $silent = false;
+    public $silent = true;
 
     /**
      * --------------------------------------------------------------------

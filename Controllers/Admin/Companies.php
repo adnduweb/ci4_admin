@@ -193,7 +193,6 @@ class Companies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function edit(string $uuid)
     {
-        parent::edit($uuid);
 
         helper(['tools', 'time']);
 
@@ -203,8 +202,8 @@ class Companies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             ]
         );
 
-        // Initialize form
-        $this->viewData['form'] = $this->tableModel->where(['uuid_company' => $this->id])->first();
+        parent::edit($uuid);
+
         $this->viewData['title_detail'] = $this->viewData['form']->raison_social ;
 
         // List of company Type

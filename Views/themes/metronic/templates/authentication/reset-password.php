@@ -40,9 +40,18 @@
 					<!--begin::Form group-->
 					<div class="form-group fv-plugins-icon-container">
 						<input class="form-control form-control-solid h-auto py-7 px-6 border-0 rounded-lg font-size-h6" type="password" placeholder="<?= lang('Auth.newPassword') ?>" name="password" autocomplete="off" kl_vkbd_parsed="true">
+						<span class="show-password"><i class="far fa-eye"></i></span>
 						<div class="fv-plugins-message-container"></div>
 					</div>
 					<!--end::Form group-->
+
+					
+					<div class="form-group fv-plugins-icon-container">
+							<div class="fl pa2 col-xl-3 col-lg-3 "></div>
+							<div class="fl ba b--black-10 h1 col-lg-9 col-xl-6" style="height: 0.25rem">
+								<div id="passwordMeter" class="h-100"></div>
+							</div>
+					</div>
 
 					<!--begin::Form group-->
 					<div class="form-group fv-plugins-icon-container">

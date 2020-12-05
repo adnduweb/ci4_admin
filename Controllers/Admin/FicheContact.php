@@ -135,16 +135,19 @@ class FicheContact extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
     public function indexPersonnel()
     {
-
-        Theme::add_js('/resources/metronic/js/pages/custom/users/outils.users.js');
+        Theme::add_js(
+            [
+                'https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js',
+                '/resources/metronic/js/pages/custom/fiche/page.outils.fiche.js',
+            ]
+        );
 
         parent::index();
         helper('tools');
 
         $this->viewData['aside_active'] = 'compte-personnel';
         $this->viewData['action'] = 'edit';
-        $this->viewData['form'] = (new UserModel())->where([$this->tableModel->primaryKeyLang => user()->company_id, 'is_principal' => true])->first();
-        // Si je ne suis pas un super user et que je modifie mon compte
+        $this->viewData['form'] = (new UserModel())->where([ (new UserModel())->primaryKey => user()->id])->first();;
 
         foreach ($this->viewData['form']->auth_groups_users as $auth_groups_users) {
             $this->viewData['id_group'] = $auth_groups_users->group_id;

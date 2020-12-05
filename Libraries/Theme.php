@@ -99,17 +99,17 @@ class Theme
             $classes = implode(' ', self::$classes[$scope]);
             if ($full) {
                 if (logged_in()) {
-                    echo ' class="' . $classes . '" onload="StartTimers();" onmousemove="ResetTimers();"';
+                    echo 'class="' . $classes . '" onload="StartTimers();" onmousemove="ResetTimers();"';
                 } else {
-                    echo ' class="' . $classes . '"';
+                    echo 'class="' . $classes . '"';
                 }
             } else {
                 if (logged_in()) {
-                    echo ' ' . $classes . ' " onload="StartTimers();" onmousemove="ResetTimers();"';
+                    echo $classes . ' " onload="StartTimers();" onmousemove="ResetTimers();"';
                 } else {
                     echo ' class="' . $classes . '"';
                 }
-                echo ' ' . $classes . ' ';
+                echo $classes . ' ';
             }
         } else {
             echo '';
@@ -373,20 +373,27 @@ class Theme
         $themeCurrent = service('settings')->setting_theme_admin;
 
         if (is_array($script) && count($script)) {
-            foreach($script as &$scrip){
-                if (env('CI_WEBPACK_MIX') == 'true') {
-                    $scrip = str_replace("/resources/" . $themeCurrent, '/assets', $scrip);
-                    $scrip = '/admin/themes/' . $themeCurrent . $scrip;
-                } else {
-                    $scrip = '/admin/themes/' . $themeCurrent . $scrip;
+            foreach ($script as &$scrip) {
+                //Dectect url
+                $retour = strstr($scrip, '://', true);
+                if (!$retour) {
+                    if (env('CI_WEBPACK_MIX') == 'true') {
+                        $scrip = str_replace("/resources/" . $themeCurrent, '/assets', $scrip);
+                        $scrip = '/admin/themes/' . $themeCurrent . $scrip;
+                    } else {
+                        $scrip = '/admin/themes/' . $themeCurrent . $scrip;
+                    }
                 }
             }
         } else {
-            if (env('CI_WEBPACK_MIX') == 'true') {
-                $script = str_replace("/resources/" . $themeCurrent, '/assets', $script);
-                $script = '/admin/themes/' . $themeCurrent . $script;
-            } else {
-                $script = '/admin/themes/' . $themeCurrent . $script;
+            $retour = strstr($script, '://', true);
+            if (!$retour) {
+                if (env('CI_WEBPACK_MIX') == 'true') {
+                    $script = str_replace("/resources/" . $themeCurrent, '/assets', $script);
+                    $script = '/admin/themes/' . $themeCurrent . $script;
+                } else {
+                    $script = '/admin/themes/' . $themeCurrent . $script;
+                }
             }
         }
 
@@ -537,7 +544,7 @@ class Theme
 
     protected static function buildScriptElement($src = '', $type = '', $content = '')
     {
-        if (!file_exists(env('DOCUMENT_ROOT') . $src)) {
+        if (!file_exists(env('DOCUMENT_ROOT') . $src) && !strstr($src, '://', true)) {
             return '<div class="red-not-script" style="position: absolute; z-index: 99999;background: #c32d00; width: 100%; color: #fff;  padding: 10px;"> le lien n\'existe pas : ' . $src . '</div>';
         }
         if (empty($src) && empty($content)) {
@@ -547,8 +554,11 @@ class Theme
         if (!empty($type)) {
             $return .= ' type="' . htmlspecialchars($type, ENT_QUOTES) . '"';
         }
-        if (!empty($src)) {
+        if (!empty($src) && !strstr($src, '://', true)) {
             $return .= ' src="' . htmlspecialchars(base_url($src), ENT_QUOTES) . '?v=' . filemtime(env('DOCUMENT_ROOT') . $src) . '"';
+        }
+        if (!empty($src) && strstr($src, '://', true)) {
+            $return .= ' src="' . htmlspecialchars(base_url($src), ENT_QUOTES) . '"';
         }
         $return .= '>';
         if (!empty($content)) {

@@ -147,7 +147,6 @@ class Groups extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public function edit(string $id)
     {
-        parent::edit($id);
 
         helper(['tools']);
 
@@ -157,8 +156,8 @@ class Groups extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             ]
         );
 
-        // Initialize form
-        $this->viewData['form'] = $this->tableModel->where(['id' => $this->id])->first();
+        parent::edit($id);
+
         $this->viewData['title_detail'] = $this->viewData['form']->name  . ' : ' . $this->viewData['form']->description;
 
          // Super Admin Whououuuu

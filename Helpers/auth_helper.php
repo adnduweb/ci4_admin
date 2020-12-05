@@ -150,3 +150,38 @@ if (! function_exists('has_permission'))
         return false;
 	}
 }
+
+
+if (!function_exists('isSuperUser')) {
+	/**
+	 * @return bool
+	 */
+	function isSuperUser(): bool
+	{
+		$authenticate = Services::authentication();
+		$authorize    = Services::authorization();
+
+		if ($authorize->inGroup(1, user()->id)) {
+			return true;
+		}
+
+		return false;
+	}
+}
+
+if (!function_exists('isAdmin')) {
+	/**
+	 * @return bool
+	 */
+	function isAdmin(): bool
+	{
+		$authenticate = Services::authentication();
+		$authorize    = Services::authorization();
+
+		if ($authorize->inGroup(2, user()->id)) {
+			return true;
+		}
+
+		return false;
+	}
+}

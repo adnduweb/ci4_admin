@@ -22,13 +22,13 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
                 <div class="card card-custom py-5 px-5">
                     <ul class="nav nav-tabs nav-tabs-line mb-5" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_1" role="tab">
+                            <a class="nav-link active" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_user_edit_tab_1" role="tab">
                                 <?= Theme::getSVG('assets/media/svg/icons/Design/Layers.svg', 'svg-icon svg-icon-sm', true); ?> 
                                 <?= ucfirst(lang('Core.tab_general')); ?>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_4" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_user_edit_tab_4" role="tab">
                                <?= Theme::getSVG('assets/media/svg/icons/Communication/Mail-opened.svg', 'svg-icon svg-icon-sm', true); ?> 
                                <?= ucfirst(lang('Core.tab_security')); ?>
                             </a>
@@ -36,42 +36,42 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 
                         <?php if(class_exists('\Adnduweb\Ci4Web\Web')){ ?>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_5" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_user_edit_tab_5" role="tab">
                                 <?= Theme::getSVG('assets/media/svg/icons/Communication/Mail-opened.svg', 'svg-icon svg-icon-sm', true); ?> 
                                 <?= ucfirst(lang('Core.tab_front')); ?>
                             </a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="<?= uri_string(); ?>#kt_analitycs_rgpd" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_analitycs_rgpd" role="tab">
                                 <?= Theme::getSVG('assets/media/svg/icons/Communication/Mail-opened.svg', 'svg-icon svg-icon-sm', true); ?> 
                                 <?= ucfirst(lang('Core.tab_analitycs_rgpd')); ?>
                             </a>
                         </li>
                         <?php } ?>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_6" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_user_edit_tab_6" role="tab">
                                 <?= Theme::getSVG('assets/media/svg/icons/Communication/Mail-opened.svg', 'svg-icon svg-icon-sm', true); ?> 
                                 <?= ucfirst(lang('Core.tab_email')); ?>
                             </a>
                         </li>
                         <?php if (inGroups(1, user()->id)) { ?>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_7" role="tab">
+                                <a class="nav-link" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_user_edit_tab_7" role="tab">
                                     <?= Theme::getSVG('assets/media/svg/icons/Communication/Mail-opened.svg', 'svg-icon svg-icon-sm', true); ?> 
                                     <?= ucfirst(lang('Core.tab_language')); ?>
                                 </a>
                             </li>
                         <?php } ?>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_8" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_user_edit_tab_8" role="tab">
                                 <?= Theme::getSVG('assets/media/svg/icons/Communication/Mail-opened.svg', 'svg-icon svg-icon-sm', true); ?> 
                                 <?= ucfirst(lang('Core.tab_image')); ?>
                             </a>
                         </li>
                         <?php if(class_exists('\Adnduweb\Ci4Ecommerce\Shopping')){ ?>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_9" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_user_edit_tab_9" role="tab">
                                 <?= Theme::getSVG('assets/media/svg/icons/Communication/Mail-opened.svg', 'svg-icon svg-icon-sm', true); ?> 
                                 <?= ucfirst(lang('Core.tab_ecommerce')); ?>
                             </a>
@@ -79,7 +79,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
                         <?php } ?>
                         <?php if (inGroups(1, user()->id)) { ?>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="<?= uri_string(); ?>#kt_user_edit_tab_10" role="tab">
+                                <a class="nav-link" data-toggle="tab" href="<?= base_url(uri_string()); ?>#kt_user_edit_tab_10" role="tab">
                                     <?= Theme::getSVG('assets/media/svg/icons/Communication/Mail-opened.svg', 'svg-icon svg-icon-sm', true); ?> 
                                     <?= ucfirst(lang('Core.tab_command')); ?>
                                 </a>
