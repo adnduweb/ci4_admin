@@ -64,7 +64,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 <?= $this->endSection() ?>
 
 
-<?= $this->section('extra-js') ?>
+<?= $this->section('AfterExtraJs') ?>
 <script>
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         lineNumbers: true,

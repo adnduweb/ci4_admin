@@ -17,12 +17,12 @@
         <div class="kt-subheader__toolbar">
             <?php if ($multilangue == true) { ?>
                 <?php if (service('Settings')->setting_activer_multilangue == true) { ?>
-                    <?php $setting_supportedLocales = unserialize(service('Settings')->setting_supportedLocales); ?>
-                    <div class="lang_tabs" data-dft-lang="<?= service('Settings')->setting_lang_iso; ?>" style="display: block;">
+                    <?php $setting_supportedLocales = json_decode(service('Settings')->setting_supportedLocales); ?>
+                    <div class="lang_tabs" data-dft-lang="<?= service('Settings')->setting_lang_iso; ?>" style="display: inline-block;">
 
                         <?php foreach ($setting_supportedLocales as $k => $v) {
                             $langExplode = explode('|', $v); ?>
-                            <a href="javascript:;" data-lang="<?= $langExplode[1]; ?>" data-id_lang="<?= $langExplode[0]; ?>" class="btn <?= (service('Settings')->setting_id_lang == $langExplode[0]) ? 'active'  : ''; ?> lang_tab btn-outline-brand"><?= ucfirst($langExplode[1]); ?></a>
+                            <a href="javascript:;" data-lang="<?= $langExplode[1]; ?>" data-id_lang="<?= $langExplode[0]; ?>" class="btn btn-xs <?= (service('Settings')->setting_id_lang == $langExplode[0]) ? 'active'  : ''; ?> lang_tab btn-outline-brand"><?= ucfirst($langExplode[1]); ?></a>
                         <?php   } ?>
                     </div>
                 <?php   } ?>

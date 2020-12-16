@@ -39,7 +39,7 @@ class Nav extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     /**
      * Display Multilangue
      */
-    public $multilangue = false;
+    public $multilangue = true;
 
     /**
      * Display Multilangue

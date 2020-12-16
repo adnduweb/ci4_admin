@@ -32,7 +32,7 @@
 </div> 
 <?= $this->endSection() ?>
 
-<?= $this->section('extra-js') ?>
+<?= $this->section('AfterExtraJs') ?>
 <script type="text/javascript">
     (function($) {
 

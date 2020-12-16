@@ -164,7 +164,7 @@ class Informations extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
     public static function dependencies()
     {
-        $json = file_get_contents(ROOTPATH . '/composer.json');
+        $json = file_get_contents(ROOTPATH . 'composer.json');
 
         $dependencies = json_decode($json, true)['require'];
         return $dependencies;

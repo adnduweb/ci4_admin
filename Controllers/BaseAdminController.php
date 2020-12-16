@@ -488,6 +488,14 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
 
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function remove($id)
+    {
+
+    }
+
     protected function getToolbar()
     {
 

@@ -203,7 +203,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 <!-- end:: Content -->
 
 <?= $this->endSection() ?>
-<?= $this->section('extra-js') ?>
+<?= $this->section('AfterExtraJs') ?>
 
 <script type="text/javascript">
     function addRemoteAddr() {

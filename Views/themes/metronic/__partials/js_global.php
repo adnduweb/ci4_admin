@@ -40,8 +40,11 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 <!-- Global Theme JS Bundle (used by all pages)  -->
 <script type="text/javascript" src="<?= assetAdmin('/js/app.js'); ?>?v=<?= Config('Theme')->version; ?>&t<?= filemtime(env('DOCUMENT_ROOT') . '/admin/themes/'.$theme_admin.'/assets/js/app.js'); ?>"></script>
 
+
+<?= $this->renderSection('beforeExtraJs') ?>
+
 <?= Theme::js(); ?>
 <?= Theme::message(); ?>
 <!--end::Page Scripts -->
 
-<?= $this->renderSection('extra-js') ?>
+<?= $this->renderSection('AfterExtraJs') ?>

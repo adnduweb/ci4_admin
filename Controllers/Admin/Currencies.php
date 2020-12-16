@@ -272,12 +272,12 @@ class Currencies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
             $throttler = \Config\Services::throttler();
 
-            if ($throttler->check($this->request->getIPAddress() . ':' . user()->id . ':currency', 2, MINUTE) === false) {
+            if ($throttler->check($this->request->getIPAddress() . '-' . user()->id . '-currency', 2, MINUTE) === false) {
                 $response = ['error' => ['code' => 429, 'message' =>  lang('Auth.tooManyRequests', [$throttler->getTokentime()])], 'success' => false, csrf_token() => csrf_hash()];
                 return $this->respond($response, 429);
             }
 
-            if (Service('currency')->save()) {
+            if (service('currency')->save()) {
                 $response = ['success' => ['code' => 200, 'message' => lang('Core.sccess_update_currency_rate')], 'error' => false, csrf_token() => csrf_hash()];
                 return $this->respond($response, 200, 'Save currencies API');
             } else {

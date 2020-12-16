@@ -108,5 +108,5 @@ return [
 	'explain_banned' => 'Votre compte a été banni',
     'banned' => 'Banni',
     'valider' => 'Valider',
-    'cancel' => 'Annuler',
+    'cancel' => 'Annuler'
 ];

@@ -42,13 +42,13 @@
 
                 <!--begin::Nav-->
                 <a href="/<?= CI_AREA_ADMIN; ?>/fiche-contact/compte-entreprise" class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block <?= ($aside_active == 'compte-entreprise') ? 'active' : ''; ?>">
-                    <?= lang('Core.compte Entreprise');  ?>
+                    <?= lang('Core.Compte Entreprise');  ?>
                 </a>
                 <a href="/<?= CI_AREA_ADMIN; ?>/fiche-contact/compte-personnel" class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block <?= ($aside_active == 'compte-personnel') ? 'active' : ''; ?>">
-                    <?= lang('Core.compte personnel'); ?>
+                    <?= lang('Core.Compte Personnel'); ?>
                 </a>
                 <a href="/<?= CI_AREA_ADMIN; ?>/fiche-contact/reseaux-sociaux" class="btn btn-hover-light-primary font-weight-bold py-3 px-6 mb-2 text-center btn-block <?= ($aside_active == 'reseaux-sociaux') ? 'active' : ''; ?>">
-                    <?= lang('Core.reseaux sociaux');  ?>
+                    <?= lang('Core.Reseaux sociaux');  ?>
                 </a>
                 <!--end::Nav-->
             </div>

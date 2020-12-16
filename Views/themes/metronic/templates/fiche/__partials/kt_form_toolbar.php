@@ -9,7 +9,7 @@
         </div>
         <div class="kt-subheader__toolbar">
             <?php if (service('Settings')->setting_activer_multilangue == true) { ?>
-                <?php $setting_supportedLocales = unserialize(service('Settings')->setting_supportedLocales); ?>
+                <?php $setting_supportedLocales = json_decode(service('Settings')->setting_supportedLocales); ?>
                 <div class="lang_tabs" data-dft-lang="<?= service('Settings')->setting_lang_iso; ?>" style="display: block;">
 
                     <?php foreach ($setting_supportedLocales as $k => $v) {
