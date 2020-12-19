@@ -32,6 +32,7 @@ class PermissionFilter implements FilterInterface
 	 */
 	public function before(RequestInterface $request, $params = null)
 	{
+		
 		if (!function_exists('logged_in')) {
 			helper('auth');
 		}
@@ -54,6 +55,8 @@ class PermissionFilter implements FilterInterface
 		// If super admin user
 		if (inGroups(1, user()->id))
 			return true;
+
+			
 
 		$methodView = false;
 

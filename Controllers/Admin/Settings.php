@@ -114,7 +114,7 @@ class Settings extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
 
                 }
 
-                cache()->delete(config('Cache')->cacheQueryString . 'settings-templates-{$k}');
+                cache()->delete(config('Cache')->prefix . 'settings-templates-{$k}');
 
                 $this->tableModel->getExist($k, 'global', $v);
                 
@@ -127,7 +127,7 @@ class Settings extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 }
             }
         }
-        cache()->delete(config('Cache')->cacheQueryString . 'admin-'. $this->settings->setting_theme_admin.'-initMenu-' . user()->id);
+        cache()->delete(config('Cache')->prefix . 'admin-'. $this->settings->setting_theme_admin.'-initMenu-' . user()->id);
 
         // Success!
         Theme::set_message('success', lang('Core.save_data'), lang('Core.cool_success'));

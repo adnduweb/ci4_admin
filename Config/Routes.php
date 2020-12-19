@@ -56,6 +56,7 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
 
         $routes->post('getPassword', 'Users::getPassword', ['as' => 'user-getpassword']);
         $routes->post('savePermissions', 'Users::savePermissions', ['as' => 'user-savepermissions']);
+        
     });
 
     //Groups
@@ -222,6 +223,11 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
     // Routes
     $routes->get('(:any)/routes', 'Routes::index',  ['as' => 'routes']);
     $routes->post('(:any)/routes', 'Routes::updateAjax', ['as' => 'routes-update']);
+
+    //AJAX
+    $routes->group('ajax', function ($routes) {
+        $routes->post('ktAsideUser', 'Users::ktAsideUser');
+    });
 
 });
 

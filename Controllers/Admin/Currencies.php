@@ -20,7 +20,7 @@ class Currencies extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     /**
      * Localize slug
      */
-    public $pathcontroller  = '/international';
+    public $pathcontroller  = '/international'; 
 
     /**
      * name model

@@ -29,7 +29,7 @@
                             <div class="form-group row">
                                 <label for="id_group" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.choisir_langue')); ?>* : </label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <select required name="lang" class="form-control selectpicker kt-selectpicker" id="id_group">
+                                    <select required name="lang" class="form-control selectFilePicker kt-selectpicker" id="lang">
                                         <?php foreach (Config('App')->supportedLocales as $file) { ?>
                                             <option value="<?= $file; ?>"><?= ucfirst($file); ?></option>
                                         <?php } ?>
@@ -39,7 +39,7 @@
                             <div class="form-group row">
                                 <label for="id_group" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.rechercher_dans_core')); ?>* : </label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <select required name="fileCore" class="form-control selectpicker fileCore file kt-selectpicker" data-actions-box="true" title="<?= ucfirst(lang('Core.choose_one_of_the_following')); ?>" id="id_group">
+                                    <select required name="fileCore" class="form-control selectFilePicker fileCore file kt-selectpicker" data-actions-box="true" title="<?= ucfirst(lang('Core.choose_one_of_the_following')); ?>" id="fileCore">
                                         <?php foreach ($filesCore as $file) { ?>
                                             <option value="<?= $file; ?>"><?= ucfirst(str_replace('.php', '', $file)); ?></option>
                                         <?php } ?>
@@ -49,7 +49,7 @@
                             <div class="form-group row">
                                 <label for="id_group" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.rechercher_dans_themes')); ?>* : </label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <select required name="fileTheme" class="form-control selectpicker fileTheme file kt-selectpicker" data-actions-box="true" title="<?= ucfirst(lang('Core.choose_one_of_the_following')); ?>" id="id_group">
+                                    <select required name="fileTheme" class="form-control selectFilePicker fileTheme file kt-selectpicker" data-actions-box="true" title="<?= ucfirst(lang('Core.choose_one_of_the_following')); ?>" id="fileTheme">
                                         <?php foreach ($filesThemesFront as $file) { ?>
                                             <option value="<?= $file; ?>"><?= ucfirst(str_replace('.php', '', $file)); ?></option>
                                         <?php } ?>

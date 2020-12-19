@@ -37,7 +37,7 @@
  							</a>
  						</li>
  						<li class="menu-item " aria-haspopup="true">
- 							<a href="<?= CI_AREA_ADMIN; ?>/cache/deleteFront" class="menu-link btn btn-light-danger rede">
+ 							<a href="<?= CI_AREA_ADMIN; ?>/cache/deleteFront" class="btn btn-warning">
  								<i class="icon-md la la-database"></i>&nbsp;&nbsp;
  								<span class="menu-text"><?= ucfirst(lang('Core.delete_cache')); ?></span>
 
@@ -93,7 +93,7 @@
  				<div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
  					<form>
  						<!--begin: Head -->
- 						<div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(/admin/themes/<?= $theme_admin; ?>/media/misc/bg-1.jpg)">
+ 						<div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(/admin/themes/<?= $theme_admin; ?>/assets/media/misc/bg-1.jpg)">
  							<h4 class="d-flex flex-center rounded-top">
  								<span class="text-white">User Notifications</span>
  								&nbsp;

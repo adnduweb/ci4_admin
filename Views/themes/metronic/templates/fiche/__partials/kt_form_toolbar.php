@@ -3,7 +3,7 @@
 
         <div class="d-flex align-items-center flex-wrap mr-1">
             <h5 class="text-dark font-weight-bold my-2 mr-5">
-                <?= lang('Core.fiche entreprise'); ?>
+                <?= lang('Core.your_fiche_entreprise'); ?>
             </h5>
             <span class="kt-subheader__separator kt-subheader__separator--v"></span>
         </div>

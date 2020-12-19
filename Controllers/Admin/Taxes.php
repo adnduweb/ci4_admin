@@ -31,6 +31,11 @@ class Taxes extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
      */
     public $fieldIdcompany = false;
 
+    /**
+     * Display Multilangue
+     */
+    public $multilangue = true;
+
     /** 
      * Display default list column
      */

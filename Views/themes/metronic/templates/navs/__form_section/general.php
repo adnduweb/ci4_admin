@@ -49,7 +49,7 @@
     <div class="col-lg-9 col-xl-6">
         <input class="form-control" required type="text" value="<?= old('slug') ? old('slug') : $form->slug; ?>" name="slug" id="slug">
         <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
-        <span class="form-text text-muted"><?= lang('Core.url par default '); ?></span>
+        <span class="form-text text-muted"><?= lang('Core.url par default'); ?></span>
     </div>
 </div>
 

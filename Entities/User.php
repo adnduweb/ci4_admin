@@ -259,4 +259,8 @@ class User extends UuidEntity
         return in_array(strtolower($permission), $this->getPermissions());
     }
 
+    public function getFullName(){
+        return ucfirst($this->attributes['lastname']) . ' ' . ucfirst($this->attributes['firstname']);
+    }
+
 }

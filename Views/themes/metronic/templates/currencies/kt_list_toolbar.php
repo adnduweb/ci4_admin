@@ -97,9 +97,9 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
             <?php } ?>
             <button type="button" class="btn btn-info btn-elevate-hover btn-circle btn-icon updateCurrencyRate" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="<?= lang('Core.update_rate_currency'); ?>"><i class="la la-refresh"></i></button>
             <?php if (isset($add) && $add == true) { ?>
-                <a href="/<?= env('CI_AREA_ADMIN'); ?><?= $addPathController; ?>" class="btn btn-primary font-weight-bolder btn-sm">
+                <a href="/<?= env('app.areaAdmin'); ?><?= $addPathController; ?>" class="btn btn-primary font-weight-bolder btn-sm">
                 <?= Theme::getSVG('assets/media/svg/icons/Design/Flatten.svg', 'svg-icon svg-icon-sm', true); ?> 
-                    <?= $add; ?> </a>
+                <?= $add; ?> </a>
             <?php } ?>
         </div>
     </div>

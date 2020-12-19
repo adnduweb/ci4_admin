@@ -607,11 +607,22 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
         $setting_notification_email = (!isset($posts['setting_notification_email'])) ? false : true;
         $setting_notification_sms = (!isset($posts['setting_notification_sms'])) ? false : true;
         $setting_connexion_unique = (!isset($posts['setting_connexion_unique'])) ? false : true;
-        cache()->delete(config('Cache')->cacheQueryString . "settings:contents:{$setting_notification_email}:{user()->id}");
-        cache()->delete(config('Cache')->cacheQueryString . "settings:contents:{$setting_notification_sms}:{user()->id}");
-        cache()->delete(config('Cache')->cacheQueryString . "settings:contents:{$setting_connexion_unique}:{user()->id}");
+        cache()->delete(config('Cache')->prefix . "settings-contents-{$setting_notification_email}-{user()->id}");
+        cache()->delete(config('Cache')->prefix . "settings-contents-{$setting_notification_sms}-{user()->id}");
+        cache()->delete(config('Cache')->prefix . "settings-contents-{$setting_connexion_unique}-{user()->id}");
         service('Settings')->setting_notification_email = $setting_notification_email;
         service('Settings')->setting_notification_sms = $setting_notification_sms;
         service('Settings')->setting_connexion_unique = $setting_connexion_unique;
+    }
+
+    public function ktAsideUser()
+    {
+        $post = $this->request->getPost();
+        if ($this->request->isAJAX()) {
+
+            cache()->delete(config('Cache')->prefix . 'settings-contents-setting_aside_back-' . user()->id);
+            service('settings')->setting_aside_back = ($post['aside'] == '0') ? '1' : '0';
+        }
+        die(1);
     }
 }

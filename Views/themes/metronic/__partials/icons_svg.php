@@ -1,7 +1,7 @@
 <div class="card card-custom">
 	<div class="card-header">
 		<div class="card-title">
-			<h3 class="card-label"><?= lang('Core. Choisir parmi la liste des icons en svg'); ?></h3>
+			<h3 class="card-label"><?= lang('Core.Choisir parmi la liste des icons en svg'); ?></h3>
 		</div>
 	</div>
 	<div class="card-body">

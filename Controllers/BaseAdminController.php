@@ -189,6 +189,9 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         $this->viewData['theme_admin'] = $this->settings->setting_theme_admin;
         $this->viewData['metatitle']   = $this->controller;
 
+        // Search
+        $this->initSearch();
+
         //On écrire le fichier ajax de traduction
         $this->invokeJs();
 
@@ -203,6 +206,38 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     {
         return view($view, $data);
     }
+
+    protected function initSearch() {
+
+        if ($this->request->getMethod() == 'get') {
+
+            if ($this->request->isAJAX()) {
+
+                $query = $this->request->uri->getQuery();
+                if(!empty($query)){
+
+                    $get = $this->request->getGet();
+
+                    if(isset($get['query']) && !empty($get['query'])){
+                        if(method_exists($this->tableModel, 'ktSearch')){
+
+                            $this->viewData['resultSearch'] = $this->tableModel->ktSearch($get['query']);
+
+                            //print_r($this->viewData['resultSearch']); exit;
+
+                            echo $this->_render('Adnduweb\Ci4Admin\themes\/'. $this->settings->setting_theme_admin.'/\templates\search\index', $this->viewData);
+                            exit;
+                        }else
+                            die(lang('Core.no_implement_feature'));
+                       
+                    }
+                }
+
+            }
+
+        }
+    }
+
 
     protected function _redirect(string $url)
     {
@@ -292,7 +327,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             'current_url'    => current_url(),
             'uri'            => $this->request->uri->getPath(),
             'basePath'       => '\/',
-            'baseController' => base_url('/' . env('app.areaAdmin') . $this->pathcontroller . '/' . $this->controller),
+            'baseController' => base_url('/' . env('app.areaAdmin')),
             'segementAdmin'  => env('app.areaAdmin'),
             'startUrl'       => '\/' . env('app.areaAdmin'),
             'lang_iso'       => $this->settings->setting_lang_iso,
@@ -620,4 +655,27 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         //return $object;
 
     }
+
+    /**
+	 * Handles failures.
+	 *
+	 * @param int $code
+	 * @param string $message
+	 * @param boolean|null $isAjax
+	 *
+	 * @return ResponseInterface|RedirectResponse
+	 */
+	protected function failure(int $code, string $message, bool $isAjax = null): ResponseInterface
+	{
+		log_message('debug', $message);
+
+		if ($isAjax ?? $this->request->isAJAX())
+		{
+			return $this->response
+				->setStatusCode($code)
+				->setJSON(['error' => $message]);
+		}
+
+		return redirect()->back()->with('error', $message);
+	}
 }

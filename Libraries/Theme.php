@@ -95,6 +95,13 @@ class Theme
             self::$classes[$scope][] = 'ps_back-office html controller_' . strtolower(end($controllerName)) . ' method_' . strtolower($controller->methodName()) . ' lang-' . service('request')->getLocale() . ' header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled page-loading-enabled page-loading ' . $setting_aside_back;
         }
 
+        if (service('settings')->setting_aside_back == '1'){ 
+            self::$classes[$scope][] .= 'aside--fixed kt-aside--minimize kt-aside-minimize-hoverable';
+        }else{
+          
+            self::$classes[$scope][] .= 'kaside--fixed';
+        } 
+
         if (isset(self::$classes[$scope]) && !empty(self::$classes[$scope])) {
             $classes = implode(' ', self::$classes[$scope]);
             if ($full) {
