@@ -189,17 +189,12 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
         $this->viewData['theme_admin'] = $this->settings->setting_theme_admin;
         $this->viewData['metatitle']   = $this->controller;
 
-        // Search
-        $this->initSearch();
 
-        //On écrire le fichier ajax de traduction
-        $this->invokeJs();
-
-        // Display param js
-        $this->initParamJs();
-
-        //Display menu
-        $this->initMenu();
+        $this->activeWebpack(); //Active Webpack in dev
+        $this->initSearch(); // Search
+        $this->invokeJs();//On écrire le fichier ajax de traduction
+        $this->initParamJs(); // Display param js
+        $this->initMenu();//Display menu
     }
 
     protected function _render(string $view, array $data = [])
@@ -677,5 +672,23 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
 		}
 
 		return redirect()->back()->with('error', $message);
-	}
+    }
+    
+    protected function activeWebpack(){
+        if (env('CI_WEBPACK_MIX') == false) {
+
+            helper('file');
+            
+            // Normalize the path
+            $resources = rtrim(config('Admin')->resourcesPath . $this->settings->setting_theme_admin . '/resources', DIRECTORY_SEPARATOR);
+
+            if (! is_dir($resources))
+            {
+                if(! mkdir($resources, 0775, true)){
+                    throw new \Exception(lang('Core.dirFail', [$resources]));
+                }
+                custom_copy(VENDORPATH . 'adnduweb/ci4_admin/Views/resources', config('Admin')->resourcesPath . $this->settings->setting_theme_admin . '/resources');
+            }
+        }
+    }
 }

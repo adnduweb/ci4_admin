@@ -91,7 +91,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 	<!-- end::Quick User -->
 
 	<!-- begin::Quick Panel -->
-	<?= $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_quick_panel') ?>
+	<?= '';// $this->include('\Adnduweb\Ci4Admin\themes\/'.$theme_admin.'/\__partials\kt_quick_panel') ?>
 	<!-- end::Quick Panel -->
 
 	<!-- begin::Outils de gestion de média -->
