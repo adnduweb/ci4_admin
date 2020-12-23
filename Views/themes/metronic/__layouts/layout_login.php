@@ -1,6 +1,4 @@
-<?php
-
-use \Adnduweb\Ci4Admin\Libraries\Theme; ?>
+<?php use \Adnduweb\Ci4Admin\Libraries\Theme; ?>
 <!DOCTYPE html>
 <html amp style="height: 100%!important;" lang="<?= service('request')->getLocale(); ?>" class="<?= detectBrowser(true);?>">
 
@@ -144,7 +142,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme; ?>
     <?php } ?>
 
     <?= Theme::js(); ?>
-    <script src="admin/themes/metronic/resources/metronic/js/pages/custom/login/login-4.js" type="text/javascript"></script>
+    <script src="<?= assetAdmin('/js/pages/custom/login/login-4.js'); ?>?v=<?= Config('Theme')->version; ?>&t<?= filemtime(env('DOCUMENT_ROOT') . '/admin/themes/' . service('settings')->setting_theme_admin . '/' .ENVIRONMENT. '/js/app.js'); ?>" type="text/javascript"></script>
 
     <!--begin::Lang Skins(used by all pages) -->
     <script src=<?= assetAdminLanguage("lang_" . service('request')->getLocale() . ".js"); ?> type="text/javascript"></script>
