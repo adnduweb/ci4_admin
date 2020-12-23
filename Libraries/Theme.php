@@ -380,12 +380,13 @@ class Theme
         $themeCurrent = service('settings')->setting_theme_admin;
 
         if (is_array($script) && count($script)) {
+           
             foreach ($script as &$scrip) {
                 //Dectect url
                 $retour = strstr($scrip, '://', true);
                 if (!$retour) {
                     if (env('CI_WEBPACK_MIX') == 'true') {
-                        $scrip = str_replace("/resources/" . $themeCurrent, '/assets', $scrip);
+                        $scrip = str_replace("/resources/" . $themeCurrent, '/' . ENVIRONMENT, $scrip);
                         $scrip = '/admin/themes/' . $themeCurrent . $scrip;
                     } else {
                         $scrip = '/admin/themes/' . $themeCurrent . $scrip;
@@ -394,9 +395,10 @@ class Theme
             }
         } else {
             $retour = strstr($script, '://', true);
+            //print_r($script); exit;
             if (!$retour) {
                 if (env('CI_WEBPACK_MIX') == 'true') {
-                    $script = str_replace("/resources/" . $themeCurrent, '/assets', $script);
+                    $script = str_replace("/resources/" . $themeCurrent, '/' . ENVIRONMENT, $script);
                     $script = '/admin/themes/' . $themeCurrent . $script;
                 } else {
                     $script = '/admin/themes/' . $themeCurrent . $script;
@@ -461,8 +463,9 @@ class Theme
         $output = '<!-- Local JS files -->' . PHP_EOL;
         helper('auth');
         if (logged_in() == true) {
-            if (is_file(env('DOCUMENT_ROOT') . '\admin\themes\metronic\assets\js\app.js')) {
-                $output .=  self::buildScriptElement('/admin/themes/metronic/assets/js/app.js', 'text/javascript') . "\n";
+            $url = '\admin\themes\/'. service('settings')->setting_theme_admin .'\/' . ENVIRONMENT . '\js\app.js';
+            if (is_file(env('DOCUMENT_ROOT') . $url)) {
+                $output .=  self::buildScriptElement($url, 'text/javascript') . "\n";
             } else {
             }
         }
@@ -590,7 +593,7 @@ class Theme
         echo $style  . "\n";
     }
 
-    public function assets_url($path = null)
+    public function assets_url($path = null) 
     {
         return $path;
     }

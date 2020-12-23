@@ -1,5 +1,5 @@
 <!--begin::Lang Skins(used by all pages) -->
-<script src="<?= assetAdmin('js/language/lang_'. service('request')->getLocale() . '.js'); ?>" type="text/javascript"></script>
+<script src="<?= assetAdminLanguage('lang_'. service('request')->getLocale() . '.js'); ?>" type="text/javascript"></script>
 <script type="text/javascript">
     <?php
     $htmlJs = "";

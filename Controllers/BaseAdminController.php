@@ -29,7 +29,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
     /**
      * @var helpers
      */
-    protected $helpers = ['detect', 'auth', 'url', 'form', 'lang'];
+    protected $helpers = ['detect', 'auth', 'admin', 'url', 'form', 'lang'];
 
     /**
      * Set default directory
@@ -322,7 +322,7 @@ abstract class BaseAdminController extends \CodeIgniter\Controller
             'current_url'    => current_url(),
             'uri'            => $this->request->uri->getPath(),
             'basePath'       => '\/',
-            'baseController' => base_url('/' . env('app.areaAdmin')),
+            'baseController' => base_url('/' . env('app.areaAdmin') . $this->pathcontroller . '/' . $this->controller),
             'segementAdmin'  => env('app.areaAdmin'),
             'startUrl'       => '\/' . env('app.areaAdmin'),
             'lang_iso'       => $this->settings->setting_lang_iso,

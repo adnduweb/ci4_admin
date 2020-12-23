@@ -169,8 +169,9 @@ jQuery(document).ready(function() {
 /********************************************
  * Internationalization phone
  *******************************************/
-if ($('div.phone_international').length) {
-    console.log('dfgdfgdfgdf');
+
+if ($('.phone_international').length) {
+
     $(".phone_international").each(function(i) {
         var id = $(this).attr('id');
         var input_phone = document.querySelector("#" + id),
@@ -233,7 +234,7 @@ var KTInputmask = {
             placeholder: "1.000000",
             autoUnmask: !0
         });
-        if ($('div.phone_international').length) {
+        if ($('.phone_international').length) {
             $(".phone_international").each(function(i) {
                 var id = $(this).attr("id");
 

@@ -4,7 +4,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 
 ?>
 
-<link rel="shortcut icon" href="<?= assetAdmin('/favicons/favicon.ico'); ?>" />
+<link rel="shortcut icon" href="<?= assetAdminFavicons('favicon.ico'); ?>" />
 
 <!-- Fonts -->
 <?= Theme::getGoogleFontsInclude(); ?>
