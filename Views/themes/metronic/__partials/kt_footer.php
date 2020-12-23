@@ -10,7 +10,7 @@
         <!--end::Copyright-->
         <!--begin::Nav-->
         <div class="nav nav-dark">
-            <a href="/<?= CI_AREA_ADMIN; ?>/settings-advanced/changelogs" target="_blank" class="nav-link pl-0 pr-5">Change Logs</a>
+            <a href="/<?= CI_AREA_ADMIN; ?>/changelogs" target="_blank" class="nav-link pl-0 pr-5">Change Logs</a>
         </div>
         <!--end::Nav-->
     </div>

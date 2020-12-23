@@ -219,6 +219,8 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
 
     // Informations
     $routes->get('(:any)/informations', 'Informations::index',  ['as' => 'informations']);
+    $routes->get('changelogs', 'ChangeLogs::index',  ['as' => 'change-logs']);
+    
 
     // Routes
     $routes->get('(:any)/routes', 'Routes::index',  ['as' => 'routes']);
