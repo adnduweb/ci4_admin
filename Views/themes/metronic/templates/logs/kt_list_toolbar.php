@@ -20,7 +20,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
                             <input type="text" class="form-control" placeholder="<?= lang('Core.search'); ?>" id="kt_subheader_search_form">
                             <div class="input-group-append">
                                 <span class="input-group-text">
-                                    <?= Theme::getSVG('assets/media/svg/icons/General/Search.svg', 'svg-icon svg-icon-sm', true); ?> 
+                                    <?= Theme::getSVG('media/svg/icons/General/Search.svg', 'svg-icon svg-icon-sm', true); ?> 
                                     <!--<i class="flaticon2-search-1 icon-sm"></i>-->
                                 </span>
                             </div>
@@ -79,15 +79,15 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
         </div>
         <div class="kt-subheader__toolbar">
             <a href="/<?= env('app.areaAdmin'); ?>/settings-advanced/logs" class="btn btn-primary font-weight-bolder btn-sm <?= count($currentUrlSegment) == '4' ? ' active ' : '' ?>">
-                <?= Theme::getSVG('assets/media/svg/icons/General/Thunder-move.svg', 'svg-icon svg-icon-sm', true); ?> 
+                <?= Theme::getSVG('media/svg/icons/General/Thunder-move.svg', 'svg-icon svg-icon-sm', true); ?> 
                 <?= lang('Core.Logs système'); ?>
             </a>
             <a href="/<?= env('app.areaAdmin'); ?>/settings-advanced/logs/traffics" class="btn btn-primary font-weight-bolder btn-sm <?= isset($currentUrlSegment['traffics']) ? ' active ' : '' ?>">
-                <?= Theme::getSVG('assets/media/svg/icons/Code/Git4.svg', 'svg-icon svg-icon-sm', true); ?> 
+                <?= Theme::getSVG('media/svg/icons/Code/Git4.svg', 'svg-icon svg-icon-sm', true); ?> 
                 <?= lang('Core.Logs Traffic'); ?>
             </a>
             <a href="/<?= env('app.areaAdmin'); ?>/settings-advanced/logs/connexions" class="btn btn-primary font-weight-bolder btn-sm <?= isset($currentUrlSegment['connexions']) ? ' active ' : '' ?>">
-                <?= Theme::getSVG('assets/media/svg/icons/General/Scale.svg', 'svg-icon svg-icon-sm', true); ?> 
+                <?= Theme::getSVG('media/svg/icons/General/Scale.svg', 'svg-icon svg-icon-sm', true); ?> 
                 <?= lang('Core.Logs Connexions'); ?>
             </a>
         </div>

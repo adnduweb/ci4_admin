@@ -20,7 +20,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
                             <input type="text" class="form-control" placeholder="<?= lang('Core.search'); ?>" id="kt_subheader_search_form">
                             <div class="input-group-append">
                                 <span class="input-group-text">
-                                    <?= Theme::getSVG('assets/media/svg/icons/General/Search.svg', 'svg-icon svg-icon-sm', true); ?> 
+                                    <?= Theme::getSVG('media/svg/icons/General/Search.svg', 'svg-icon svg-icon-sm', true); ?> 
                                 </span>
                             </div>
                         </div>
@@ -98,7 +98,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
             <button type="button" class="btn btn-info btn-elevate-hover btn-circle btn-icon updateCurrencyRate" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="<?= lang('Core.update_rate_currency'); ?>"><i class="la la-refresh"></i></button>
             <?php if (isset($add) && $add == true) { ?>
                 <a href="/<?= env('app.areaAdmin'); ?><?= $addPathController; ?>" class="btn btn-primary font-weight-bolder btn-sm">
-                <?= Theme::getSVG('assets/media/svg/icons/Design/Flatten.svg', 'svg-icon svg-icon-sm', true); ?> 
+                <?= Theme::getSVG('media/svg/icons/Design/Flatten.svg', 'svg-icon svg-icon-sm', true); ?> 
                 <?= $add; ?> </a>
             <?php } ?>
         </div>

@@ -51,11 +51,11 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 
 									<div class="d-flex flex-wrap my-2">
 										<a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2" href="javascript:;">
-											<?= Theme::getSVG('assets/media/svg/icons/Communication/Mail.svg', 'svg-icon svg-icon-sm', true); ?> 
+											<?= Theme::getSVG('media/svg/icons/Communication/Mail.svg', 'svg-icon svg-icon-sm', true); ?> 
 											<?= $user->email; ?>
 										</a>
 										<a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2" href="javascript:;">
-											<?= Theme::getSVG('assets/media/svg/icons/Communication/Address-card.svg', 'svg-icon svg-icon-sm', true); ?> 
+											<?= Theme::getSVG('media/svg/icons/Communication/Address-card.svg', 'svg-icon svg-icon-sm', true); ?> 
 											<?= $user->fonction; ?> 
 										</a>
 
@@ -80,14 +80,14 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 										<?php if (empty($user->phone)) {
 										?>
 											<a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2" href="#">
-												<?= Theme::getSVG('assets/media/svg/icons/Devices/iPhone-back.svg', 'svg-icon svg-icon-sm', true); ?> 
+												<?= Theme::getSVG('media/svg/icons/Devices/iPhone-back.svg', 'svg-icon svg-icon-sm', true); ?> 
 												<?= lang('Core.nc'); ?>
 											</a>
 										<?php
 										} else {
 										?>
 											<a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2" href="tel:<?= $user->phone; ?>">
-												<?= Theme::getSVG('assets/media/svg/icons/Devices/iPhone-back.svg', 'svg-icon svg-icon-sm', true); ?> 
+												<?= Theme::getSVG('media/svg/icons/Devices/iPhone-back.svg', 'svg-icon svg-icon-sm', true); ?> 
 												<?= $user->phone; ?>
 											</a>
 										<?php
@@ -96,14 +96,14 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 										<?php if (empty($user->phone_mobile)) {
 										?>
 											<a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2" href="#">
-												<?= Theme::getSVG('assets/media/svg/icons/Devices/iPhone-back.svg', 'svg-icon svg-icon-sm', true); ?> 
+												<?= Theme::getSVG('media/svg/icons/Devices/iPhone-back.svg', 'svg-icon svg-icon-sm', true); ?> 
 												<?= lang('Core.nc'); ?>
 											</a>
 										<?php
 										} else {
 										?>
 											<a class="text-muted text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2" href="tel:<?= $user->phone_mobile; ?>">
-												<?= Theme::getSVG('assets/media/svg/icons/Devices/iPhone-back.svg', 'svg-icon svg-icon-sm', true); ?> 
+												<?= Theme::getSVG('media/svg/icons/Devices/iPhone-back.svg', 'svg-icon svg-icon-sm', true); ?> 
 												<?= $user->phone_mobile; ?>
 											</a>
 										<?php

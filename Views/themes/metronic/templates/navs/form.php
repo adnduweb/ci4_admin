@@ -21,7 +21,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 			<div class="flex-row ">
 				<div class="alert alert-custom alert-white alert-shadow fade show gutter-b" role="alert">
 					<div class="alert-icon">
-						<?= Theme::getSVG('assets/media/svg/icons/Tools/Compass.svg', 'svg-icon svg-icon-sm', true); ?> 
+						<?= Theme::getSVG('media/svg/icons/Tools/Compass.svg', 'svg-icon svg-icon-sm', true); ?> 
 					</div>
 					<div class="alert-text">
 						<?= lang('Core.Si vous modifier l\'url du <code>Menu/Controller</code> il ne faut pas oublier d\'aller dans le menu route'); ?>.
@@ -37,7 +37,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 				<div class="card card-custom py-5 px-5">
 					<ul class="nav nav-tabs nav-tabs-line mb-5" role="tablist">
 						<li class="nav-item">
-								<?= Theme::getSVG('assets/media/svg/icons/Design/Layers.svg', 'svg-icon svg-icon-sm', true); ?> 
+								<?= Theme::getSVG('media/svg/icons/Design/Layers.svg', 'svg-icon svg-icon-sm', true); ?> 
 								<?= lang('Core.tab_general'); ?>
 							</a>
 						</li>

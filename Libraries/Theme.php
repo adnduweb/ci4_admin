@@ -192,7 +192,7 @@ class Theme
      */
     public static function getSVG($filepath, $class = '', $nav = false)
     {
-        $filepath = ROOTPATH . '/public/admin/themes/' . service('settings')->setting_theme_admin . '/' . $filepath;
+        $filepath = ROOTPATH . '/public/admin/themes/' . service('settings')->setting_theme_admin . '/' . ENVIRONMENT . '/' . $filepath; 
         if (!is_string($filepath) || !file_exists($filepath)) {
             return '';
         }

@@ -16,7 +16,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 
 		<!--begin::Toggle-->
 		<button class="brand-toggle btn btn-sm px-0 <?= (service('settings')->setting_aside_back == '1') ? 'active' : ''; ?>" data-kt_aside="<?= service('settings')->setting_aside_back; ?>" id="kt_aside_toggle">
-			<?= Theme::getSVG('assets/media/svg/icons/Navigation/Angle-double-left.svg', 'svg-icon svg-icon svg-icon-xl', true); ?> 
+			<?= Theme::getSVG('media/svg/icons/Navigation/Angle-double-left.svg', 'svg-icon svg-icon svg-icon-xl', true); ?> 
 		 </button>
 		<!--end::Toolbar-->
 	</div>
@@ -46,7 +46,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
 											<?= $k->icon; ?>
 										</span>
 									<?php } else { ?>
-										<?= Theme::getSVG('assets/media/svg/icons/Design/Layers.svg', 'svg-icon svg-icon-sm', true); ?> 
+										<?= Theme::getSVG('media/svg/icons/Design/Layers.svg', 'svg-icon svg-icon-sm', true); ?> 
 										<
 									<?php } ?>
 									<span class="menu-text"><?= ucfirst($k->name); ?></span>

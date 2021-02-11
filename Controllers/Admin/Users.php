@@ -296,6 +296,11 @@ class Users extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
             return redirect()->back()->withInput();
         }
 
+        // echo'<pre>';
+        // print_r($user); 
+        // echo'</pre>';
+        // exit;
+
         $user->id = $user_id;
         $user->force_pass_reset = ($user->force_pass_reset == '1') ? $user->force_pass_reset : '0';
 

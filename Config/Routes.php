@@ -34,6 +34,7 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
     $routes->group('(:any)/settings', function ($routes) {
         $routes->get('/', 'Settings::index', ['as' => 'settings']);
         $routes->post('/', 'Settings::store');
+        $routes->post('genererKeyApi', 'Settings::genererKeyApi', ['as' => 'settings-genererkeyapi']);
     });
 
 
@@ -219,7 +220,7 @@ $routes->group(CI_AREA_ADMIN, ['namespace' => '\Adnduweb\Ci4Admin\Controllers\Ad
 
     // Informations
     $routes->get('(:any)/informations', 'Informations::index',  ['as' => 'informations']);
-    $routes->get('changelogs', 'ChangeLogs::index',  ['as' => 'change-logs']);
+    $routes->get('changelogs', 'Changelogs::index',  ['as' => 'change-logs']);
     
 
     // Routes

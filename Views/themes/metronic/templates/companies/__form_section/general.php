@@ -60,7 +60,7 @@
 <div class="form-group row">
     <label for="phone" class="col-xl-3 col-lg-3 col-form-label"><?= ucfirst(lang('Core.telephone_fixe')); ?> : </label>
     <div class="col-lg-9 col-xl-6">
-        <input class="form-control phone_international phone_fixe" type="tel" value="<?= old('phone') ? old('phone') : $form->phone; ?>" name="phone" id="phone">
+        <input class="form-control phone_international phone_fixe" type="tel" value="+33 2 48 63 31 76" name="phone" id="phone">
         <div class="invalid-feedback"><?= lang('Core.this_field_is_requis'); ?> </div>
         <div class="invalid-feedback-phone" class="hide"></div>
     </div>

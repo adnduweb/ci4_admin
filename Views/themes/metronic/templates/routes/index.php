@@ -21,7 +21,7 @@ use \Adnduweb\Ci4Admin\Libraries\Theme;
                     <div class="alert-icon">
                         <span class="svg-icon svg-icon-primary svg-icon-xl">
                             <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Tools/Compass.svg-->
-                            <?= Theme::getSVG('assets/media/svg/icons/Tools/Compass.svg', 'svg-icon svg-icon-sm', true); ?> 
+                            <?= Theme::getSVG('media/svg/icons/Tools/Compass.svg', 'svg-icon svg-icon-sm', true); ?> 
                             <!--end::Svg Icon-->
                         </span>
                     </div>

@@ -21,11 +21,9 @@
 
     </div>
 <?php } else { ?>
-    <div class="kt-grid kt-grid--ver" style="min-height: 200px;">
-        <div class="kt-grid kt-grid--hor kt-grid__item kt-grid__item--fluid kt-grid__item--middle">
-            <div class="kt-grid__item kt-grid__item--middle kt-align-center">
-                <?= lang('Core.All caught up!'); ?>
-                <br><?= lang('Core.No new notifications.'); ?> </div>
+    <div class="scroll pr-7 mr-n7" data-scroll="true" data-height="300" data-mobile-height="200">
+        <div class="d-flex flex-center text-center text-muted min-h-200px">
+            <br> <?= lang('Core.no_new_notifications'); ?>
         </div>
     </div>
 <?php } ?>

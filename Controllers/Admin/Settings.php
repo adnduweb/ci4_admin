@@ -55,6 +55,7 @@ class Settings extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
     public function index()
     {
         $this->viewData['form'] =  service('settings');
+        Theme::add_js('/resources/metronic/js/pages/custom/settings/outils.settings.js');
 
         parent::index();
 
@@ -282,5 +283,14 @@ class Settings extends \Adnduweb\Ci4Admin\Controllers\BaseAdminController
                 });";
 
 
+    }
+
+    public function genererKeyApi()
+    {
+        if ($this->request->isAJAX()) {
+
+            $response = ['success' => ['code' => 200, 'key_api' => $this->uuid->uuid4()->toString()], 'error' => false, csrf_token() => csrf_hash()];
+            return $this->respond($response, 200, 'génération de la cla api');
+        }
     }
 }
